@@ -1,17 +1,16 @@
 package br.com.greenblood.world;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.pieces.Player;
+import br.com.greenblood.pieces.MovableEntity;
 import br.com.greenblood.world.map.Tile;
-
-import android.graphics.Canvas;
-import android.graphics.Rect;
 
 public class WorldMap {
     private final int MAP_WIDTH = 100, MAP_HEIGHT = 20;
-    private final int MAP_VISIBLE_ROWS = 8;
+    private final int MAP_VISIBLE_ROWS = 5;
 
     private Tile[][] map;
 
@@ -23,13 +22,9 @@ public class WorldMap {
 
         for (int c = 0; c < MAP_WIDTH; c++)
             for (int r = 0; r < MAP_HEIGHT; r++)
-                map[c][r] = new Tile(r == c);
+                map[c][r] = new Tile(r == c || r == MAP_HEIGHT - 1);
     }
 
-    public WorldMap() {
-    }
-
-    // TODO:scale
     public void surfaceCreated(Rect size) {
         screenWidth = size.width();
         screenHeight = size.height();
@@ -52,10 +47,11 @@ public class WorldMap {
         offsetY = Math.max(Math.min(offsetY, 0), screenHeight - height());
 
         int firstTileY = GameCore.pixelsToTiles(-offsetY);
-        int lastTileY =
-                GameCore.pixelsToTiles(GameCore.tilesToPixels(firstTileY) + screenHeight) + 1;
+        int lastTileY = GameCore.pixelsToTiles(GameCore.tilesToPixels(firstTileY) + screenHeight) + 1;
 
         for (int y = firstTileY; y < lastTileY; y++) {
+            if( y >= MAP_HEIGHT)
+                continue;
             for (int x = firstTileX; x <= lastTileX; x++) {
                 if (x >= MAP_WIDTH)
                     continue;
@@ -64,9 +60,9 @@ public class WorldMap {
 
                 int xPos = GameCore.tilesToPixels(x) + offsetX;
                 int yPos = GameCore.tilesToPixels(y) + offsetY;
-                canvas.drawRect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize(),
-                        tile.isSolid() ? Paints.WHITE : Paints.STROKE_BLUE);
-//                canvas.drawText("(" + x + "," + y + ")", xPos + 5, yPos + 20, Paints.RED);
+
+                canvas.drawBitmap(tile.sprite(), null, new Rect(xPos, yPos, xPos + GameCore.tileSize(),
+                        yPos + GameCore.tileSize()), Paints.BLANK);
             }
         }
 
@@ -77,7 +73,7 @@ public class WorldMap {
         return GameCore.tilesToPixels(MAP_HEIGHT);
     }
 
-    private int width() {
+    int width() {
         return GameCore.tilesToPixels(MAP_WIDTH);
     }
 
@@ -85,10 +81,10 @@ public class WorldMap {
         return map[col][row];
     }
 
-    public boolean collids(Player player, int tileX, int tileY) {
+    public boolean collids(MovableEntity ent, int tileX, int tileY) {
         if (tileX < 0 || tileX >= MAP_WIDTH)
             return false;
-        
+
         if (tileY < 0 || tileY >= MAP_HEIGHT)
             return false;
 
@@ -98,17 +94,7 @@ public class WorldMap {
 
         int tileXPos = GameCore.tilesToPixels(tileX);
         int tileYPos = GameCore.tilesToPixels(tileY);
-        Rect tileSqr =
-                new Rect(tileXPos, tileYPos, tileXPos + GameCore.tileSize(), tileYPos
-                        + GameCore.tileSize());
-        Rect playerSqr =
-                new Rect((int) player.x(), (int) player.y(), (int) player.x() + player.width(),
-                        (int) player.y() + player.height());
-
-//        System.out.println(tileSqr);
-//        System.out.println(playerSqr);
-//        System.out.println(Rect.intersects(tileSqr, playerSqr));
-
-        return Rect.intersects(tileSqr, playerSqr);
+        Rect tileSqr = new Rect(tileXPos, tileYPos, tileXPos + GameCore.tileSize(), tileYPos + GameCore.tileSize());
+        return Rect.intersects(tileSqr, ent.currentBounds());
     }
 }

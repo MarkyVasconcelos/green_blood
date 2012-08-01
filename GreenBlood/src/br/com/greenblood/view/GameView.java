@@ -22,7 +22,8 @@ public class GameView extends SurfaceView implements LoopSteps {
     public GameView(Context context, DirectionalControls controls, ActionControls actions) {
         super(context);
         
-        gameWorld = new GameWorld(controls, actions);
+        GameWorld.init(controls, actions);
+        gameWorld = GameWorld.world();
 
         looper = new Thread(glooper = new MainLoop(this, 40));
         looper.setDaemon(true);

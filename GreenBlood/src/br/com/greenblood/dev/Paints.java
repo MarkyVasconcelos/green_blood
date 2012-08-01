@@ -7,6 +7,7 @@ import android.graphics.Paint.Style;
 public class Paints {
     public static final Paint BLACK, BLUE, WHITE, RED;
     public static final Paint STROKE_BLUE;
+    public static final Paint BLANK = new Paint();
     
     static{
         BLACK = new Paint();

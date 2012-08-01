@@ -7,7 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class ActionControls extends View {
-    private boolean hasTouched;
+    private boolean touchedJump;
+    private boolean touchedAction;
 
     public ActionControls(Context context) {
         super(context);
@@ -15,16 +16,30 @@ public class ActionControls extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN)
-            hasTouched = true;
+        if (event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getY() < getHeight() / 2)
+                touchedAction = true;
+            else
+                touchedJump = true;
+        }
+        
+        
         return true;
     }
 
-    public boolean hasTouched() {
-        if (!hasTouched)
+    public boolean hasAction() {
+        if (!touchedAction)
             return false;
 
-        hasTouched = false;
+        touchedAction = false;
+        return true;
+    }
+    
+    public boolean hasJumped() {
+        if (!touchedJump)
+            return false;
+
+        touchedJump = false;
         return true;
     }
 
@@ -32,8 +47,10 @@ public class ActionControls extends View {
     protected void onDraw(Canvas canvas) {
         canvas.save();
 
-//        canvas.drawRect(0, 0, getWidth()-1, getHeight(), Paints.BLACK);
-        canvas.drawRect(0, 0, getWidth()-1, getHeight(), Paints.STROKE_BLUE);
+        int middle = getHeight() / 2;
+        canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.STROKE_BLUE);
+        canvas.drawLine(0, middle, getWidth(), middle - 1, Paints.BLUE);
+
 
         canvas.restore();
     }
