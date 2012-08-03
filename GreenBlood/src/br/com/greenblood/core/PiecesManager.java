@@ -10,14 +10,17 @@ import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.MovableEntity;
+import br.com.greenblood.pieces.Player;
 import br.com.greenblood.world.WorldMap;
 
 public class PiecesManager {
     private final List<Entity> pieces = new ArrayList<Entity>();
     private final WorldMap worldMap;
+    private final Player player;
 
-    public PiecesManager(WorldMap worldMap){
+    public PiecesManager(WorldMap worldMap, Player player){
         this.worldMap = worldMap;
+        this.player = player;
     }
     
     public void add(Entity ent) {
@@ -25,11 +28,14 @@ public class PiecesManager {
     }
 
     public void proccessAI(long uptime) {
-        long now = System.currentTimeMillis();
+//        long now = System.currentTimeMillis();
 
+        player.processLogics(uptime);
+//        applyGravity(uptime, player);
+        
         for (Entity ent : pieces) {
             ent.processLogics(uptime);
-            applyGravity(uptime, (MovableEntity) ent);
+//            applyGravity(uptime, (MovableEntity) ent);
         }
         
         Iterator<Entity> it = pieces.iterator();
@@ -38,21 +44,23 @@ public class PiecesManager {
                 it.remove();
         
         long after = System.currentTimeMillis();
-        System.out.println("proccessAI finished in:" + (after - now) + "ms");
+//        System.out.println("proccessAI finished in:" + (after - now) + "ms");
     }
 
     private void applyGravity(long uptime, MovableEntity ent) {
         int tileX = ent.tileX();
         int tileY = GameCore.pixelsToTiles(ent.bottom());
-        boolean collids = worldMap.collids(ent, tileX, tileY);
 
-        if (!collids)
+        if (!worldMap.collids(ent, tileX, tileY)){
+            if(worldMap.willCollids(ent, tileX, tileY + 1))
             Gravity.apply(ent, uptime);
-        else
+        }else
             ent.dir().setY(0);
     }
 
     public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
+        player.draw(canvas, surfaceSize, offset);
+        
         for(Entity ent : pieces)
             ent.draw(canvas, surfaceSize, offset);        
     }

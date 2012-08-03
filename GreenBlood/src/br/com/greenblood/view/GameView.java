@@ -25,7 +25,7 @@ public class GameView extends SurfaceView implements LoopSteps {
         GameWorld.init(controls, actions);
         gameWorld = GameWorld.world();
 
-        looper = new Thread(glooper = new MainLoop(this, 40));
+        looper = new Thread(glooper = new MainLoop(this, 40, 0,16));
         looper.setDaemon(true);
 
         holder = getHolder();
@@ -39,9 +39,10 @@ public class GameView extends SurfaceView implements LoopSteps {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            looper.start();
             thisSize = new Rect(0, 0, getWidth(), getHeight());
             gameWorld.surfaceCreated(thisSize);
+            looper.setDaemon(true);
+            looper.start();
         }
 
         @Override

@@ -1,5 +1,7 @@
 package br.com.greenblood.pieces;
 
+import java.util.Random;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -8,12 +10,14 @@ import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.world.GameWorld;
 
 public class Enemy extends MovableEntity {
+    private static final Random rdm = new Random();
     private Bitmap resource;
 
     public Enemy(Rect bounds) {
-        super(bounds, 260);
+        super(bounds, 180 + rdm.nextInt(80));
         
         resource = ImageLoader.image("red_stick.png");
     }
@@ -27,7 +31,14 @@ public class Enemy extends MovableEntity {
 
     @Override
     public void processLogics(long uptime) {
-        //TODO: AI
+        Player player = GameWorld.player();
+        
+        if(player.x() < x())
+            desaccelerate();
+        else
+            accelerate();
+        
+        
         super.processLogics(uptime); // Move
     }
 

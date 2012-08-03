@@ -25,10 +25,13 @@ public class DirectionalControls extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN)
             holdingLeft = holdingRight = false;
 
-        if (event.getX() < getWidth() / 2)
+        if (event.getX() < getWidth() / 2){
             holdingLeft = true;
-        else
+            holdingRight = false;
+        }else{
+            holdingLeft = false;
             holdingRight = true;
+        }
 
         return true;
     }

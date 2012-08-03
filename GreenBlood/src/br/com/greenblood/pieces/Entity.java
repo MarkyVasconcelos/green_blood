@@ -13,6 +13,11 @@ public abstract class Entity {
     public Entity(Rect bounds) {
         this.bounds = bounds;
         
+        this.bounds.left *= GameCore.scale();
+        this.bounds.top *= GameCore.scale();
+        this.bounds.right *= GameCore.scale();
+        this.bounds.bottom *= GameCore.scale();
+        
         pos = new Vector2D();
     }
 

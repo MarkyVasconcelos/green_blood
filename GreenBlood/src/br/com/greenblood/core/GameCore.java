@@ -27,4 +27,8 @@ public class GameCore {
     public static int tileSize() {
         return (int) (TILE_SIZE * scale);
     }
+
+    public static float scale() {
+        return scale;
+    }
 }

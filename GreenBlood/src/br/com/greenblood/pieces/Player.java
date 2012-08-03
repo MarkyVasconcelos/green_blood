@@ -20,7 +20,7 @@ public class Player extends MovableEntity {
     public Player(Rect bounds) {
         super(bounds, 260);
         
-        walking = new AnimatedSprite(ImageLoader.image("stick.png"), 0, null);
+        walking = new AnimatedSprite(new Bitmap[]{ImageLoader.image("stick.png"),ImageLoader.image("stick_1.png")}, 0, null, 100,true);
         image = walking;
     }
 
@@ -60,13 +60,13 @@ public class Player extends MovableEntity {
     }
     
     private AnimatedSprite punching(){
-        return new AnimatedSprite(ImageLoader.image("stick_punch.png"), 400, new Listener<Void>() {
+        return new AnimatedSprite(new Bitmap[]{ImageLoader.image("stick_punch.png")}, 400, new Listener<Void>() {
             @Override
             public void fire(Void t) {
                 image = walking;
                 punch();
             }
-        });
+        },0,false);
     }
 
     public void setControls(DirectionalControls controls) {
@@ -87,22 +87,39 @@ public class Player extends MovableEntity {
     }
     
     private class AnimatedSprite {
-        private final Bitmap img;
+        private final Bitmap[] imgs;
         private final Listener<Void> onAnimationEndListener;
         private long duration;
         private boolean fired;
+            
+        private int currentSprite;
+        private int elapsedSprites;
+        private long tick;
+        private final int frameDelay;
+        private final boolean loop;
         
-        public AnimatedSprite(Bitmap img, long duration, Listener<Void> onAnimationEndListener){
-            this.img = img;
+        public AnimatedSprite(Bitmap[] imgs, long duration, Listener<Void> onAnimationEndListener, int frameDelay, boolean loop){
+            this.imgs = imgs;
             this.duration = duration;
             this.onAnimationEndListener = onAnimationEndListener;
+            this.frameDelay = frameDelay;
+            this.loop = loop;
         }
         
         public Bitmap current(){
-            return img;
+            return imgs[currentSprite];
         }
         
         public void update(long uptime){
+            if(loop){
+                tick += uptime;
+                if(tick > frameDelay){
+                    currentSprite = ++elapsedSprites % imgs.length;
+                    System.out.println(currentSprite);
+                    tick = 0;
+                }
+            }
+            
             if(fired || duration == 0)
                 return;
             duration -= uptime;

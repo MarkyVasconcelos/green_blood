@@ -40,8 +40,7 @@ public class WorldMap {
         offsetX = Math.max(Math.min(offsetX, 0), screenWidth - width());
 
         int firstTileX = GameCore.pixelsToTiles(-offsetX);
-        int lastTileX =
-                GameCore.pixelsToTiles(GameCore.tilesToPixels(firstTileX) + screenWidth) + 1;
+        int lastTileX = GameCore.pixelsToTiles(GameCore.tilesToPixels(firstTileX) + screenWidth) + 1;
 
         int offsetY = screenHeight / 2 - Math.round(player.y());
         offsetY = Math.max(Math.min(offsetY, 0), screenHeight - height());
@@ -61,8 +60,7 @@ public class WorldMap {
                 int xPos = GameCore.tilesToPixels(x) + offsetX;
                 int yPos = GameCore.tilesToPixels(y) + offsetY;
 
-                canvas.drawBitmap(tile.sprite(), null, new Rect(xPos, yPos, xPos + GameCore.tileSize(),
-                        yPos + GameCore.tileSize()), Paints.BLANK);
+                canvas.drawBitmap(tile.sprite(), null, new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLANK);
             }
         }
 
@@ -96,5 +94,50 @@ public class WorldMap {
         int tileYPos = GameCore.tilesToPixels(tileY);
         Rect tileSqr = new Rect(tileXPos, tileYPos, tileXPos + GameCore.tileSize(), tileYPos + GameCore.tileSize());
         return Rect.intersects(tileSqr, ent.currentBounds());
+    }
+
+    public boolean willCollids(MovableEntity ent, int tileX, int tileY) {
+        if (tileX < 0 || tileX >= MAP_WIDTH)
+            return false;
+
+        if (tileY < 0 || tileY >= MAP_HEIGHT)
+            return false;
+
+        Tile t = tile(tileX, tileY);
+        if (!t.isSolid())
+            return false;
+
+        int tileXPos = GameCore.tilesToPixels(tileX);
+        int tileYPos = GameCore.tilesToPixels(tileY);
+        Rect tileSqr = new Rect(tileXPos, tileYPos, tileXPos + GameCore.tileSize(), tileYPos + GameCore.tileSize());
+        return Rect.intersects(tileSqr, ent.currentBounds());
+    }
+
+    public boolean isSolid(float x, float y) {
+        int tileX = GameCore.pixelsToTiles(x);
+        int tileY = GameCore.pixelsToTiles(y);
+        
+        if (tileX < 0 || tileX >= MAP_WIDTH)
+            return false;
+
+        if (tileY < 0 || tileY >= MAP_HEIGHT)
+            return false;
+        
+        return tile(tileX, tileY).isSolid();
+    }
+
+    public int nextSolidDistance(float x, float y) {
+        int tileX = GameCore.pixelsToTiles(x);
+        int tileY = GameCore.pixelsToTiles(y);
+        
+        if (tileX < 0 || tileX >= MAP_WIDTH)
+            return -1;
+
+        if (tileY < 0 || tileY + 1 >= MAP_HEIGHT)
+            return -1;
+        
+        if(tile(tileX, tileY + 1).isSolid())
+            return (int) (y - GameCore.tilesToPixels(tileY + 1));
+        return -1;
     }
 }
