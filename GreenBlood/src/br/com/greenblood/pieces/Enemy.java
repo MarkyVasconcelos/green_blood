@@ -17,7 +17,7 @@ public class Enemy extends MovableEntity {
     private Bitmap resource;
 
     public Enemy(Rect bounds) {
-        super(bounds, 180 + rdm.nextInt(80));
+        super(bounds, 130 + rdm.nextInt(130));
         
         resource = ImageLoader.image("red_stick.png");
     }
@@ -33,10 +33,10 @@ public class Enemy extends MovableEntity {
     public void processLogics(long uptime) {
         Player player = GameWorld.player();
         
-        if(player.x() < x())
-            desaccelerate();
-        else
-            accelerate();
+//        if(player.x() < x())
+//            desaccelerate();
+//        else
+//            accelerate();
         
         
         super.processLogics(uptime); // Move
