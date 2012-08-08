@@ -44,4 +44,11 @@ public class GameActivity extends MultiTouchActivity {
 
         setContentView(screen);
     }
+    
+    @Override
+    public void finish() {
+        super.finish();
+        
+        gameView.tearDown();
+    }
 }

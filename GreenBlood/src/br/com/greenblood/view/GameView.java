@@ -71,6 +71,7 @@ public class GameView extends SurfaceView implements LoopSteps {
 
     @Override
     public void tearDown() {
+        glooper.stop();
     }
 
 }

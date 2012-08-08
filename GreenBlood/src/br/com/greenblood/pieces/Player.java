@@ -2,7 +2,10 @@ package br.com.greenblood.pieces;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
@@ -26,9 +29,22 @@ public class Player extends MovableEntity {
 
     @Override
     public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
+        canvas.save();
+        
         Rect currentBounds = currentBounds();
         currentBounds.offset((int)offset.x(), (int)offset.y());
-        canvas.drawBitmap(image.current(), null, currentBounds, Paints.BLANK);
+        
+        float scale = (float) currentBounds.width() / (float) image.current().getWidth();
+        
+        boolean leftMovement = movingLeft();
+        
+        Matrix matrix = new Matrix();
+        matrix.setScale(leftMovement ? -scale : scale, scale);
+        matrix.postTranslate(leftMovement ? currentBounds.right : currentBounds.left, currentBounds.top);
+
+        canvas.drawBitmap(image.current(), matrix, Paints.BLANK);
+        
+        canvas.restore();
     }
 
     @Override
@@ -60,13 +76,15 @@ public class Player extends MovableEntity {
     }
     
     private AnimatedSprite punching(){
-        return new AnimatedSprite(new Bitmap[]{ImageLoader.image("stick_punch.png")}, 400, new Listener<Void>() {
+        return new AnimatedSprite(new Bitmap[]{ ImageLoader.image("stick_punch.png"),
+                                                ImageLoader.image("stick_punch_1.png"),
+                                                ImageLoader.image("stick_punch_2.png")}, 400, new Listener<Void>() {
             @Override
             public void fire(Void t) {
                 image = walking;
                 punch();
             }
-        },0,false);
+        },80,true);
     }
 
     public void setControls(DirectionalControls controls) {
@@ -78,7 +96,9 @@ public class Player extends MovableEntity {
     }
     
     private void punch() {
-        Entity target = GameWorld.world().pieces().entityAt((int) (x() + width() / 2 ), (int) (y()));
+        float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
+        
+        Entity target = GameWorld.world().pieces().entityAt((int) targetX, (int) (y()));
         
         if(target == null)
             return;

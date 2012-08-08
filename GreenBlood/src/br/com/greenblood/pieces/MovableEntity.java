@@ -12,6 +12,7 @@ public abstract class MovableEntity extends Entity {
     private final Vector2D acceleration = new Vector2D(0.08f, 0);
     private final float speed;
     private Walking walking;
+    private MoveDirection moving;
 
     public MovableEntity(Rect bounds, float speed) {
         super(bounds);
@@ -49,8 +50,21 @@ public abstract class MovableEntity extends Entity {
                 Gravity.apply(this, uptime);
             else
                 direction.setY(0);
-
+        
+        if (step.x() < 0)
+            moving = MoveDirection.Left;
+        else if (step.x() > 0)
+            moving = MoveDirection.Right;
+        
         pos().plusMe(step);
+    }
+    
+    protected boolean movingLeft(){
+        return moving == MoveDirection.Left;
+    }
+    
+    protected boolean movingRight(){
+        return moving == MoveDirection.Right;
     }
 
     public Vector2D dir() {
@@ -86,5 +100,9 @@ public abstract class MovableEntity extends Entity {
 
     private enum Walking {
         Ground, Jumping, Falling;
+    }
+    
+    private enum MoveDirection {
+        Left, Right;
     }
 }
