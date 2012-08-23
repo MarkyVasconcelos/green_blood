@@ -67,7 +67,7 @@ public class PiecesManager {
     
     public Entity entityAt(int x, int y){
         for(Entity ent : pieces)
-            if(ent.currentBounds().contains(x, y))
+            if(ent.currentBoundingBounds().contains(x, y))
                 return ent;
         return null;
     }

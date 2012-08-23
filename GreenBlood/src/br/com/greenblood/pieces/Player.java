@@ -3,9 +3,7 @@ package br.com.greenblood.pieces;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
@@ -20,8 +18,8 @@ public class Player extends MovableEntity {
     private AnimatedSprite image;
     private final AnimatedSprite walking;
     
-    public Player(Rect bounds) {
-        super(bounds, 260);
+    public Player(Rect bounds, Rect boundingBox) {
+        super(bounds, boundingBox, 260);
         
         walking = new AnimatedSprite(new Bitmap[]{ImageLoader.image("stick.png"),ImageLoader.image("stick_1.png")}, 0, null, 100,true);
         image = walking;

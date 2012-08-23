@@ -66,7 +66,7 @@ public class GameWorld {
     public void surfaceCreated(Rect size) {
         worldMap.surfaceCreated(size);
         
-        player = new Player(new Rect(0, 0, 42, 128));
+        player = new Player(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
         player.setControls(controls);
         player.setActionControls(actions);
 
@@ -75,7 +75,7 @@ public class GameWorld {
         
         Random rdm = new Random();
         for(int i = 0; i < 50; i++){
-            Enemy ent = new Enemy(new Rect(0, 0, 42, 128));
+            Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
             ent.pos().setX(rdm.nextInt(8000));
             pieces.add(ent);
         }

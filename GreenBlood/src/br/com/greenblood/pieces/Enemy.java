@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.dev.Paints;
-import br.com.greenblood.hud.ActionControls;
-import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.GameWorld;
@@ -16,8 +14,8 @@ public class Enemy extends MovableEntity {
     private static final Random rdm = new Random();
     private Bitmap resource;
 
-    public Enemy(Rect bounds) {
-        super(bounds, 130 + rdm.nextInt(130));
+    public Enemy(Rect bounds, Rect boundingBounds) {
+        super(bounds, boundingBounds, 130 + rdm.nextInt(130));
         
         resource = ImageLoader.image("red_stick.png");
     }
