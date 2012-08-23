@@ -9,7 +9,7 @@ import br.com.greenblood.pieces.MovableEntity;
 import br.com.greenblood.world.map.Tile;
 
 public class WorldMap {
-    private final int MAP_WIDTH = 100, MAP_HEIGHT = 20;
+    private final int MAP_WIDTH = 100, MAP_HEIGHT = 12;
     private final int MAP_VISIBLE_ROWS = 5;
 
     private Tile[][] map;
@@ -23,6 +23,15 @@ public class WorldMap {
         for (int c = 0; c < MAP_WIDTH; c++)
             for (int r = 0; r < MAP_HEIGHT; r++)
                 map[c][r] = new Tile(r == c || r == MAP_HEIGHT - 1);
+        
+        map[0][0] = new Tile(false);
+        map[1][1] = new Tile(false);
+        map[0][2] = new Tile(true);
+        map[1][2] = new Tile(true);
+        map[12][MAP_HEIGHT - 2] = new Tile(true);
+        map[18][MAP_HEIGHT - 2] = new Tile(true);
+        map[22][MAP_HEIGHT - 2] = new Tile(true);
+        map[22][MAP_HEIGHT - 3] = new Tile(true);
     }
 
     public void surfaceCreated(Rect size) {
