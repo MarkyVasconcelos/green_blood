@@ -59,12 +59,8 @@ public class Player extends MovableEntity {
         if (controls.isHoldingRight())
             accelerate();
 
-        if (actions.hasJumped()) {
-            if (dir().x() == 0)
-                dir().setY(-1);
-            else
-                dir().rotateMe(dir().x() < 0 ? 45 : -45);
-        }
+        if (actions.hasJumped())
+            dir().setY(-1);
         
         if(actions.hasAction()){
             image = punching();
