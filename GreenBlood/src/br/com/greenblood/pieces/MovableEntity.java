@@ -1,6 +1,7 @@
 package br.com.greenblood.pieces;
 
 import br.com.greenblood.core.GameCore;
+import br.com.greenblood.core.PiecesManager;
 import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.world.GameWorld;
@@ -14,8 +15,8 @@ public abstract class MovableEntity extends Entity {
     private Walking walking;
     private MoveDirection moving;
 
-    public MovableEntity(Rect bounds, float speed) {
-        super(bounds);
+    public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
+        super(bounds, boundingBox);
         this.speed = speed * GameCore.scale();
     }
 
@@ -28,33 +29,37 @@ public abstract class MovableEntity extends Entity {
 
         WorldMap map = GameWorld.map();
 
-        Walking dir = step.y() == 0 ? Walking.Ground : (step.y() > 0 ? Walking.Falling : Walking.Jumping);
-
-        if (dir == Walking.Falling) {
-            int nextSolidY = map.nextSolidDistance(pos().x(), bottom());
-            if (nextSolidY != -1 && -nextSolidY <= step.y()) {
-                step.setY(-nextSolidY);
-                direction.setY(0);
-            } else if(map.isSolid(pos().x(), bottom())){
-                direction.setY(0);
-                step.setY(0);
-            }else
-                Gravity.apply(this, uptime);
-        }
-
-        if (dir == Walking.Jumping)
+        if(!map.isSolid(pos().x(), boundingBottom()))
             Gravity.apply(this, uptime);
-
-        if (dir == Walking.Ground)
-            if (!map.isSolid(pos().x(), bottom()))
-                Gravity.apply(this, uptime);
-            else
-                direction.setY(0);
         
+        if(step.y() > 0)
+            if (map.isSolid(pos().x(), boundingBottom())) {
+                int tileY = GameCore.tilesToPixels(GameCore.pixelsToTiles(boundingBottom()));
+                step.setY(tileY - boundingBottom());
+                direction.setY(0);
+            }
+
         if (step.x() < 0)
             moving = MoveDirection.Left;
         else if (step.x() > 0)
             moving = MoveDirection.Right;
+        
+        if (step.x() != 0){
+            if(movingLeft() && map.isSolid(boundingLeft(), boundingBottom() - 1)){
+                direction.setX(0);
+                step.setX(0);
+            }else if (movingRight() && map.isSolid(boundingRight(), boundingBottom() - 1)){
+                direction.setX(0);
+                step.setX(0);
+            }
+        }
+        
+        float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
+        Entity target = GameWorld.world().pieces().entityAt((int) targetX, (int) (y()));
+        if(target != null){
+            direction.setX(0);
+            step.setX(0);
+        }
         
         pos().plusMe(step);
     }
@@ -96,6 +101,19 @@ public abstract class MovableEntity extends Entity {
 
     public int bottom() {
         return (int) (pos().y() + height() / 2);
+    }
+    
+    
+    private float boundingBottom() {
+        return (int) (pos().y() + boundingHeight() / 2);
+    }
+    
+    private float boundingLeft() {
+        return (int) (pos().x() - boundingWidth() / 2);
+    }
+    
+    private float boundingRight() {
+        return (int) (pos().x() + boundingWidth() / 2);
     }
 
     private enum Walking {
