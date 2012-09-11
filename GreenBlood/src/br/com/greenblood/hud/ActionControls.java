@@ -48,9 +48,8 @@ public class ActionControls extends View {
         canvas.save();
 
         int middle = getHeight() / 2;
-        canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.STROKE_BLUE);
-        canvas.drawLine(0, middle, getWidth(), middle - 1, Paints.BLUE);
-
+        canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.STROKE_RED);
+        canvas.drawLine(0, middle, getWidth(), middle - 1, Paints.RED);
 
         canvas.restore();
     }

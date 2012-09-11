@@ -12,14 +12,14 @@ import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.Listener;
 import br.com.greenblood.world.GameWorld;
 
-public class Player extends MovableEntity {
+public class WalkerEntity extends MovableEntity {
     private DirectionalControls controls;
     private ActionControls actions;
     private AnimatedSprite image;
     private final AnimatedSprite walking;
     
-    public Player(Rect bounds, Rect boundingBox) {
-        super(bounds, boundingBox, 140);
+    public WalkerEntity(Rect bounds, Rect boundingBox) {
+        super(bounds, boundingBox, 260);
         
         walking = new AnimatedSprite(new Bitmap[]{ImageLoader.image("stick.png"),ImageLoader.image("stick_1.png")}, 0, null, 100,true);
         image = walking;
@@ -30,7 +30,7 @@ public class Player extends MovableEntity {
         canvas.save();
         
         Rect currentBounds = currentBounds();
-        currentBounds.offset((int) offset.x(), (int) offset.y());
+        currentBounds.offset((int)offset.x(), (int)offset.y());
         
         float scale = (float) currentBounds.width() / (float) image.current().getWidth();
         

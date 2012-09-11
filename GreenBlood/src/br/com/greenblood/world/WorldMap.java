@@ -1,11 +1,16 @@
 package br.com.greenblood.world;
 
+import java.util.Random;
+
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Vector2D;
+import br.com.greenblood.pieces.Enemy;
 import br.com.greenblood.pieces.MovableEntity;
+import br.com.greenblood.world.map.HillTile;
 import br.com.greenblood.world.map.Tile;
 
 public class WorldMap {
@@ -16,23 +21,6 @@ public class WorldMap {
 
     private int screenHeight;
     private int screenWidth;
-
-    {
-        map = new Tile[MAP_WIDTH][MAP_HEIGHT];
-
-        for (int c = 0; c < MAP_WIDTH; c++)
-            for (int r = 0; r < MAP_HEIGHT; r++)
-                map[c][r] = new Tile(r == c || r == MAP_HEIGHT - 1);
-        
-        map[0][0] = new Tile(false);
-        map[1][1] = new Tile(false);
-        map[0][2] = new Tile(true);
-        map[1][2] = new Tile(true);
-        map[12][MAP_HEIGHT - 2] = new Tile(true);
-        map[18][MAP_HEIGHT - 2] = new Tile(true);
-        map[22][MAP_HEIGHT - 2] = new Tile(true);
-        map[22][MAP_HEIGHT - 3] = new Tile(true);
-    }
 
     public void surfaceCreated(Rect size) {
         screenWidth = size.width();
@@ -65,11 +53,15 @@ public class WorldMap {
                     continue;
 
                 Tile tile = map[x][y];
+                
+                if(tile == null)
+                    continue;
 
                 int xPos = GameCore.tilesToPixels(x) + offsetX;
                 int yPos = GameCore.tilesToPixels(y) + offsetY;
 
                 canvas.drawBitmap(tile.sprite(), null, new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLANK);
+                canvas.drawText(x + ":" + y, xPos + GameCore.tileSize() / 2 , yPos + GameCore.tileSize() / 2, Paints.RED);
             }
         }
 
@@ -85,54 +77,53 @@ public class WorldMap {
     }
 
     public Tile tile(int col, int row) {
+        if(col < 0 || row < 0)
+            return null;
+        
+        if(col > MAP_WIDTH || row > MAP_HEIGHT)
+            return null;
         return map[col][row];
     }
-
-    public boolean collids(MovableEntity ent, int tileX, int tileY) {
-        if (tileX < 0 || tileX >= MAP_WIDTH)
-            return false;
-
-        if (tileY < 0 || tileY >= MAP_HEIGHT)
-            return false;
-
-        Tile t = tile(tileX, tileY);
-        if (!t.isSolid())
-            return false;
-
-        int tileXPos = GameCore.tilesToPixels(tileX);
-        int tileYPos = GameCore.tilesToPixels(tileY);
-        Rect tileSqr = new Rect(tileXPos, tileYPos, tileXPos + GameCore.tileSize(), tileYPos + GameCore.tileSize());
-        return Rect.intersects(tileSqr, ent.currentBounds());
+    
+    public Tile tileAt(float x, float y) {
+        int tileX = GameCore.pixelsToTiles(x);
+        int tileY = GameCore.pixelsToTiles(y);
+        
+        if(tileX != otileX || tileY != otileY){
+            Log.v("WorldMap.collids", tileX + ":" + tileY);
+            otileX = tileX;
+            otileY = tileY;
+        }
+        
+        return tile(tileX, tileY);
     }
 
-    public boolean willCollids(MovableEntity ent, int tileX, int tileY) {
-        if (tileX < 0 || tileX >= MAP_WIDTH)
-            return false;
-
-        if (tileY < 0 || tileY >= MAP_HEIGHT)
-            return false;
-
-        Tile t = tile(tileX, tileY);
-        if (!t.isSolid())
-            return false;
-
-        int tileXPos = GameCore.tilesToPixels(tileX);
-        int tileYPos = GameCore.tilesToPixels(tileY);
-        Rect tileSqr = new Rect(tileXPos, tileYPos, tileXPos + GameCore.tileSize(), tileYPos + GameCore.tileSize());
-        return Rect.intersects(tileSqr, ent.currentBounds());
-    }
 
     public boolean isSolid(float x, float y) {
+        return collids(x, y) > 0;
+    }
+    
+    private static int otileX, otileY;
+    public int collids(float x, float y) {
         int tileX = GameCore.pixelsToTiles(x);
         int tileY = GameCore.pixelsToTiles(y);
         
         if (tileX < 0 || tileX >= MAP_WIDTH)
-            return false;
+            return 0;
 
         if (tileY < 0 || tileY >= MAP_HEIGHT)
-            return false;
+            return 0;
         
-        return tile(tileX, tileY).isSolid();
+        Tile tile = tile(tileX, tileY);
+        if(tile == null || !tile.isSolid())
+            return 0;
+        
+//        Rect bounds = ent.currentBoundingBounds();
+//        bounds.offset(GameCore.tilesToPixels(tileX), GameCore.tilesToPixels(tileY));
+
+        int pX = (int) (x - GameCore.tilesToPixels(tileX));
+        int pY = (int) (y - GameCore.tilesToPixels(tileY));
+        return tile.collids(pX, pY);
     }
 
     public int nextSolidDistance(float x, float y) {
@@ -149,4 +140,62 @@ public class WorldMap {
             return (int) (y - GameCore.tilesToPixels(tileY + 1));
         return -1;
     }
+
+    public void createWorld() {
+        map = new Tile[MAP_WIDTH][MAP_HEIGHT];
+
+        for (int c = 0; c < MAP_WIDTH; c++)
+            for (int r = 0; r < MAP_HEIGHT; r++)
+                if(r == c || r == MAP_HEIGHT - 1){
+                    map[c][r] = new Tile(true);
+//                    if( c+ 1 < MAP_HEIGHT)
+//                    map[c + 1][r] = new HillTile();
+                }
+        
+        map[1][1] = null;
+        map[0][0] = new Tile(true);
+        map[0][1] = new Tile(true);
+        map[0][2] = new Tile(true);
+        map[1][2] = new Tile(true);
+//        map[3][2] = new HillTile();
+//        map[12][MAP_HEIGHT - 2] = new Tile(true);
+        map[18][MAP_HEIGHT - 2] = new Tile(true);
+        map[22][MAP_HEIGHT - 2] = new Tile(true);
+        map[22][MAP_HEIGHT - 3] = new Tile(true);
+
+        
+//        int halfTile = GameCore.tileSize() / 2;
+//        Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(3) + halfTile);
+//        GameWorld.pieces().add(ent);
+//        
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(8) + halfTile);
+//        GameWorld.pieces().add(ent);
+//        
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(12) + halfTile);
+//        GameWorld.pieces().add(ent);
+//        
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(22) + halfTile);
+//        GameWorld.pieces().add(ent);
+//        
+//        
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(28) + halfTile);
+//        GameWorld.pieces().add(ent);
+//        
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(30) + halfTile);
+//        GameWorld.pieces().add(ent);
+        
+//        Random rdm = new Random();
+//        for(int i = 0; i < 50; i++){
+//            ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//            ent.pos().setX(rdm.nextInt(8000));
+//            GameWorld.pieces().add(ent);
+//        }
+    }
+
 }

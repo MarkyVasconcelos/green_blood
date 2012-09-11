@@ -21,5 +21,12 @@ public class Tile {
         return img;
     }
     
+    public int collids(int x, int y) {
+        return y;
+    }
+
+    public int y(float x) {
+        return 0;
+    }
     
 }

@@ -1,23 +1,25 @@
 package br.com.greenblood.pieces;
 
 import br.com.greenblood.core.GameCore;
-import br.com.greenblood.core.PiecesManager;
 import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.world.GameWorld;
 import br.com.greenblood.world.WorldMap;
+import br.com.greenblood.world.map.Tile;
+import android.graphics.Movie;
 import android.graphics.Rect;
 
 public abstract class MovableEntity extends Entity {
     private final Vector2D direction = new Vector2D();
     private final Vector2D acceleration = new Vector2D(0.08f, 0);
     private final float speed;
-    private Walking walking;
     private MoveDirection moving;
+    private Walking walk;
 
     public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
         super(bounds, boundingBox);
         this.speed = speed * GameCore.scale();
+        walk = Walking.Ground;
     }
 
     @Override
@@ -27,35 +29,15 @@ public abstract class MovableEntity extends Entity {
 
         Vector2D step = direction.multiply(speed / (float) uptime);
 
-        WorldMap map = GameWorld.map();
-
-        if(!map.isSolid(pos().x(), boundingBottom()))
-            Gravity.apply(this, uptime);
-        
-        if(step.y() > 0)
-            if (map.isSolid(pos().x(), boundingBottom())) {
-                int tileY = GameCore.tilesToPixels(GameCore.pixelsToTiles(boundingBottom()));
-                step.setY(tileY - boundingBottom());
-                direction.setY(0);
-            }
-
-        if (step.x() < 0)
-            moving = MoveDirection.Left;
-        else if (step.x() > 0)
-            moving = MoveDirection.Right;
-        
-        if (step.x() != 0){
-            if(movingLeft() && map.isSolid(boundingLeft(), boundingBottom() - 1)){
-                direction.setX(0);
-                step.setX(0);
-            }else if (movingRight() && map.isSolid(boundingRight(), boundingBottom() - 1)){
-                direction.setX(0);
-                step.setX(0);
-            }
-        }
+        if(step.y() != 0)
+            walk = step.y() > 0 ? Walking.Falling : Walking.Jumping;
+        else
+            walk = Walking.Ground;
+            
+        walk.proccessCollisions(this, step, uptime);
         
         float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
-        Entity target = GameWorld.world().pieces().entityAt((int) targetX, (int) (y()));
+        Entity target = GameWorld.pieces().entityAt((int) targetX, (int) (y()));
         if(target != null){
             direction.setX(0);
             step.setX(0);
@@ -117,10 +99,65 @@ public abstract class MovableEntity extends Entity {
     }
 
     private enum Walking {
-        Ground, Jumping, Falling;
+        Ground {
+            @Override
+            public void proccessCollisions(MovableEntity movableEntity, Vector2D step, long uptime) {
+                WorldMap map = GameWorld.map();
+
+                float y = movableEntity.boundingBottom();
+                float x = movableEntity.pos().x();
+
+                boolean solidHill = false;
+                Tile t = map.tileAt(x, y);
+                if(t != null){
+                    int solid = t.y(step.x());
+                    solidHill = true;
+                    if (solid != 0) {
+                        step.setY(solid);
+                        movableEntity.direction.setY(0);
+                    }
+                }else if(!map.isSolid(x, y))
+                    Gravity.apply(movableEntity, uptime);
+                
+                if (step.x() < 0)
+                    movableEntity.moving = MoveDirection.Left;
+                else if (step.x() > 0)
+                    movableEntity.moving = MoveDirection.Right;
+                
+                if (step.x() != 0 && !solidHill)
+                    if ((movableEntity.movingLeft() && map.isSolid(movableEntity.boundingLeft(), y - 1))
+                            || (movableEntity.movingRight() && map.isSolid(movableEntity.boundingRight(), y - 1))) {
+                        movableEntity.direction.setX(0);
+                        step.setX(0);
+                    }
+                
+            }
+        }, Jumping {
+            @Override
+            public void proccessCollisions(MovableEntity movableEntity, Vector2D step, long uptime) {
+                Gravity.apply(movableEntity, uptime);
+            }
+        }, Falling {
+            @Override
+            public void proccessCollisions(MovableEntity movableEntity, Vector2D step, long uptime) {
+                WorldMap map = GameWorld.map();
+
+                float futureY = movableEntity.boundingBottom() + step.y();
+                if(!map.isSolid(movableEntity.pos().x(), futureY + 1))
+                    Gravity.apply(movableEntity, uptime);
+                
+                int solid = map.collids(movableEntity.pos().x(), futureY);
+                if (solid > 0) {
+                    step.setY(-solid + step.y());
+                    movableEntity.direction.setY(0);
+                }
+            }
+        };
+
+        public abstract void proccessCollisions(MovableEntity movableEntity, Vector2D step, long uptime);
     }
     
     private enum MoveDirection {
-        Left, Right;
+        Left, Right, None;
     }
 }

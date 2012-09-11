@@ -29,13 +29,15 @@ public class Enemy extends MovableEntity {
 
     @Override
     public void processLogics(long uptime) {
+        
         Player player = GameWorld.player();
-        
-//        if(player.x() < x())
-//            desaccelerate();
-//        else
-//            accelerate();
-        
+        float distanceFromPlayer = player.pos().x() - pos().x();
+        if(Math.abs(distanceFromPlayer) < 400){
+            if(distanceFromPlayer > 0)
+                accelerate();
+            else
+                desaccelerate();
+        }
         
         super.processLogics(uptime); // Move
     }

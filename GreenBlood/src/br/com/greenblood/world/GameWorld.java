@@ -1,15 +1,13 @@
 package br.com.greenblood.world;
 
-import java.util.Random;
-
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.core.PiecesManager;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.pieces.Enemy;
 import br.com.greenblood.pieces.Player;
 
 public class GameWorld {
@@ -25,6 +23,10 @@ public class GameWorld {
     
     public static Player player() {
         return world().player;
+    }
+    
+    public static PiecesManager pieces() {
+        return world().pieces;
     }
     
     public static void init(DirectionalControls controls, ActionControls actions){
@@ -49,40 +51,31 @@ public class GameWorld {
     }
 
     public void draw(Canvas canvas, Rect surfaceSize) {
-        long now = System.currentTimeMillis();
+//        long now = System.currentTimeMillis();
         canvas.save();
 
-        canvas.drawRect(surfaceSize, Paints.BLACK);
+        canvas.drawRect(surfaceSize, Paints.BLUE);
 
         Vector2D offset = worldMap.draw(canvas, player.pos());
         pieces.draw(canvas, surfaceSize, offset);
         
         canvas.restore();
         
-        long after = System.currentTimeMillis();
-        System.out.println("draw finished in:" + (after - now ) +"ms");
+//        long after = System.currentTimeMillis();
+//        System.out.println("draw finished in:" + (after - now ) +"ms");
     }
 
     public void surfaceCreated(Rect size) {
         worldMap.surfaceCreated(size);
         
         player = new Player(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+        player.pos().setX(GameCore.tilesToPixels(1));
         player.setControls(controls);
         player.setActionControls(actions);
-
-        pieces = new PiecesManager(worldMap, player);
         
+        pieces = new PiecesManager(player);
         
-        Random rdm = new Random();
-        for(int i = 0; i < 50; i++){
-            Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-            ent.pos().setX(rdm.nextInt(8000));
-            pieces.add(ent);
-        }
-    }
-
-    public PiecesManager pieces() {
-        return pieces;
+        worldMap.createWorld();
     }
 
 }
