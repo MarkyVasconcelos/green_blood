@@ -7,7 +7,7 @@ public abstract class BlockableEntity extends Entity {
 	private Vector2D normal;
 
 	public BlockableEntity(Rect bounds, Vector2D normal) {
-		super(bounds);
+		super(bounds, bounds);
 		this.normal = normal;
 	}
 

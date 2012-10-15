@@ -1,11 +1,14 @@
 package br.com.greenblood.pieces;
 
 import br.com.greenblood.core.GameCore;
-import br.com.greenblood.core.PiecesManager;
+import br.com.greenblood.dev.Paints;
+import br.com.greenblood.img.AnimatedSprite;
 import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.world.GameWorld;
 import br.com.greenblood.world.WorldMap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 
 public abstract class MovableEntity extends Entity {
@@ -14,11 +17,34 @@ public abstract class MovableEntity extends Entity {
     private final float speed;
     private Walking walking;
     private MoveDirection moving;
-
+    private AnimatedSprite image;
+    
+    
     public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
         super(bounds, boundingBox);
         this.speed = speed * GameCore.scale();
     }
+    
+    @Override
+    public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
+        canvas.save();
+        
+        Rect currentBounds = currentBounds();
+        currentBounds.offset((int)offset.x(), (int)offset.y());
+        
+        float scale = (float) currentBounds.width() / (float) image.current().getWidth();
+        
+        boolean leftMovement = movingLeft();
+        
+        Matrix matrix = new Matrix();
+        matrix.setScale(leftMovement ? -scale : scale, scale);
+        matrix.postTranslate(leftMovement ? currentBounds.right : currentBounds.left, currentBounds.top);
+
+        canvas.drawBitmap(image.current(), matrix, Paints.BLANK);
+        
+        canvas.restore();
+    }
+
 
     @Override
     public void processLogics(long uptime) {
@@ -55,13 +81,24 @@ public abstract class MovableEntity extends Entity {
         }
         
         float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
-        Entity target = GameWorld.world().pieces().entityAt((int) targetX, (int) (y()));
+        Entity target = GameWorld.pieces().entityAt((int) targetX, (int) (y()));
         if(target != null){
             direction.setX(0);
             step.setX(0);
         }
         
         pos().plusMe(step);
+        
+        image.update(uptime);
+    }
+    
+    protected void setImage(AnimatedSprite image){
+        this.image = image;
+        this.image.reset();
+    }
+    
+    protected AnimatedSprite image(){
+        return image;
     }
     
     protected boolean movingLeft(){
