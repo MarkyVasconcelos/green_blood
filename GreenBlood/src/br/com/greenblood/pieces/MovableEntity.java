@@ -27,6 +27,8 @@ public abstract class MovableEntity extends Entity {
     
     @Override
     public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
+    	if(image.current() == null)
+    		return;
         canvas.save();
         
         Rect currentBounds = currentBounds();

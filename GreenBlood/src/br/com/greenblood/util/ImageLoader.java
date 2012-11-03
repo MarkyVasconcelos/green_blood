@@ -37,6 +37,10 @@ public class ImageLoader {
             e.printStackTrace();
         }
     }
+    
+    public static Bitmap image(int resId) {
+    	return BitmapFactory.decodeResource(context.getResources(), resId);
+    }
 
     public static Bitmap image(String asset) {
         try {

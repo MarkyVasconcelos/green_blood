@@ -39,7 +39,7 @@ public class AnimatedSprite {
                 tick += uptime;
                 if(tick > frameDelay){
                     currentSprite = ++elapsedSprites % imgs.length;
-                    System.out.println(currentSprite);
+//                    System.out.println(currentSprite);
                     tick = 0;
                 }
             }

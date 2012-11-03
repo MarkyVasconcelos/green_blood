@@ -2,6 +2,7 @@ package br.com.greenblood.pieces;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import br.com.greenblood.R;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.img.AnimatedSprite;
@@ -18,7 +19,7 @@ public class Player extends MovableEntity {
 
     
     public Player(Rect bounds, Rect boundingBox) {
-        super(bounds, boundingBox, 260);
+        super(bounds, boundingBox, 130);
         
         setImage(walking);
     }
@@ -66,7 +67,14 @@ public class Player extends MovableEntity {
 
     private final class WalkingSprite extends AnimatedSprite {
         public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("stick.png"), ImageLoader.image("stick_1.png") }, 0, null, 100, true);
+            super(new Bitmap[] { ImageLoader.image("player/player_walk_01.png"),
+            					 ImageLoader.image("player/player_walk_02.png"),
+            					 ImageLoader.image("player/player_walk_03.png"),
+            					 ImageLoader.image("player/player_walk_04.png"),
+            					 ImageLoader.image("player/player_walk_05.png"),
+            					 ImageLoader.image("player/player_walk_06.png"),
+            					 ImageLoader.image("player/player_walk_07.png") 
+            			}, 0, null, 100, true);
         }
     }
     private final class PunchSprite extends AnimatedSprite{

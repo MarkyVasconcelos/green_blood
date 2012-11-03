@@ -36,7 +36,7 @@ public class GameWorld {
     }
 
     public void draw(Canvas canvas, Rect surfaceSize) {
-        long now = System.currentTimeMillis();
+//        long now = System.currentTimeMillis();
         canvas.save();
 
         canvas.drawRect(surfaceSize, Paints.BLACK);
@@ -46,14 +46,14 @@ public class GameWorld {
         
         canvas.restore();
         
-        long after = System.currentTimeMillis();
-        System.out.println("draw finished in:" + (after - now ) +"ms");
+//        long after = System.currentTimeMillis();
+//        System.out.println("draw finished in:" + (after - now ) +"ms");
     }
 
     public void surfaceCreated(Rect size) {
         worldMap.surfaceCreated(size);
 
-        player = new Player(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+        player = new Player(new Rect(0, 0, 64, 128), new Rect(0, 0, 30, 128));
         player.setControls(controls);
         player.setActionControls(actions);
 
