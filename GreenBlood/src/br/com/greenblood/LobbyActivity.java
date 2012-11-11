@@ -21,7 +21,12 @@ public class LobbyActivity extends Activity {
 			}
 		});
 		
-		View ranking = findViewById(R.id.ranking_button);
+		findViewById(R.id.options_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(LobbyActivity.this, OptionsActivity.class));
+			}
+		});
 		
 		findViewById(R.id.ranking_button).setOnClickListener(new OnClickListener() {
 			@Override
