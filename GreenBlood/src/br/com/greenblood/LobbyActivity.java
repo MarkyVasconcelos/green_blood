@@ -10,14 +10,11 @@ public class LobbyActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.lobby_activity);
 		
-		View startGame = findViewById(R.id.start_game_button);
-		
-		startGame.setOnClickListener(new OnClickListener() {
+		findViewById(R.id.start_game_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				startActivity(new Intent(LobbyActivity.this, GameActivity.class));
@@ -26,10 +23,17 @@ public class LobbyActivity extends Activity {
 		
 		View ranking = findViewById(R.id.ranking_button);
 		
-		ranking.setOnClickListener(new OnClickListener() {
+		findViewById(R.id.ranking_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(LobbyActivity.this, RankingActivity.class));
+			}
+		});
+		
+		findViewById(R.id.credits_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(LobbyActivity.this, CreditsActivity.class));
 			}
 		});
 	}
