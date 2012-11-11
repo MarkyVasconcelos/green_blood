@@ -25,8 +25,6 @@ public class GameActivity extends MultiTouchActivity {
         DirectionalControls leftRight = new DirectionalControls(this);
         ActionControls actions = new ActionControls(this);
         
-        
-        
         gameView = new GameView(this, leftRight, actions);
         
         params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);

@@ -17,21 +17,8 @@ public class WorldMap {
     private int screenHeight;
     private int screenWidth;
 
-    {
-        map = new Tile[MAP_WIDTH][MAP_HEIGHT];
-
-        for (int c = 0; c < MAP_WIDTH; c++)
-            for (int r = 0; r < MAP_HEIGHT; r++)
-                map[c][r] = new Tile(r == c || r == MAP_HEIGHT - 1);
-        
-        map[0][0] = new Tile(false);
-        map[1][1] = new Tile(false);
-        map[0][2] = new Tile(true);
-        map[1][2] = new Tile(true);
-        map[12][MAP_HEIGHT - 2] = new Tile(true);
-        map[18][MAP_HEIGHT - 2] = new Tile(true);
-        map[22][MAP_HEIGHT - 2] = new Tile(true);
-        map[22][MAP_HEIGHT - 3] = new Tile(true);
+    public WorldMap(Scene scene){
+    	map = scene.tiles();
     }
 
     public void surfaceCreated(Rect size) {
@@ -65,11 +52,16 @@ public class WorldMap {
                     continue;
 
                 Tile tile = map[x][y];
+                
+                if(tile == null)
+                	continue;
 
                 int xPos = GameCore.tilesToPixels(x) + offsetX;
                 int yPos = GameCore.tilesToPixels(y) + offsetY;
 
                 canvas.drawBitmap(tile.sprite(), null, new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLANK);
+                canvas.drawRect(new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLACK_STROKE);
+                canvas.drawText("(" + x + "," + y + ")", xPos + 8, yPos + 20, Paints.BLACK);
             }
         }
 
@@ -131,6 +123,9 @@ public class WorldMap {
 
         if (tileY < 0 || tileY >= MAP_HEIGHT)
             return false;
+        
+        if (tile(tileX, tileY) == null)
+        	return false;
         
         return tile(tileX, tileY).isSolid();
     }

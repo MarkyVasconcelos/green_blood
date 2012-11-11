@@ -8,6 +8,7 @@ import br.com.greenblood.dev.Paints;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.math.Vector2D;
+import br.com.greenblood.mock.SceneMaker;
 import br.com.greenblood.pieces.Enemy;
 import br.com.greenblood.pieces.Player;
 
@@ -23,12 +24,14 @@ public class GameWorld {
     private Player player;
     private final DirectionalControls controls;
     private final ActionControls actions;
+	private Scene scene;
     
     private GameWorld(DirectionalControls controls, ActionControls actions) {
         this.controls = controls;
         this.actions = actions;
         
-        worldMap = new WorldMap();
+        scene = SceneMaker.sceneOne();
+		worldMap = new WorldMap(scene);
     }
 
     public void proccessAI(long uptime) {
@@ -39,7 +42,7 @@ public class GameWorld {
 //        long now = System.currentTimeMillis();
         canvas.save();
 
-        canvas.drawRect(surfaceSize, Paints.BLACK);
+        canvas.drawRect(surfaceSize, Paints.BLUE);
 
         Vector2D offset = worldMap.draw(canvas, player.pos());
         pieces.draw(canvas, surfaceSize, offset);
@@ -56,42 +59,39 @@ public class GameWorld {
         player = new Player(new Rect(0, 0, 64, 128), new Rect(0, 0, 30, 128));
         player.setControls(controls);
         player.setActionControls(actions);
+        
+        Vector2D initialTile = scene.playerInitialTile();
+        Vector2D position = new Vector2D(GameCore.tilesToPixels(initialTile.x()), GameCore.tilesToPixels(initialTile.y()));
+		player.pos().set(position);
 
         pieces = new PiecesManager(player);
         
+        pieces.addAll(scene.objects());
         
-        int halfTile = GameCore.tileSize() / 2;
-        Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-        ent.pos().setX(GameCore.tilesToPixels(3) + halfTile);
-        GameWorld.pieces().add(ent);
-      
-        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-        ent.pos().setX(GameCore.tilesToPixels(8) + halfTile);
-        GameWorld.pieces().add(ent);
-
-        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-        ent.pos().setX(GameCore.tilesToPixels(12) + halfTile);
-        GameWorld.pieces().add(ent);
-
-        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-        ent.pos().setX(GameCore.tilesToPixels(22) + halfTile);
-        GameWorld.pieces().add(ent);
-
-        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-        ent.pos().setX(GameCore.tilesToPixels(28) + halfTile);
-        GameWorld.pieces().add(ent);
-
-        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-        ent.pos().setX(GameCore.tilesToPixels(30) + halfTile);
-        GameWorld.pieces().add(ent);
-
-        
-//        Random rdm = new Random();
-//        for(int i = 0; i < 50; i++){
-//            Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//            ent.pos().setX(rdm.nextInt(8000));
-//            pieces.add(ent);
-//        }
+//        int halfTile = GameCore.tileSize() / 2;
+//        Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(3) + halfTile);
+//        GameWorld.pieces().add(ent);
+//      
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(8) + halfTile);
+//        GameWorld.pieces().add(ent);
+//
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(12) + halfTile);
+//        GameWorld.pieces().add(ent);
+//
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(22) + halfTile);
+//        GameWorld.pieces().add(ent);
+//
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(28) + halfTile);
+//        GameWorld.pieces().add(ent);
+//
+//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+//        ent.pos().setX(GameCore.tilesToPixels(30) + halfTile);
+//        GameWorld.pieces().add(ent);
     }
 
     public static GameWorld world(){

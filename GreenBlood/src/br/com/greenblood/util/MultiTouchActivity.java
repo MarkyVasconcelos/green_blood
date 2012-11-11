@@ -4,7 +4,6 @@ import java.util.ArrayList;
  
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -36,7 +35,6 @@ public class MultiTouchActivity extends Activity implements OnTouchListener {
         int rawX, rawY;
         final int location[] = { 0, 0 };
         eventView.getLocationOnScreen(location);
-        // Log.v("tag", location + "");
         rawX = (int) event.getX(actionPointerIndex) + location[0];
         rawY = (int) event.getY(actionPointerIndex) + location[1];
  
@@ -92,14 +90,12 @@ public class MultiTouchActivity extends Activity implements OnTouchListener {
             if (recentTouchedViewsIndex[actionPointerID] != null) {
                 if (pointInView(x, y, mTouchSlop, view.getWidth(),
                         view.getHeight())) {
-                    // Log.v("tag", "added because < mTouchSlop");
  
                     if (!recentTouchedViewsIndex[actionPointerID]
                             .contains(view)) {
                         recentTouchedViewsIndex[actionPointerID].add(view);
                     }
                 } else if (moveOutsideEnabledViews.contains(view)) {
-                    Log.v("tag", "outside but gets event");
                     recentTouchedViewsIndex[actionPointerID].add(view);
                 }
             }
@@ -115,14 +111,6 @@ public class MultiTouchActivity extends Activity implements OnTouchListener {
             if (!me.equals(event)) {
                 // deals the Event
                 view.onTouchEvent(me);
-            }
- 
-            // debug
-            if (actionResolved == MotionEvent.ACTION_MOVE) {
-                Log.v("tag",
-                        "#" + actionPointerIndex + " Rawx:" + rawX + " rawy:"
-                                + rawY + " x:" + x + " y:" + y + " "
-                                + view.toString());
             }
         }
  
@@ -152,7 +140,6 @@ public class MultiTouchActivity extends Activity implements OnTouchListener {
             }
         }
         sb.append("]");
-        Log.d("tag", sb.toString());
     }
  
     private ArrayList<View> getChildViews(final View view) {
@@ -226,7 +213,6 @@ public class MultiTouchActivity extends Activity implements OnTouchListener {
             for (int ptrIndex = 0; ptrIndex < event.getPointerCount(); ptrIndex++) {
                 // only one event for all move events.
                 dealEvent(ptrIndex, event, v, actionResolved);
-                Log.v("tag", "move" + ptrIndex);
             }
  
         } else {

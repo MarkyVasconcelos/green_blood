@@ -50,4 +50,8 @@ public class PiecesManager {
                 return ent;
         return null;
     }
+
+	public void addAll(List<Entity> objects) {
+		pieces.addAll(objects);
+	}
 }
