@@ -3,12 +3,15 @@ package br.com.greenblood.pieces;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
+import br.com.greenblood.img.AnimatedSprite;
 import br.com.greenblood.math.Vector2D;
 
 public abstract class Entity {
     private final Vector2D pos;
     private final Rect bounds, boundingBox;
     private boolean dead;
+    private AnimatedSprite image;
+    private boolean collidable;
 
     public Entity(Rect bounds, Rect boundingBox) {
         pos = new Vector2D();
@@ -28,6 +31,14 @@ public abstract class Entity {
         this.boundingBox.top *= GameCore.scale();
         this.boundingBox.right *= GameCore.scale();
         this.boundingBox.bottom *= GameCore.scale();
+    }
+    
+    public void setSprite(AnimatedSprite image){
+        this.image = image;
+        this.image.reset();
+    }
+    protected AnimatedSprite image(){
+        return image;
     }
 
     public Vector2D pos() {
@@ -97,4 +108,12 @@ public abstract class Entity {
     public boolean isDead() {
         return dead;
     }
+
+	public boolean isCollidable() {
+		return collidable;
+	}
+
+	public void setCollidable(boolean collidable) {
+		this.collidable = collidable;
+	}
 }

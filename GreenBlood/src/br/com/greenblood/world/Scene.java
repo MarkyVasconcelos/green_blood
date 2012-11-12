@@ -3,8 +3,8 @@ package br.com.greenblood.world;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.greenblood.history.ObjectCreator;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.world.map.Tile;
 
 public class Scene {
@@ -16,7 +16,7 @@ public class Scene {
 	private Vector2D playerInitialTile;
 	
 	private Tile[][] tiles;
-	private List<Entity> objects;
+	private List<ObjectCreator> objects;
 	
 	public Scene(int rowMapSize, int colMapSize){
 		this.rowMapSize = rowMapSize;
@@ -24,7 +24,7 @@ public class Scene {
 		
 		tiles = new Tile[rowMapSize][colMapSize];
 		
-		objects = new ArrayList<Entity>();
+		objects = new ArrayList<ObjectCreator>();
 	}
 	
 	public String name() {
@@ -63,7 +63,7 @@ public class Scene {
 		return tiles;
 	}
 	
-	public List<Entity> objects(){
+	public List<ObjectCreator> objects(){
 		return objects;
 	}
 
@@ -73,6 +73,10 @@ public class Scene {
 
 	public void setPlayerInitialTile(Vector2D playerInitialPosition) {
 		this.playerInitialTile = playerInitialPosition;
+	}
+
+	public void addObjectCreator(ObjectCreator objectCreator) {
+		objects().add(objectCreator);
 	}
 }
 

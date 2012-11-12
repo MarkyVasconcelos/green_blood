@@ -17,7 +17,7 @@ public abstract class MovableEntity extends Entity {
     private final float speed;
     private Walking walking;
     private MoveDirection moving;
-    private AnimatedSprite image;
+    
     
     
     public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
@@ -27,14 +27,14 @@ public abstract class MovableEntity extends Entity {
     
     @Override
     public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
-    	if(image.current() == null)
+    	if(image().current() == null)
     		return;
         canvas.save();
         
         Rect currentBounds = currentBounds();
         currentBounds.offset((int)offset.x(), (int)offset.y());
         
-        float scale = (float) currentBounds.width() / (float) image.current().getWidth();
+        float scale = (float) currentBounds.width() / (float) image().current().getWidth();
         
         boolean leftMovement = movingLeft();
         
@@ -42,7 +42,7 @@ public abstract class MovableEntity extends Entity {
         matrix.setScale(leftMovement ? -scale : scale, scale);
         matrix.postTranslate(leftMovement ? currentBounds.right : currentBounds.left, currentBounds.top);
 
-        canvas.drawBitmap(image.current(), matrix, Paints.BLANK);
+        canvas.drawBitmap(image().current(), matrix, Paints.BLANK);
         
         canvas.restore();
     }
@@ -84,23 +84,14 @@ public abstract class MovableEntity extends Entity {
         
         float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
         Entity target = GameWorld.pieces().entityAt((int) targetX, (int) (y()));
-        if(target != null){
+        if(target != null && target.isCollidable()){
             direction.setX(0);
             step.setX(0);
         }
         
         pos().plusMe(step);
         
-        image.update(uptime);
-    }
-    
-    protected void setImage(AnimatedSprite image){
-        this.image = image;
-        this.image.reset();
-    }
-    
-    protected AnimatedSprite image(){
-        return image;
+        image().update(uptime);
     }
     
     protected boolean movingLeft(){

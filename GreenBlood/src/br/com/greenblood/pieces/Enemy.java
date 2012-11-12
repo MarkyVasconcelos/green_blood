@@ -17,7 +17,8 @@ public class Enemy extends MovableEntity {
 
     public Enemy(Rect bounds, Rect boundingBounds) {
         super(bounds, boundingBounds, 130 + rdm.nextInt(130));
-        setImage(walking);
+        setSprite(walking);
+        setCollidable(true);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class Enemy extends MovableEntity {
             desaccelerate();
         
         if(Math.abs(dist) < 100 && image() != punching)
-            setImage(punching);
+            setSprite(punching);
         
         super.processLogics(uptime); // Move
     }
@@ -41,7 +42,7 @@ public class Enemy extends MovableEntity {
 
         Entity target = GameWorld.pieces().entityAt((int) targetX, (int) (y()));
 
-        if (target == null || target instanceof Enemy)
+        if (target == null || target instanceof Enemy || target instanceof StaticObject)
             return;
 
         target.kill();
@@ -58,7 +59,7 @@ public class Enemy extends MovableEntity {
                     400, new Listener<Void>() {
                         @Override
                         public void fire(Void t) {
-                            setImage(walking);
+                            setSprite(walking);
                             punch();
                         }
                     }, 80, true);

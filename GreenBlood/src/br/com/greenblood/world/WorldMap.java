@@ -9,7 +9,7 @@ import br.com.greenblood.pieces.MovableEntity;
 import br.com.greenblood.world.map.Tile;
 
 public class WorldMap {
-    private final int MAP_WIDTH = 100, MAP_HEIGHT = 12;
+    private final int MAP_WIDTH = 100, MAP_HEIGHT = 20;
     private final int MAP_VISIBLE_ROWS = 5;
 
     private Tile[][] map;

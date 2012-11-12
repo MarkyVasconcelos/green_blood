@@ -5,11 +5,13 @@ import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.core.PiecesManager;
 import br.com.greenblood.dev.Paints;
+import br.com.greenblood.history.ObjectCreator;
+import br.com.greenblood.history.mock.SceneMaker;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.mock.SceneMaker;
 import br.com.greenblood.pieces.Enemy;
+import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.Player;
 
 public class GameWorld {
@@ -61,12 +63,13 @@ public class GameWorld {
         player.setActionControls(actions);
         
         Vector2D initialTile = scene.playerInitialTile();
-        Vector2D position = new Vector2D(GameCore.tilesToPixels(initialTile.x()), GameCore.tilesToPixels(initialTile.y()));
-		player.pos().set(position);
+		player.pos().set(GameCore.tilesToPixel(initialTile));
+		System.out.println(player.pos());
 
         pieces = new PiecesManager(player);
         
-        pieces.addAll(scene.objects());
+        for(ObjectCreator ent : scene.objects())
+        	pieces.add(ent.create());
         
 //        int halfTile = GameCore.tileSize() / 2;
 //        Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));

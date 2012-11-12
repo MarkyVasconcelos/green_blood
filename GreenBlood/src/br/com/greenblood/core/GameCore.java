@@ -1,5 +1,7 @@
 package br.com.greenblood.core;
 
+import br.com.greenblood.math.Vector2D;
+
 public class GameCore {
     public static final int TILE_SIZE = 50;
     private static float scale;
@@ -31,4 +33,8 @@ public class GameCore {
     public static float scale() {
         return scale;
     }
+
+	public static Vector2D tilesToPixel(Vector2D pos) {
+		return new Vector2D(GameCore.tilesToPixels(pos.x()), GameCore.tilesToPixels(pos.y()));
+	}
 }

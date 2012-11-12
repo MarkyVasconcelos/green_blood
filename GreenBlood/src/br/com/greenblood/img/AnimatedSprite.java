@@ -24,8 +24,8 @@ public class AnimatedSprite {
             this.frameDelay = frameDelay;
             this.loop = loop;
         }
-        
-        public Bitmap current(){
+
+		public Bitmap current(){
             return imgs[currentSprite];
         }
         
@@ -39,7 +39,6 @@ public class AnimatedSprite {
                 tick += uptime;
                 if(tick > frameDelay){
                     currentSprite = ++elapsedSprites % imgs.length;
-//                    System.out.println(currentSprite);
                     tick = 0;
                 }
             }

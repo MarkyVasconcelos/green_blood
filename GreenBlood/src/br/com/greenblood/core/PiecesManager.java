@@ -35,10 +35,10 @@ public class PiecesManager {
     }
 
     public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
-        player.draw(canvas, surfaceSize, offset);
-        
         for(Entity ent : pieces)
-            ent.draw(canvas, surfaceSize, offset);        
+            ent.draw(canvas, surfaceSize, offset);
+        
+        player.draw(canvas, surfaceSize, offset);
     }
     
     public Entity entityAt(int x, int y){

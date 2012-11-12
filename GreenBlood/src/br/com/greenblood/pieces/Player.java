@@ -20,8 +20,8 @@ public class Player extends MovableEntity {
     
     public Player(Rect bounds, Rect boundingBox) {
         super(bounds, boundingBox, 130);
-        
-        setImage(walking);
+        setCollidable(true);
+        setSprite(walking);
     }
 
     @Override
@@ -37,10 +37,10 @@ public class Player extends MovableEntity {
             accelerate();
 
         if (actions.hasJumped())
-            dir().setY(-1);
+            dir().setY(-1.5f);
         
         if(actions.hasAction())
-            setImage(punching);
+            setSprite(punching);
         
         super.processLogics(uptime); // Move
     }
@@ -83,7 +83,7 @@ public class Player extends MovableEntity {
                     400, new Listener<Void>() {
                         @Override
                         public void fire(Void t) {
-                            setImage(walking);
+                            setSprite(walking);
                             punch();
                         }
                     }, 80, true);
