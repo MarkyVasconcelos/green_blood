@@ -18,10 +18,7 @@ public class PlayerStatsView extends LinearLayout {
 		ImageView faceView = new ImageView(context);
 		faceView.setImageBitmap(ImageLoader.image("player/player_face.png"));
 		
-//		int pad = 80;
-//		setPadding(pad, pad, pad, pad);
-		
-		addView(faceView, LayoutParamsFactory.newWrapMatchLinear());
+		addView(faceView, LayoutParamsFactory.newLinear(48,48));
 		
 		LinearLayout weast = new LinearLayout(context);
 		weast.setGravity(Gravity.CENTER);

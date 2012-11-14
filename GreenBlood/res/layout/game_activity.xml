@@ -10,8 +10,9 @@
 
     <br.com.greenblood.hud.PlayerStatsView
         android:id="@+id/player_stats"
-        android:layout_width="160px"
-        android:layout_height="80px" />
+        android:padding="1dp"
+        android:layout_width="113px"
+        android:layout_height="48px" />
 
     <br.com.greenblood.hud.DirectionalControls
         android:id="@+id/direction_control"
