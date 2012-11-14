@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#3a3a3a"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="50dp" >
+
+    <TextView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="#11FF11"
+        android:text="Score: 158456800" />
+
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:text="Enviar pontuação" />
+    
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:text="Salvar progresso" />
+
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:text="Avançar" />
+
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:text="Sair" />
+
+</LinearLayout>
