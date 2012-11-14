@@ -1,9 +1,6 @@
 package br.com.greenblood;
 
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.util.ImageLoader;
@@ -19,28 +16,25 @@ public class GameActivity extends MultiTouchActivity {
         
         ImageLoader.init(this);
         
-        LayoutParams params;
-        FrameLayout screen = new FrameLayout(this);
-
-        DirectionalControls leftRight = new DirectionalControls(this);
-        ActionControls actions = new ActionControls(this);
+        setContentView(R.layout.game_activity);
         
-        gameView = new GameView(this, leftRight, actions);
-        
-        params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        screen.addView(gameView, params);
+        gameView = (GameView) findViewById(R.id.game_view);
 
-        params = new LayoutParams(160, 80);
-        params.gravity = Gravity.BOTTOM;
-        screen.addView(leftRight, params);
+        DirectionalControls leftRight = (DirectionalControls) findViewById(R.id.direction_control);
+        ActionControls actions = (ActionControls) findViewById(R.id.action_control);
+        gameView.set(leftRight, actions);
         leftRight.setOnTouchListener(this);
-        
-        params = new LayoutParams(80, 160);
-        params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-        screen.addView(actions, params);
         actions.setOnTouchListener(this);
 
-        setContentView(screen);
+        // XXX: Just decorator for now
+//        PlayerStatsView stats = (PlayerStatsView) findViewById(R.id.player_stats);
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	super.onBackPressed();
+//    	startActivity(new Intent(this, PauseActivity.class));
+//    	startActivity(new Intent(this, GameProgressActivity.class));
     }
     
     @Override

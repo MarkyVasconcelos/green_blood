@@ -3,6 +3,7 @@ package br.com.greenblood.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import br.com.greenblood.core.LoopSteps;
@@ -18,18 +19,20 @@ public class GameView extends SurfaceView implements LoopSteps {
     private GameWorld gameWorld;
     private SurfaceHolder holder;
     private Rect thisSize;
-
-    public GameView(Context context, DirectionalControls controls, ActionControls actions) {
-        super(context);
-        
-        GameWorld.init(controls, actions);
-        gameWorld = GameWorld.world();
-
+    
+    public GameView(Context context, AttributeSet attrs){
+    	super(context, attrs);
+    	
         looper = new Thread(glooper = new MainLoop(this, 40, 0,16));
         looper.setDaemon(true);
 
         holder = getHolder();
         holder.addCallback(new SurfaceCallback());
+    }
+    
+    public void set(DirectionalControls controls, ActionControls actions) {
+        GameWorld.init(controls, actions);
+        gameWorld = GameWorld.world();
     }
 
     private class SurfaceCallback implements SurfaceHolder.Callback {

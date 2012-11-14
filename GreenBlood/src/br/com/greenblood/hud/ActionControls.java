@@ -3,6 +3,7 @@ package br.com.greenblood.hud;
 import br.com.greenblood.dev.Paints;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -10,8 +11,8 @@ public class ActionControls extends View {
     private boolean touchedJump;
     private boolean touchedAction;
 
-    public ActionControls(Context context) {
-        super(context);
+    public ActionControls(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override
