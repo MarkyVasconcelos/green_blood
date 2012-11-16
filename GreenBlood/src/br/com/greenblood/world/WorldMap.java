@@ -9,7 +9,7 @@ import br.com.greenblood.pieces.MovableEntity;
 import br.com.greenblood.world.map.Tile;
 
 public class WorldMap {
-    private final int MAP_WIDTH = 100, MAP_HEIGHT = 20;
+	private final int mapWidth, mapHeight;
     private final int MAP_VISIBLE_ROWS = 5;
 
     private Tile[][] map;
@@ -19,6 +19,8 @@ public class WorldMap {
 
     public WorldMap(Scene scene){
     	map = scene.tiles();
+    	mapWidth = scene.colMapSize();
+    	mapHeight = scene.rowMapSize();
     }
 
     public void surfaceCreated(Rect size) {
@@ -45,10 +47,10 @@ public class WorldMap {
         int lastTileY = GameCore.pixelsToTiles(GameCore.tilesToPixels(firstTileY) + screenHeight) + 1;
 
         for (int y = firstTileY; y < lastTileY; y++) {
-            if( y >= MAP_HEIGHT)
+            if( y >= mapHeight)
                 continue;
             for (int x = firstTileX; x <= lastTileX; x++) {
-                if (x >= MAP_WIDTH)
+                if (x >= mapWidth)
                     continue;
 
                 Tile tile = map[x][y];
@@ -69,11 +71,11 @@ public class WorldMap {
     }
 
     private int height() {
-        return GameCore.tilesToPixels(MAP_HEIGHT);
+        return GameCore.tilesToPixels(mapHeight);
     }
 
     int width() {
-        return GameCore.tilesToPixels(MAP_WIDTH);
+        return GameCore.tilesToPixels(mapWidth);
     }
 
     public Tile tile(int col, int row) {
@@ -81,10 +83,10 @@ public class WorldMap {
     }
 
     public boolean collids(MovableEntity ent, int tileX, int tileY) {
-        if (tileX < 0 || tileX >= MAP_WIDTH)
+        if (tileX < 0 || tileX >= mapWidth)
             return false;
 
-        if (tileY < 0 || tileY >= MAP_HEIGHT)
+        if (tileY < 0 || tileY >= mapHeight)
             return false;
 
         Tile t = tile(tileX, tileY);
@@ -98,10 +100,10 @@ public class WorldMap {
     }
 
     public boolean willCollids(MovableEntity ent, int tileX, int tileY) {
-        if (tileX < 0 || tileX >= MAP_WIDTH)
+        if (tileX < 0 || tileX >= mapWidth)
             return false;
 
-        if (tileY < 0 || tileY >= MAP_HEIGHT)
+        if (tileY < 0 || tileY >= mapHeight)
             return false;
 
         Tile t = tile(tileX, tileY);
@@ -118,10 +120,10 @@ public class WorldMap {
         int tileX = GameCore.pixelsToTiles(x);
         int tileY = GameCore.pixelsToTiles(y);
         
-        if (tileX < 0 || tileX >= MAP_WIDTH)
+        if (tileX < 0 || tileX >= mapWidth)
             return false;
 
-        if (tileY < 0 || tileY >= MAP_HEIGHT)
+        if (tileY < 0 || tileY >= mapHeight)
             return false;
         
         if (tile(tileX, tileY) == null)
@@ -134,10 +136,10 @@ public class WorldMap {
         int tileX = GameCore.pixelsToTiles(x);
         int tileY = GameCore.pixelsToTiles(y);
         
-        if (tileX < 0 || tileX >= MAP_WIDTH)
+        if (tileX < 0 || tileX >= mapWidth)
             return -1;
 
-        if (tileY < 0 || tileY + 1 >= MAP_HEIGHT)
+        if (tileY < 0 || tileY + 1 >= mapHeight)
             return -1;
         
         if(tile(tileX, tileY + 1).isSolid())

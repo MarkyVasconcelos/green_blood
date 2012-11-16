@@ -1,14 +1,7 @@
 package br.com.greenblood.history.mock;
 
-import static br.com.greenblood.world.map.Tiles.empty;
-import static br.com.greenblood.world.map.Tiles.floor;
-import static br.com.greenblood.world.map.Tiles.mountain;
-import static br.com.greenblood.world.map.Tiles.mountainCornerRight;
-import static br.com.greenblood.world.map.Tiles.mountainJoinCornerRight;
-import static br.com.greenblood.world.map.Tiles.mountainLeft;
-import static br.com.greenblood.world.map.Tiles.mountainRight;
-import static br.com.greenblood.world.map.Tiles.water;
-import static br.com.greenblood.world.map.Tiles.waterFill;
+import static br.com.greenblood.world.map.Tiles.*;
+
 import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.ObjectCreator;
@@ -21,65 +14,60 @@ import br.com.greenblood.world.map.Tile;
 
 public class SceneMaker {
 	public static Scene sceneOne() {
-		int MAP_WIDTH = 150; //cols
-		int MAP_HEIGHT = 20; //rows
-		Scene scene = new Scene(MAP_WIDTH, MAP_HEIGHT);
+		int MAP_WIDTH = 150; // cols
+		int MAP_HEIGHT = 20; // rows
+		Scene scene = new Scene(MAP_HEIGHT, MAP_WIDTH);
 		scene.setName("Prologue");
 
 		scene.setPlayerInitialTile(new Vector2D(4, 9));
-		
+
 		Tile[][] tiles = scene.tiles();
 
-		//Floor all map
-		for (int col = 0; col < MAP_WIDTH; col++){
-			tiles[col][11] = floor();
-			
-			for(int i = 12; i < MAP_HEIGHT; i++)
-				tiles[col][i] = mountain();
-		}
-		
-		//waterfall
+		// waterfall
 		tiles[0][8] = water();
-		
-		for(int row = 9; row <= 19; row++)
+
+		for (int row = 9; row <= 19; row++)
 			tiles[0][row] = waterFill();
-		
+
 		tiles[1][8] = mountainCornerRight();
-		
-		for(int row = 9; row <= 11; row++)
+
+		for (int row = 9; row <= 11; row++)
 			tiles[1][row] = mountainRight();
-		
+
+		// Floor (hallow, fire ) TODO: trigger
+		floorGround(tiles, 1, MAP_WIDTH, 11, MAP_HEIGHT);
 		tiles[1][11] = mountainJoinCornerRight();
-		//end
-		
+
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				StaticObject hallow = SceneOneObjects.hallow();
 				int bottom = GameCore.tilesToPixels(11);
-				hallow.pos().set(GameCore.tilesToPixels(3), bottom - hallow.height() / 2);
+				hallow.pos().set(GameCore.tilesToPixels(3),
+						bottom - hallow.height() / 2);
 				return hallow;
 			}
 		});
-		
+
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				StaticObject fire = SceneOneObjects.fire();
 				int bottom = GameCore.tilesToPixels(11);
-				fire.pos().set(GameCore.tilesToPixels(6), bottom - fire.height() / 2);
+				fire.pos().set(GameCore.tilesToPixels(6),
+						bottom - fire.height() / 2);
 				return fire;
 			}
 		});
-		
-		//Remove floor to build up fall
-		for(int col = 18; col < 37; col++){
-			for(int row = 11; row < 17; row++)
+
+		// Remove floor to build up fall
+		for (int col = 18; col < 42; col++) {
+			for (int row = 11; row < 17; row++)
 				tiles[col][row] = empty();
 			tiles[col][16] = floor();
 		}
-		
-		//Fall
+
+		// Fall
 		tiles[18][11] = mountainCornerRight();
 		tiles[18][12] = mountainJoinCornerRight();
 		tiles[19][12] = mountainCornerRight();
@@ -90,7 +78,7 @@ public class SceneMaker {
 		tiles[21][15] = mountainJoinCornerRight();
 		tiles[22][15] = mountainCornerRight();
 		tiles[22][16] = mountainJoinCornerRight();
-		
+
 		tiles[18][13] = mountain();
 		tiles[18][14] = mountain();
 		tiles[18][15] = mountain();
@@ -100,66 +88,114 @@ public class SceneMaker {
 		tiles[19][16] = mountain();
 		tiles[20][15] = mountain();
 		tiles[20][16] = mountain();
-		
-		//TODO: first enemy (tree)
-		
+		tiles[21][16] = mountain();
+
+		// TODO: first enemy (tree)
+
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				StaticObject tree = SceneOneObjects.tree();
 				int bottom = GameCore.tilesToPixels(16);
-				tree.pos().set(GameCore.tilesToPixels(26), bottom - tree.height() / 2);
+				tree.pos().set(GameCore.tilesToPixels(26),
+						bottom - tree.height() / 2);
 				return tree;
 			}
 		});
-		scene.addObjectCreator(new ObjectCreator() {
-			@Override
-			public Entity create() {
-				Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-				int bottom = GameCore.tilesToPixels(16);
-				ent.pos().set(GameCore.tilesToPixels(27), bottom - ent.height() / 2);
-				return ent;
-			}
-		});
 		
-		for(int row = 0; row < MAP_HEIGHT; row++)
-			tiles[37][row] = mountainLeft();
+		addEnemy(scene, 27, 16);
 		
-		//Up
-//		tiles[16][11] = mountainJoinCornerLeft();
-//		tiles[16][10] = mountainCornerLeft();
-//		tiles[17][10] = mountainJoinCornerLeft();
-//		tiles[17][9] = mountainCornerLeft();
-//		tiles[18][9] = mountainJoinCornerLeft();
-//		tiles[18][8] = mountainCornerLeft();
+		// Up (XXX: see anti-word of fall)
+		tiles[37][16] = mountainJoinCornerLeft();
+		tiles[37][15] = mountainCornerLeft();
+		tiles[38][15] = mountainJoinCornerLeft();
+		tiles[38][14] = mountainCornerLeft();
+		tiles[39][14] = mountainJoinCornerLeft();
+		tiles[39][13] = mountainCornerLeft();
 		
+		tiles[38][16] = mountain();
+		tiles[39][16] = mountain();
+		tiles[39][15] = mountain();
+
+		// Floor on another level
+		remove(tiles, 40, MAP_WIDTH, 11, 14);
+		floorGround(tiles, 40, MAP_WIDTH, 13, MAP_HEIGHT);
 		
-		//Fill floor again in another level
-//		for (int col = 19; col < MAP_WIDTH; col++){
-//			tiles[col][8] = floor();
-//			tiles[col][9] = mountain();
-//		}
+		//TODO: House and enemy + trigger
 		
-		//Water
-//		tiles[29][8] = mountainCornerRight();
-//		tiles[50][8] = mountainCornerLeft();
+		addEnemy(scene, 53, 13);
 		
-//		for (int row = 9; row < MAP_HEIGHT; row++){
-//			tiles[29][row] = mountainRight();
-//			tiles[50][row] = mountainLeft();
-//		}
-//		
+		//down a level
+		remove(tiles, 54, MAP_WIDTH, 13, 14);
+		tiles[54][13] = mountainCornerRight();
+		tiles[54][14] = mountainJoinCornerRight();
+		floorGround(tiles, 55, MAP_WIDTH, 14, MAP_HEIGHT);
 		
-//		for (int c = 30; c < 50; c++){
-//			tiles[c][8] = water();
-//		
-//			for(int i = 9; i < MAP_HEIGHT; i++)
-//				tiles[c][i] = waterFill();
-//		}
+		addEnemy(scene, 58, 14);
 		
+		//down a level
+		remove(tiles, 60, MAP_WIDTH, 14, 15);
+		tiles[60][14] = mountainCornerRight();
+		tiles[60][15] = mountainJoinCornerRight();
+		floorGround(tiles, 61, MAP_WIDTH, 15, MAP_HEIGHT);
+		
+		//TODO: Water and jump obstacles
+
+		//down a level
+		remove(tiles, 67, 77, 15, MAP_HEIGHT);
+		
+		// Water
+		
+		for (int row = 15; row < MAP_HEIGHT; row++) {
+			tiles[66][row] = mountainRight();
+			tiles[78][row] = mountainLeft();
+		}
+		
+		tiles[66][15] = mountainCornerRight();
+		tiles[78][15] = mountainCornerLeft();
+	
+		for (int row = 67; row < 78; row++) {
+			tiles[row][15] = water();
+
+			for (int i = 16; i < MAP_HEIGHT; i++)
+				tiles[row][i] = waterFill();
+		}
+		
+		// Scenario block wall
+		for (int row = 0; row < MAP_HEIGHT; row++)
+			tiles[100][row] = mountainLeft();
+
 		return scene;
 	}
 
+	public static void remove(Tile[][] tiles, int x1, int x2, int y1, int y2) {
+		for (int col = x1; col < x2; col++)
+			for (int row = y1; row < y2; row++)
+				tiles[col][row] = empty();
+
+	}
+
+	public static void floorGround(Tile[][] tiles, int x1, int x2, int y1, int y2) {
+		for (int col = x1; col < x2; col++) {
+			tiles[col][y1] = floor();
+
+			for (int i = y1 + 1; i < y2; i++)
+				tiles[col][i] = mountain();
+		}
+	}
+	
+	public static void addEnemy(Scene scene, final int x, final int y){
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0,
+						30, 128));
+				int bottom = GameCore.tilesToPixels(y);
+				ent.pos().set(GameCore.tilesToPixels(x),
+						bottom - ent.height() / 2);
+				return ent;
+			}
+		});
+	}
 
 }
-
