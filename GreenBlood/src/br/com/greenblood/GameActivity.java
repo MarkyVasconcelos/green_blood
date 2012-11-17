@@ -3,9 +3,12 @@ package br.com.greenblood;
 import android.os.Bundle;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
+import br.com.greenblood.hud.EnemyStatsView;
+import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
 import br.com.greenblood.view.GameView;
+import br.com.greenblood.world.GameWorld;
 
 public class GameActivity extends MultiTouchActivity {
     private GameView gameView;
@@ -26,8 +29,8 @@ public class GameActivity extends MultiTouchActivity {
         leftRight.setOnTouchListener(this);
         actions.setOnTouchListener(this);
 
-        // XXX: Just decorator for now
-//        PlayerStatsView stats = (PlayerStatsView) findViewById(R.id.player_stats);
+        GameWorld.setEnemyStatsView((EnemyStatsView) findViewById(R.id.enemy_stats));
+        GameWorld.setPlayerStatsView((PlayerStatsView) findViewById(R.id.player_stats));
     }
     
     @Override

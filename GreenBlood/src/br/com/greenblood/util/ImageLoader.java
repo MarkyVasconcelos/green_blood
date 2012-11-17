@@ -1,23 +1,16 @@
 package br.com.greenblood.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class ImageLoader {
-    private static final Random random = new Random();
-    
-    private static List<Bitmap> tiles;
-    
     private static Context context;
 
-    private static Bitmap emptyTile;
-    
     private static Bitmap floor;
 	private static Bitmap mountain;
 	private static Bitmap mountainRight;
@@ -28,19 +21,11 @@ public class ImageLoader {
 	private static Bitmap mountainJoinCornerRight;
 	private static Bitmap water;
 	private static Bitmap waterFill;
+	
+	private static final Map<String, Bitmap> assets = new HashMap<String, Bitmap>();
 
     public static void init(Context context) {
         ImageLoader.context = context;
-        
-        tiles = new ArrayList<Bitmap>();
-        tiles.add(image("tile_A.png"));
-        tiles.add(image("tile_B.png"));
-        tiles.add(image("tile_C.png"));
-        tiles.add(image("tile_D.png"));
-        tiles.add(image("tile_E.png"));
-        tiles.add(image("tile_F.png"));
-        tiles.add(image("tile_G.png"));
-        tiles.add(image("tile_H.png"));
         
         mountain = image("tile_A.png");
         floor = image("tile_B.png");
@@ -52,35 +37,27 @@ public class ImageLoader {
         mountainJoinCornerRight = image("tile_H.png");
         water = image("tile_water.png");
         waterFill = image("tile_water_fill.png");
-        
-        try {
-            emptyTile = BitmapFactory.decodeStream(context.getAssets().open("tile_0.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     
     public static Bitmap image(int resId) {
     	return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 
+    
+    //TODO: Cache things to speedup decode time
     public static Bitmap image(String asset) {
+//    	if(assets.containsKey(asset) && !assets.get(asset).isRecycled())
+//    		return assets.get(asset);
+    	
         try {
-            return BitmapFactory.decodeStream(context.getAssets().open(asset));
+//			return assets.put(asset, BitmapFactory.decodeStream(context.getAssets().open(asset)));
+        	return BitmapFactory.decodeStream(context.getAssets().open(asset));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
     
-    public static Bitmap randomTile(){
-        return tiles.get(random.nextInt(tiles.size()));
-    }
-
-    public static Bitmap emptyTile() {
-        return emptyTile;
-    }
-
 	public static Bitmap floor() {
 		return floor;
 	}

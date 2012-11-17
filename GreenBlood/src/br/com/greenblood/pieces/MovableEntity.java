@@ -2,7 +2,7 @@ package br.com.greenblood.pieces;
 
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
-import br.com.greenblood.img.AnimatedSprite;
+import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.world.GameWorld;
@@ -83,7 +83,7 @@ public abstract class MovableEntity extends Entity {
         }
         
         float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
-        Entity target = GameWorld.pieces().entityAt((int) targetX, (int) (y()));
+        Entity target = GameWorld.pieces().punchCollidableEntityAt((int) targetX, (int) (y()));
         if(target != null && target.isCollidable()){
             direction.setX(0);
             step.setX(0);

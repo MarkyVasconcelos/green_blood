@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
+import br.com.greenblood.pieces.Character;
 import br.com.greenblood.pieces.Player;
 
 public class PiecesManager {
@@ -41,13 +42,14 @@ public class PiecesManager {
         player.draw(canvas, surfaceSize, offset);
     }
     
-    public Entity entityAt(int x, int y){
+    public Character punchCollidableEntityAt(int x, int y){
         if(player.currentBoundingBounds().contains(x, y))
             return player;
         
         for(Entity ent : pieces)
-            if(ent.currentBoundingBounds().contains(x, y))
-                return ent;
+            if(ent instanceof Character && ent.currentBoundingBounds().contains(x, y))
+                return (Character) ent;
+        
         return null;
     }
 

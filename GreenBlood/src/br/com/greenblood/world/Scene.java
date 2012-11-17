@@ -22,7 +22,7 @@ public class Scene {
 		this.rowMapSize = rowMapSize;
 		this.colMapSize = colMapSize;
 		
-		tiles = new Tile[rowMapSize][colMapSize];
+		tiles = new Tile[colMapSize][rowMapSize];
 		
 		objects = new ArrayList<ObjectCreator>();
 	}

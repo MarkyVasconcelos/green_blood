@@ -9,6 +9,8 @@ import br.com.greenblood.history.ObjectCreator;
 import br.com.greenblood.history.mock.SceneMaker;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
+import br.com.greenblood.hud.EnemyStatsView;
+import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Enemy;
 import br.com.greenblood.pieces.Entity;
@@ -21,6 +23,8 @@ public class GameWorld {
         world = new GameWorld(controls, actions);
     }
 
+    private PlayerStatsView playerStatsView;
+    private EnemyStatsView enemyStatsView;
     private WorldMap worldMap;
     private PiecesManager pieces;
     private Player player;
@@ -41,7 +45,6 @@ public class GameWorld {
     }
 
     public void draw(Canvas canvas, Rect surfaceSize) {
-//        long now = System.currentTimeMillis();
         canvas.save();
 
         canvas.drawRect(surfaceSize, Paints.BLUE);
@@ -50,9 +53,6 @@ public class GameWorld {
         pieces.draw(canvas, surfaceSize, offset);
         
         canvas.restore();
-        
-//        long after = System.currentTimeMillis();
-//        System.out.println("draw finished in:" + (after - now ) +"ms");
     }
 
     public void surfaceCreated(Rect size) {
@@ -61,40 +61,15 @@ public class GameWorld {
         player = new Player(new Rect(0, 0, 64, 128), new Rect(0, 0, 30, 128));
         player.setControls(controls);
         player.setActionControls(actions);
+        player.setStatsView(playerStatsView);
         
         Vector2D initialTile = scene.playerInitialTile();
 		player.pos().set(GameCore.tilesToPixel(initialTile));
-		System.out.println(player.pos());
 
         pieces = new PiecesManager(player);
         
         for(ObjectCreator ent : scene.objects())
         	pieces.add(ent.create());
-        
-//        int halfTile = GameCore.tileSize() / 2;
-//        Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//        ent.pos().setX(GameCore.tilesToPixels(3) + halfTile);
-//        GameWorld.pieces().add(ent);
-//      
-//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//        ent.pos().setX(GameCore.tilesToPixels(8) + halfTile);
-//        GameWorld.pieces().add(ent);
-//
-//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//        ent.pos().setX(GameCore.tilesToPixels(12) + halfTile);
-//        GameWorld.pieces().add(ent);
-//
-//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//        ent.pos().setX(GameCore.tilesToPixels(22) + halfTile);
-//        GameWorld.pieces().add(ent);
-//
-//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//        ent.pos().setX(GameCore.tilesToPixels(28) + halfTile);
-//        GameWorld.pieces().add(ent);
-//
-//        ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-//        ent.pos().setX(GameCore.tilesToPixels(30) + halfTile);
-//        GameWorld.pieces().add(ent);
     }
 
     public static GameWorld world(){
@@ -112,4 +87,17 @@ public class GameWorld {
     public static Player player() {
         return world().player;
     }
+
+	public static void setEnemyStatsView(EnemyStatsView enemyStatsView) {
+		world().enemyStatsView = enemyStatsView;
+		enemyStatsView.dismiss();
+	}
+	
+	public static void setPlayerStatsView(PlayerStatsView playerStatsView){
+		world().playerStatsView = playerStatsView;
+	}
+
+	public void showEnemyStats(Enemy enemy) {
+		enemyStatsView.display(enemy);
+	}
 }

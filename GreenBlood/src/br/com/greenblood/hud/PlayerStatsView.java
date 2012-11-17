@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 public class PlayerStatsView extends LinearLayout {
 
+	private int maxHelth;
+	private LinearProgressBar bar;
+
 	public PlayerStatsView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
@@ -26,12 +29,25 @@ public class PlayerStatsView extends LinearLayout {
 		TextView score = new TextView(context);
 		score.setText("12154800");
 		weast.addView(score, LayoutParamsFactory.newMatchWrapLinear());
-		LinearProgressBar bar = new LinearProgressBar(context);
-		bar.setTotal(100);
-		bar.setValue(90);
+		bar = new LinearProgressBar(context);
 		weast.addView(bar, LayoutParamsFactory.newMatchWrapLinear());
 		
 		addView(weast, LayoutParamsFactory.newWrapMatchLinear());
+	}
+
+	public void setMaximumHealth(int maxHelth) {
+		this.maxHelth = maxHelth;
+		bar.setTotal(maxHelth);
+		bar.setValue(maxHelth);
+	}
+	
+	public void setValue(final int helth) {
+		post(new Runnable() {
+			@Override
+			public void run() {
+				bar.setValue(helth);
+			}
+		});
 	}
 
 }

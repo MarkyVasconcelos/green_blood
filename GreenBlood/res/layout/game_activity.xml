@@ -13,6 +13,15 @@
         android:padding="1dp"
         android:layout_width="113px"
         android:layout_height="48px" />
+    
+    <br.com.greenblood.hud.EnemyStatsView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/enemy_stats"
+        android:layout_marginLeft="8dp"
+        android:padding="1dp"
+        android:layout_width="113px"
+        android:layout_height="40px" />
+        
 
     <br.com.greenblood.hud.DirectionalControls
         android:id="@+id/direction_control"
