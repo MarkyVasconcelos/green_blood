@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 public class PlayerStatsView extends LinearLayout {
 
-	private int maxHelth;
 	private LinearProgressBar bar;
 
 	public PlayerStatsView(Context context, AttributeSet attrs) {
@@ -21,7 +20,7 @@ public class PlayerStatsView extends LinearLayout {
 		ImageView faceView = new ImageView(context);
 		faceView.setImageBitmap(ImageLoader.image("player/player_face.png"));
 		
-		addView(faceView, LayoutParamsFactory.newLinear(48,48));
+		addView(faceView, LayoutParamsFactory.newLinear(39, 39));
 		
 		LinearLayout weast = new LinearLayout(context);
 		weast.setGravity(Gravity.CENTER);
@@ -36,7 +35,6 @@ public class PlayerStatsView extends LinearLayout {
 	}
 
 	public void setMaximumHealth(int maxHelth) {
-		this.maxHelth = maxHelth;
 		bar.setTotal(maxHelth);
 		bar.setValue(maxHelth);
 	}
