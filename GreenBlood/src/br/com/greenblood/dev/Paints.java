@@ -5,11 +5,16 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
 public class Paints {
-    public static final Paint BLACK, BLACK_STROKE, BLUE, WHITE, RED;
+    public static final Paint TRANS_BLACK, BLACK, BLACK_STROKE, BLUE, WHITE, RED;
     public static final Paint STROKE_BLUE;
     public static final Paint BLANK = new Paint();
     
     static{
+		TRANS_BLACK = new Paint();
+		TRANS_BLACK.setColor(Color.BLACK);
+		TRANS_BLACK.setAlpha(100);
+		
+         
         BLACK = new Paint();
         BLACK.setColor(Color.BLACK);
         

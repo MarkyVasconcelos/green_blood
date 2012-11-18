@@ -43,7 +43,7 @@ public class DirectionalControls extends View {
 
         int middle = getWidth() / 2;
 
-        // canvas.drawRect(0, 0, getWidth()-1, getHeight(), Paints.BLACK);
+        canvas.drawRect(0, 0, getWidth()-1, getHeight(), Paints.TRANS_BLACK);
         canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.STROKE_BLUE);
         canvas.drawLine(middle, 0, middle - 1, getHeight(), Paints.BLUE);
 
