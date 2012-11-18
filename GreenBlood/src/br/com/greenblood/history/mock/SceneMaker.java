@@ -33,7 +33,7 @@ public class SceneMaker {
 		for (int row = 9; row <= 11; row++)
 			tiles[1][row] = mountainRight();
 
-		// Floor (hallow, fire ) TODO: trigger
+		// Floor (hallow, fire )
 		floorGround(tiles, 1, MAP_WIDTH, 11, MAP_HEIGHT);
 		tiles[1][11] = mountainJoinCornerRight();
 		
@@ -42,7 +42,7 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Trigger salut = SceneOneObjects.firstTrigger();
+				Trigger salut = SceneOneObjects.welcomeTrigger();
 				int bottom = GameCore.tilesToPixels(11);
 				salut.pos().set(GameCore.tilesToPixels(5), bottom - salut.height() / 2);
 				return salut;
@@ -75,7 +75,19 @@ public class SceneMaker {
 				tiles[col][row] = empty();
 			tiles[col][16] = floor();
 		}
-
+		
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Trigger problem = SceneOneObjects.problemTrigger();
+				int bottom = GameCore.tilesToPixels(11);
+				problem.pos().set(GameCore.tilesToPixels(17), bottom - problem.height() / 2);
+				return problem;
+			}
+		});
+		
+		
 		// Fall
 		tiles[18][11] = mountainCornerRight();
 		tiles[18][12] = mountainJoinCornerRight();

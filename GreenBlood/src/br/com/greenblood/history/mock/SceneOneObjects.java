@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
+import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
 import br.com.greenblood.pieces.scene.one.WhatABeutifullDayTrigger;
 import br.com.greenblood.util.ImageLoader;
 
@@ -32,8 +33,12 @@ public class SceneOneObjects {
 		return tree;
 	}
 
-	public static Trigger firstTrigger() {
+	public static Trigger welcomeTrigger() {
 		return new WhatABeutifullDayTrigger(new Rect(0,0,40,80));
+	}
+	
+	public static Trigger problemTrigger() {
+		return new TheresAProblemAheadTrigger(new Rect(0,0,40,80));
 	}
 
 }

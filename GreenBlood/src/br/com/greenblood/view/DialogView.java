@@ -26,23 +26,15 @@ public class DialogView extends FrameLayout {
 		addView(view, LayoutParamsFactory.newMatchFrame());
 	}
 
-	public void hide() {
-		setVisibility(View.INVISIBLE);
-	}
-	
-	public void show() {
-		setVisibility(View.VISIBLE);
-	}
-	
 	/**
-	 * Since setVisibility will be called trough game thread, this will post the
+	 * Since hide() will be called trough game thread, this will post the
 	 * action into UI-Thread
 	 */
-	public void setVisibility(final int visibility){
+	public void hide() {
 		post(new Runnable() {
 			@Override
 			public void run() {
-				DialogView.super.setVisibility(visibility);
+				setVisibility(View.INVISIBLE);
 			}
 		});
 	}
@@ -55,21 +47,27 @@ public class DialogView extends FrameLayout {
 		return super.dispatchTouchEvent(ev);
 	}
 	
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		if(getVisibility() == View.INVISIBLE)
+			return false;
+	
+		return super.onTouchEvent(ev);
+	}
+	
 	public void display(final String txt, final Listener<Void> onTouchListener){
-		show();
-		
 		post(new Runnable() {
 			@Override
 			public void run() {
-				view.setText(txt);				
-			}
-		});
-		
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				onTouchListener.on(null);
-				view.setOnClickListener(null);
+				setVisibility(VISIBLE);
+				view.setText(txt);	
+				setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						onTouchListener.on(null);
+						setOnClickListener(null);
+					}
+				});
 			}
 		});
 	}
