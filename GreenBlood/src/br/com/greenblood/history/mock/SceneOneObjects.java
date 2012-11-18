@@ -9,23 +9,26 @@ import br.com.greenblood.util.ImageLoader;
 public class SceneOneObjects {
 	public static StaticObject hallow() {
 		StaticObject hallow = new StaticObject(new Rect(0, 0, 144, 288));
-		hallow.setSprite(new Sprite(new Bitmap[] { ImageLoader
-				.image("hollow.PNG") }, 0l, 0, false));
+		hallow.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("hollow.PNG") }, 0l, false));
 		return hallow;
 	}
 
 	public static StaticObject fire() {
 		StaticObject fire = new StaticObject(new Rect(0, 0, 53, 76));
-		fire.setSprite(new Sprite(new Bitmap[] { ImageLoader
-				.image("fire.PNG") }, 0l, 0, false));
+		fire.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("fire/fire.PNG"),
+				ImageLoader.image("fire/fire2.PNG")}, 300, false));
 		return fire;
 	}
 	
 	public static StaticObject tree() {
-		StaticObject fire = new StaticObject(new Rect(0, 0, 196, 288));
-		fire.setSprite(new Sprite(new Bitmap[] { ImageLoader
-				.image("tree.PNG") }, 0l, 0, false));
-		return fire;
+		StaticObject tree = new StaticObject(new Rect(0, 0, 383, 288));
+		tree.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("falling_tree/tree.PNG"),
+				ImageLoader.image("falling_tree/tree2.PNG"),
+				ImageLoader.image("falling_tree/tree3.PNG"),
+				ImageLoader.image("falling_tree/tree4.PNG")
+		}, 800, true));
+		return tree;
+	}
 	}
 
 }
