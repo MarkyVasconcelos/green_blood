@@ -133,4 +133,8 @@ public class Player extends Character {
 		this.statsView = statsView;
 		statsView.setMaximumHealth(maxHelth);
 	}
+
+	public void stop() {
+		execute(standingSprite(), false);
+	}
 }

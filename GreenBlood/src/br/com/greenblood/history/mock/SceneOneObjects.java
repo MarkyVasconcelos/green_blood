@@ -5,7 +5,9 @@ import android.graphics.Rect;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
+import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
+import br.com.greenblood.pieces.scene.one.TreeCutterTrigger;
 import br.com.greenblood.pieces.scene.one.WhatABeutifullDayTrigger;
 import br.com.greenblood.util.ImageLoader;
 
@@ -23,14 +25,8 @@ public class SceneOneObjects {
 		return fire;
 	}
 	
-	public static StaticObject tree() {
-		StaticObject tree = new StaticObject(new Rect(0, 0, 383, 288));
-		tree.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("falling_tree/tree.PNG"),
-				ImageLoader.image("falling_tree/tree2.PNG"),
-				ImageLoader.image("falling_tree/tree3.PNG"),
-				ImageLoader.image("falling_tree/tree4.PNG")
-		}, 800, true));
-		return tree;
+	public static StaticObject beingCuttedTree() {
+		return new FallingTree(new Rect(0, 0, 383, 288));
 	}
 
 	public static Trigger welcomeTrigger() {
@@ -39,6 +35,8 @@ public class SceneOneObjects {
 	
 	public static Trigger problemTrigger() {
 		return new TheresAProblemAheadTrigger(new Rect(0,0,40,80));
+	public static Trigger cutTrigger() {
+		return new TreeCutterTrigger(new Rect(0,0,40,200));
 	}
 
 }

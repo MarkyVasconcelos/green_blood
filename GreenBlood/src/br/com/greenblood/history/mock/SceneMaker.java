@@ -85,7 +85,6 @@ public class SceneMaker {
 			tiles[col][16] = floor();
 		}
 		
-		
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
@@ -95,7 +94,6 @@ public class SceneMaker {
 				return problem;
 			}
 		});
-		
 		
 		// Fall
 		tiles[18][11] = mountainCornerRight();
@@ -120,20 +118,29 @@ public class SceneMaker {
 		tiles[20][16] = mountain();
 		tiles[21][16] = mountain();
 
-		// TODO: first enemy (tree)
+		// first enemy (tree)
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Trigger problem = SceneOneObjects.cutTrigger();
+				int bottom = GameCore.tilesToPixels(16);
+				problem.pos().set(GameCore.tilesToPixels(30), bottom - problem.height() / 2);
+				return problem;
+			}
+		});
+		
 
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				StaticObject tree = SceneOneObjects.tree();
+				StaticObject tree = SceneOneObjects.beingCuttedTree();
 				int bottom = GameCore.tilesToPixels(16);
 				tree.pos().set(GameCore.tilesToPixels(34),
 						bottom - tree.height() / 2);
 				return tree;
 			}
 		});
-		
-		addEnemy(scene, 35, 16);
 		
 		// Up (XXX: see anti-word of fall)
 		tiles[37][16] = mountainJoinCornerLeft();
@@ -218,14 +225,17 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Enemy ent = new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0,
-						30, 128));
+				Enemy ent = enemy();
 				int bottom = GameCore.tilesToPixels(y);
 				ent.pos().set(GameCore.tilesToPixels(x),
 						bottom - ent.height() / 2);
 				return ent;
 			}
 		});
+	}
+
+	public static Enemy enemy() {
+		return new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
 	}
 
 }

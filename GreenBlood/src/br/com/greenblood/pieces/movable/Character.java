@@ -76,6 +76,10 @@ public abstract class Character extends MovableEntity {
 		target.hit();
 	}
 	
+	protected Sprite standingSprite(){
+		return standingSprite;
+	}
+	
 	public abstract void hit();
 	protected abstract Sprite walkingSprite();
 	protected abstract Sprite punchingSprite();

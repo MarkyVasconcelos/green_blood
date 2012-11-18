@@ -13,6 +13,7 @@ import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
+import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.World;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.movable.Player;
@@ -36,7 +37,8 @@ public class GameWorld {
     private final DirectionalControls controls;
     private final ActionControls actions;
 	private Scene scene;
-	private boolean blockInput;
+	private boolean blockMove;
+	private int offsetX;
     
     private GameWorld(DirectionalControls controls, ActionControls actions) {
         this.controls = controls;
@@ -47,7 +49,8 @@ public class GameWorld {
     }
 
     public void proccessAI(long uptime) {
-    	if(!blockInput)
+    	worldScene.onProcessPhaseStarted();
+    	if(!blockMove)
     		worldScene.processLogics(uptime);
         worldScene.processAnimationLogics(uptime);
     }
@@ -57,7 +60,7 @@ public class GameWorld {
 
         canvas.drawRect(surfaceSize, Paints.BLUE);
 
-        Vector2D offset = worldMap.draw(canvas, player.pos());
+        Vector2D offset = worldMap.draw(canvas, player.pos(), offsetX);
         worldScene.draw(canvas, surfaceSize, offset);
         
         canvas.restore();
@@ -99,14 +102,13 @@ public class GameWorld {
 	public void showEnemyStats(Enemy enemy) {
 		enemyStatsView.display(enemy);
 	}
-
+	
 	public void display(String txt){
-		lockInput();
-		gameActivity.hideControllers();
+		lockScreen();
 		gameActivity.display(txt, new Listener<Void>() {
 			@Override
 			public boolean on(Void t) {
-				unlockInput();
+				unlockMove();
 				gameActivity.dialog().hide();
 				gameActivity.showControllers();
 				return false;
@@ -114,14 +116,31 @@ public class GameWorld {
 		});
 	}
 
-	public void lockInput() {
-		blockInput = true;
+	public void lockScreen() {
+		player.stop();
+		lockMove();
+		gameActivity.hideControllers();
+	}
+	
+	public void unlockScreen() {
+		unlockMove();
+		gameActivity.showControllers();
+	}
+
+	public void lockMove() {
+		blockMove = true;
+	}
+	
+	public void unlockMove() {
+		blockMove = false;
+	}
+
 	public void addEntity(Entity ent) {
 		worldScene.postAdd(ent);
 	}
 	
-	public void unlockInput() {
-		blockInput = false;
+	public void offsetDraw(int offsetX){
+		this.offsetX = offsetX;
 	}
 
 }

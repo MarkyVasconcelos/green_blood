@@ -31,10 +31,10 @@ public class WorldMap {
         GameCore.setAppliedScale(((float) estimatedTileSize) / ((float) GameCore.TILE_SIZE));
     }
 
-    public Vector2D draw(Canvas canvas, Vector2D player) {
+    public Vector2D draw(Canvas canvas, Vector2D player, int offset) {
         canvas.save();
 
-        int offsetX = screenWidth / 2 - Math.round(player.x());
+        int offsetX = screenWidth / 2 - Math.round(player.x() + offset);
         offsetX = Math.max(Math.min(offsetX, 0), screenWidth - width());
 
         int firstTileX = GameCore.pixelsToTiles(-offsetX);

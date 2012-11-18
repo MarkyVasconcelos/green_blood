@@ -6,6 +6,7 @@ import android.graphics.Paint.Style;
 
 public class Paints {
     public static final Paint TRANS_BLACK, BLACK, BLACK_STROKE, BLUE, WHITE, RED;
+    public static final Paint RED_WRITE;
     public static final Paint STROKE_BLUE;
     public static final Paint BLANK = new Paint();
     
@@ -30,6 +31,9 @@ public class Paints {
         
         RED = new Paint();
         RED.setColor(Color.RED);
+        
+        RED_WRITE = new Paint(RED);
+        RED_WRITE.setStrokeWidth(2);
         
         STROKE_BLUE = new Paint();
         STROKE_BLUE.setColor(Color.BLUE);
