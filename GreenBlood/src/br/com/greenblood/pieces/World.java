@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.movable.Character;
 import br.com.greenblood.pieces.movable.Player;
+import edu.emory.mathcs.backport.java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * World is the whole entity that holds all others
@@ -20,6 +21,7 @@ import br.com.greenblood.pieces.movable.Player;
 public class World extends Entity {
 	private final List<Entity> pieces = new ArrayList<Entity>();
 	private final Player player;
+	private final ArrayBlockingQueue postAdd = new ArrayBlockingQueue(20);
 
 	public World(Player player) {
 		super(new Rect()); //This is the world, has no dimensions
@@ -29,11 +31,16 @@ public class World extends Entity {
 	public void add(Entity ent) {
 		pieces.add(ent);
 	}
+	
+	public void onProcessPhaseStarted(){
+		if(postAdd.size() > 0)
+			postAdd.drainTo(pieces);
+	}
 
 	@Override
 	public void processLogics(long uptime) {
 		player.processLogics(uptime);
-
+		
 		for (Entity ent : pieces)
 			ent.processLogics(uptime);
 
@@ -72,5 +79,9 @@ public class World extends Entity {
 
 	public void addAll(List<Entity> objects) {
 		pieces.addAll(objects);
+	}
+
+	public void postAdd(Entity ent) {
+		postAdd.add(ent);
 	}
 }

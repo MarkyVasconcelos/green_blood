@@ -116,6 +116,8 @@ public class GameWorld {
 
 	public void lockInput() {
 		blockInput = true;
+	public void addEntity(Entity ent) {
+		worldScene.postAdd(ent);
 	}
 	
 	public void unlockInput() {
