@@ -19,7 +19,7 @@ public class SceneOneObjects {
 	public static StaticObject fire() {
 		StaticObject fire = new StaticObject(new Rect(0, 0, 53, 76));
 		fire.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("fire/fire.PNG"),
-				ImageLoader.image("fire/fire2.PNG")}, 300, false));
+				ImageLoader.image("fire/fire2.PNG")}, 300, true));
 		return fire;
 	}
 	

@@ -46,7 +46,10 @@ public class Sprite {
         public void update(long uptime){
         	tick += uptime;
             if(tick > frameDelay){
-                currentSprite = ++elapsedSprites % imgs.length;
+            	if(!loop)
+            		currentSprite = ++currentSprite == imgs.length ? imgs.length - 1 : currentSprite;
+            	else
+            		currentSprite = ++elapsedSprites % imgs.length;
                 tick = 0;
             }
             

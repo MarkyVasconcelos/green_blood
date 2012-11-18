@@ -25,7 +25,6 @@ public abstract class Entity {
     }
     
     public void setSprite(Sprite image){
-    	System.out.println(image.getClass());
         this.image = image;
         this.image.reset();
     }
