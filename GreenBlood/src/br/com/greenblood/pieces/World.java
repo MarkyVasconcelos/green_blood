@@ -20,7 +20,7 @@ public class World extends Entity {
 	private final Player player;
 
 	public World(Player player) {
-		super(new Rect(), new Rect()); //This is the world, has no dimensions
+		super(new Rect()); //This is the world, has no dimensions
 		this.player = player;
 	}
 
@@ -61,9 +61,9 @@ public class World extends Entity {
 			return player;
 
 		for (Entity ent : pieces)
-			if (ent instanceof Character
-					&& ent.currentBoundingBounds().contains(x, y))
-				return (Character) ent;
+			if (ent instanceof Character)
+				if (((Character) ent).currentBoundingBounds().contains(x, y))
+					return (Character) ent;
 
 		return null;
 	}

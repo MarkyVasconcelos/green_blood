@@ -10,7 +10,7 @@ public abstract class Trigger extends Entity {
 	private boolean fired = false;
 	
 	public Trigger(Rect bounds) {
-		super(bounds, bounds);
+		super(bounds);
 	}
 
 	@Override

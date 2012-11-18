@@ -8,16 +8,13 @@ import br.com.greenblood.math.Vector2D;
 
 public abstract class Entity {
     private final Vector2D pos;
-    private final Rect bounds, boundingBox;
+    private final Rect bounds;
     private boolean dead;
     private Sprite image;
     private boolean collidable;
 
-    public Entity(Rect bounds, Rect boundingBox) {
+    public Entity(Rect bounds) {
         pos = new Vector2D();
-        
-        if(boundingBox == null)
-            boundingBox = new Rect(bounds);
         
         this.bounds = bounds;
         
@@ -25,12 +22,6 @@ public abstract class Entity {
         this.bounds.top *= GameCore.scale();
         this.bounds.right *= GameCore.scale();
         this.bounds.bottom *= GameCore.scale();
-        
-        this.boundingBox = boundingBox;
-        this.boundingBox.left *= GameCore.scale();
-        this.boundingBox.top *= GameCore.scale();
-        this.boundingBox.right *= GameCore.scale();
-        this.boundingBox.bottom *= GameCore.scale();
     }
     
     public void setSprite(Sprite image){
@@ -80,30 +71,12 @@ public abstract class Entity {
         return bounds().height();
     }
     
-    public int boundingHeight() {
-        return boundingBox().height();
-    }
-    
-    public int boundingWidth() {
-        return boundingBox().width();
-    }
-    
-    public Rect boundingBox() {
-        return boundingBox;
-    }
-
     public Rect currentBounds() {
         int centerX = width() / 2;
         int centerY = height() / 2;
         return new Rect((int) x() - centerX, (int) y() - centerY, (int) x() + centerX, (int) y() + centerY);
     }
     
-    public Rect currentBoundingBounds() {
-        int centerX = boundingWidth() / 2;
-        int centerY = boundingHeight() / 2;
-        return new Rect((int) x() - centerX, (int) y() - centerY, (int) x() + centerX, (int) y() + centerY);
-    }
-
     public void kill() {
         dead = true;
     }

@@ -8,7 +8,7 @@ import br.com.greenblood.math.Vector2D;
 public class StaticObject extends Entity {
 
 	public StaticObject(Rect bounds) {
-		super(bounds, bounds);
+		super(bounds);
 	}
 
 	@Override

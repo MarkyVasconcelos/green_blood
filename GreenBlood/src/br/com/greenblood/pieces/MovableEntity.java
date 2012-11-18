@@ -2,7 +2,6 @@ package br.com.greenblood.pieces;
 
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
-import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.world.GameWorld;
@@ -17,12 +16,23 @@ public abstract class MovableEntity extends Entity {
     private final float speed;
     private Walking walking;
     private MoveDirection moving;
+	private Rect boundingBox;
     
     
     
     public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
-        super(bounds, boundingBox);
+        super(bounds);
         this.speed = speed * GameCore.scale();
+        
+        if(boundingBox == null)
+            boundingBox = new Rect(bounds);
+        
+        
+        this.boundingBox = boundingBox;
+        this.boundingBox.left *= GameCore.scale();
+        this.boundingBox.top *= GameCore.scale();
+        this.boundingBox.right *= GameCore.scale();
+        this.boundingBox.bottom *= GameCore.scale();
     }
     
     @Override
@@ -136,6 +146,23 @@ public abstract class MovableEntity extends Entity {
         return (int) (pos().y() + height() / 2);
     }
     
+    public Rect boundingBox() {
+        return boundingBox;
+    }
+    
+    public int boundingHeight() {
+        return boundingBox().height();
+    }
+    
+    public int boundingWidth() {
+        return boundingBox().width();
+    }
+    
+    public Rect currentBoundingBounds() {
+        int centerX = boundingWidth() / 2;
+        int centerY = boundingHeight() / 2;
+        return new Rect((int) x() - centerX, (int) y() - centerY, (int) x() + centerX, (int) y() + centerY);
+    }
     
     private float boundingBottom() {
         return (int) (pos().y() + boundingHeight() / 2);
