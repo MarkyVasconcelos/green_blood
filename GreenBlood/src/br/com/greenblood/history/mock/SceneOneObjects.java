@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
+import br.com.greenblood.pieces.Trigger;
+import br.com.greenblood.pieces.scene.one.WhatABeutifullDayTrigger;
 import br.com.greenblood.util.ImageLoader;
 
 public class SceneOneObjects {
@@ -29,6 +31,9 @@ public class SceneOneObjects {
 		}, 800, true));
 		return tree;
 	}
+
+	public static Trigger firstTrigger() {
+		return new WhatABeutifullDayTrigger(new Rect(0,0,40,80));
 	}
 
 }

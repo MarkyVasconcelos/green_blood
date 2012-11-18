@@ -2,8 +2,9 @@ package br.com.greenblood.world;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import br.com.digitalpages.commons.awt.Listener;
+import br.com.greenblood.GameActivity;
 import br.com.greenblood.core.GameCore;
-import br.com.greenblood.core.PiecesManager;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.history.ObjectCreator;
 import br.com.greenblood.history.mock.SceneMaker;
@@ -13,24 +14,29 @@ import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Enemy;
-import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.Player;
+import br.com.greenblood.pieces.World;
 
 public class GameWorld {
     private static GameWorld world;
-    
-    public static void init(DirectionalControls controls, ActionControls actions){
-        world = new GameWorld(controls, actions);
-    }
 
+	public static void init(GameActivity gameActivity) {
+		world = new GameWorld(gameActivity.controls(), gameActivity.actions());
+		world.playerStatsView = gameActivity.playerStats();
+		world.enemyStatsView = gameActivity.enemyStats();
+		world.gameActivity = gameActivity;
+	}
+
+	private GameActivity gameActivity;
     private PlayerStatsView playerStatsView;
     private EnemyStatsView enemyStatsView;
     private WorldMap worldMap;
-    private PiecesManager pieces;
+    private World worldScene;
     private Player player;
     private final DirectionalControls controls;
     private final ActionControls actions;
 	private Scene scene;
+	private boolean blockInput;
     
     private GameWorld(DirectionalControls controls, ActionControls actions) {
         this.controls = controls;
@@ -41,7 +47,9 @@ public class GameWorld {
     }
 
     public void proccessAI(long uptime) {
-        pieces.proccessAI(uptime);
+    	if(!blockInput)
+    		worldScene.processLogics(uptime);
+        worldScene.processAnimationLogics(uptime);
     }
 
     public void draw(Canvas canvas, Rect surfaceSize) {
@@ -50,7 +58,7 @@ public class GameWorld {
         canvas.drawRect(surfaceSize, Paints.BLUE);
 
         Vector2D offset = worldMap.draw(canvas, player.pos());
-        pieces.draw(canvas, surfaceSize, offset);
+        worldScene.draw(canvas, surfaceSize, offset);
         
         canvas.restore();
     }
@@ -66,10 +74,10 @@ public class GameWorld {
         Vector2D initialTile = scene.playerInitialTile();
 		player.pos().set(GameCore.tilesToPixel(initialTile));
 
-        pieces = new PiecesManager(player);
+        worldScene = new World(player);
         
         for(ObjectCreator ent : scene.objects())
-        	pieces.add(ent.create());
+        	worldScene.add(ent.create());
     }
 
     public static GameWorld world(){
@@ -80,24 +88,38 @@ public class GameWorld {
         return world().worldMap;
     }
     
-    public static PiecesManager pieces() {
-        return world().pieces;
+    public static World pieces() {
+        return world().worldScene;
     }
     
     public static Player player() {
         return world().player;
     }
 
-	public static void setEnemyStatsView(EnemyStatsView enemyStatsView) {
-		world().enemyStatsView = enemyStatsView;
-		enemyStatsView.dismiss();
-	}
-	
-	public static void setPlayerStatsView(PlayerStatsView playerStatsView){
-		world().playerStatsView = playerStatsView;
-	}
-
 	public void showEnemyStats(Enemy enemy) {
 		enemyStatsView.display(enemy);
 	}
+
+	public void display(String txt){
+		lockInput();
+		gameActivity.hideControllers();
+		gameActivity.display(txt, new Listener<Void>() {
+			@Override
+			public boolean on(Void t) {
+				unlockInput();
+				gameActivity.dialog().hide();
+				gameActivity.showControllers();
+				return false;
+			}
+		});
+	}
+
+	public void lockInput() {
+		blockInput = true;
+	}
+	
+	public void unlockInput() {
+		blockInput = false;
+	}
+
 }

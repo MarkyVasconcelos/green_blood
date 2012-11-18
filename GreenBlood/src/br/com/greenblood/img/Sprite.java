@@ -20,11 +20,11 @@ public class Sprite {
         private final long originalDuration;
 		private int id;
         
-        public Sprite(Bitmap[] imgs, long duration, int frameDelay, boolean loop){
+        public Sprite(Bitmap[] imgs, long duration, boolean loop){
             this.imgs = imgs;
             originalDuration = duration;
             this.duration = duration;
-            this.frameDelay = frameDelay;
+            this.frameDelay = (int) (duration / imgs.length);
             this.loop = loop;
             
             onAnimationEndListeners = new  ArrayList<Listener<Void>>();

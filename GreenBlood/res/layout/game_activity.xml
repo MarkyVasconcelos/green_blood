@@ -10,29 +10,37 @@
 
     <br.com.greenblood.hud.PlayerStatsView
         android:id="@+id/player_stats"
-        android:padding="1dp"
         android:layout_width="113px"
-        android:layout_height="48px" />
-    
+        android:layout_height="48px"
+        android:padding="1dp" />
+
     <br.com.greenblood.hud.EnemyStatsView
-        android:layout_gravity="center_horizontal"
         android:id="@+id/enemy_stats"
-        android:layout_marginLeft="8dp"
-        android:padding="1dp"
+        android:visibility="invisible"
         android:layout_width="113px"
-        android:layout_height="40px" />
-        
+        android:layout_height="40px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="8dp"
+        android:padding="1dp" />
 
     <br.com.greenblood.hud.DirectionalControls
         android:id="@+id/direction_control"
-        android:layout_width="160px"
-        android:layout_height="80px"
+        android:layout_width="140px"
+        android:layout_height="70px"
         android:layout_gravity="bottom" />
 
     <br.com.greenblood.hud.ActionControls
         android:id="@+id/action_control"
-        android:layout_width="80px"
-        android:layout_height="160px"
+        android:layout_width="70px"
+        android:layout_height="140px"
         android:layout_gravity="bottom|right" />
+
+    <br.com.greenblood.view.DialogView
+        android:id="@+id/dialog_view"
+        android:visibility="invisible"
+        android:layout_width="180px"
+        android:layout_height="90px"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="2dp" />
 
 </FrameLayout>

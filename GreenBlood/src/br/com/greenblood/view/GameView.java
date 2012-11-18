@@ -6,10 +6,9 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import br.com.greenblood.GameActivity;
 import br.com.greenblood.core.LoopSteps;
 import br.com.greenblood.core.MainLoop;
-import br.com.greenblood.hud.ActionControls;
-import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.world.GameWorld;
 
 public class GameView extends SurfaceView implements LoopSteps {
@@ -30,10 +29,10 @@ public class GameView extends SurfaceView implements LoopSteps {
         holder.addCallback(new SurfaceCallback());
     }
     
-    public void set(DirectionalControls controls, ActionControls actions) {
-        GameWorld.init(controls, actions);
-        gameWorld = GameWorld.world();
-    }
+	public void set(GameActivity gameActivity) {
+		GameWorld.init(gameActivity);
+		gameWorld = GameWorld.world();
+	}
 
     private class SurfaceCallback implements SurfaceHolder.Callback {
         @Override
@@ -76,5 +75,4 @@ public class GameView extends SurfaceView implements LoopSteps {
     public void tearDown() {
         glooper.stop();
     }
-
 }

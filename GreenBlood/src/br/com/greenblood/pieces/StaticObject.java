@@ -27,8 +27,11 @@ public class StaticObject extends Entity {
 
 	@Override
 	public void processLogics(long uptime) {
-		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void processAnimationLogics(long uptime) {
+		image().update(uptime);		
 	}
 
 }

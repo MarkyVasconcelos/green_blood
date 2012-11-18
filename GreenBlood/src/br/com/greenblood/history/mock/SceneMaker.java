@@ -9,6 +9,7 @@ import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Enemy;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.StaticObject;
+import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.world.Scene;
 import br.com.greenblood.world.map.Tile;
 
@@ -18,8 +19,6 @@ public class SceneMaker {
 		int MAP_HEIGHT = 20; // rows
 		Scene scene = new Scene(MAP_HEIGHT, MAP_WIDTH);
 		scene.setName("Prologue");
-
-		scene.setPlayerInitialTile(new Vector2D(4, 9));
 
 		Tile[][] tiles = scene.tiles();
 
@@ -37,14 +36,25 @@ public class SceneMaker {
 		// Floor (hallow, fire ) TODO: trigger
 		floorGround(tiles, 1, MAP_WIDTH, 11, MAP_HEIGHT);
 		tiles[1][11] = mountainJoinCornerRight();
+		
+		scene.setPlayerInitialTile(new Vector2D(4, 9));
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Trigger salut = SceneOneObjects.firstTrigger();
+				int bottom = GameCore.tilesToPixels(11);
+				salut.pos().set(GameCore.tilesToPixels(5), bottom - salut.height() / 2);
+				return salut;
+			}
+		});
 
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				StaticObject hallow = SceneOneObjects.hallow();
 				int bottom = GameCore.tilesToPixels(11);
-				hallow.pos().set(GameCore.tilesToPixels(3),
-						bottom - hallow.height() / 2);
+				hallow.pos().set(GameCore.tilesToPixels(3), bottom - hallow.height() / 2);
 				return hallow;
 			}
 		});
@@ -54,8 +64,7 @@ public class SceneMaker {
 			public Entity create() {
 				StaticObject fire = SceneOneObjects.fire();
 				int bottom = GameCore.tilesToPixels(11);
-				fire.pos().set(GameCore.tilesToPixels(6),
-						bottom - fire.height() / 2);
+				fire.pos().set(GameCore.tilesToPixels(6), bottom - fire.height() / 2);
 				return fire;
 			}
 		});
@@ -97,13 +106,13 @@ public class SceneMaker {
 			public Entity create() {
 				StaticObject tree = SceneOneObjects.tree();
 				int bottom = GameCore.tilesToPixels(16);
-				tree.pos().set(GameCore.tilesToPixels(26),
+				tree.pos().set(GameCore.tilesToPixels(34),
 						bottom - tree.height() / 2);
 				return tree;
 			}
 		});
 		
-		addEnemy(scene, 27, 16);
+		addEnemy(scene, 35, 16);
 		
 		// Up (XXX: see anti-word of fall)
 		tiles[37][16] = mountainJoinCornerLeft();

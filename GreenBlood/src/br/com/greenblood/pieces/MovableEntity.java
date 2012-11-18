@@ -90,8 +90,11 @@ public abstract class MovableEntity extends Entity {
         }
         
         pos().plusMe(step);
-        
-        image().update(uptime);
+    }
+    
+    @Override
+    public void processAnimationLogics(long uptime) {
+    	image().update(uptime);
     }
     
     protected boolean movingLeft(){

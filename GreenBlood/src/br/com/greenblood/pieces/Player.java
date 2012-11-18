@@ -74,21 +74,21 @@ public class Player extends Character {
     private static final class StandingSprite extends Sprite {
         public StandingSprite(){
             super(new Bitmap[] { ImageLoader.image("player/player_stand.png") }
-            			,0, 0, true);
+            			,0, true);
         }
     }
     
     private final class FallingSprite extends Sprite {
         public FallingSprite(){
             super(new Bitmap[] { ImageLoader.image("player/player_falling.png"),
-            			}, 0, 100, true);
+            			}, 0, true);
         }
     }
     
     private final class JumpingSprite extends Sprite {
         public JumpingSprite(){
             super(new Bitmap[] { ImageLoader.image("player/player_jumping.png"),
-            			}, 0, 100, true);
+            			}, 0, true);
         }
     }
     
@@ -101,7 +101,7 @@ public class Player extends Character {
             					 ImageLoader.image("player/player_walk_05.png"),
             					 ImageLoader.image("player/player_walk_06.png"),
             					 ImageLoader.image("player/player_walk_07.png") 
-            			}, 0, 100, true);
+            			}, 700, true);
         }
     }
     private final class PunchingSprite extends Sprite{
@@ -109,7 +109,7 @@ public class Player extends Character {
             super(new Bitmap[] { ImageLoader.image("stick_punch.png"),
             					 ImageLoader.image("stick_punch_1.png"), 
             					 ImageLoader.image("stick_punch_2.png") 
-            		    }, 400, 80, false);
+            		    }, 400, false);
         }
     }
 	@Override

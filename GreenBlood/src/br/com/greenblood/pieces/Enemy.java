@@ -36,13 +36,13 @@ public class Enemy extends Character {
 
     private static final class WalkingSprite extends Sprite {
         public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("stick.png"), ImageLoader.image("stick_1.png") }, 0, 100, true);
+            super(new Bitmap[] { ImageLoader.image("stick.png"), ImageLoader.image("stick_1.png") }, 200, true);
         }
     }
     private final class PunchingSprite extends Sprite{
         public PunchingSprite() {
             super(new Bitmap[] { ImageLoader.image("stick_punch.png"), ImageLoader.image("stick_punch_1.png"), ImageLoader.image("stick_punch_2.png") },
-                    400, 80, false);
+                    400, false);
         }
     }
 	@Override

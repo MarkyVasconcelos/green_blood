@@ -1,17 +1,22 @@
 package br.com.greenblood;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
+import br.com.greenblood.view.DialogView;
 import br.com.greenblood.view.GameView;
-import br.com.greenblood.world.GameWorld;
 
 public class GameActivity extends MultiTouchActivity {
     private GameView gameView;
+    
+    private final Handler uiHandler = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,17 +28,32 @@ public class GameActivity extends MultiTouchActivity {
         
         gameView = (GameView) findViewById(R.id.game_view);
 
-        DirectionalControls leftRight = (DirectionalControls) findViewById(R.id.direction_control);
-        ActionControls actions = (ActionControls) findViewById(R.id.action_control);
-        gameView.set(leftRight, actions);
-        leftRight.setOnTouchListener(this);
-        actions.setOnTouchListener(this);
-
-        GameWorld.setEnemyStatsView((EnemyStatsView) findViewById(R.id.enemy_stats));
-        GameWorld.setPlayerStatsView((PlayerStatsView) findViewById(R.id.player_stats));
+        gameView.set(this);
+        controls().setOnTouchListener(this);
+        actions().setOnTouchListener(this);
     }
+
+	public PlayerStatsView playerStats() {
+		return (PlayerStatsView) findViewById(R.id.player_stats);
+	}
+
+	public EnemyStatsView enemyStats() {
+		return (EnemyStatsView) findViewById(R.id.enemy_stats);
+	}
+
+	public DialogView dialog() {
+		return (DialogView) findViewById(R.id.dialog_view);
+	}
     
-    @Override
+    public ActionControls actions() {
+		return (ActionControls) findViewById(R.id.action_control);
+	}
+
+    public DirectionalControls controls() {
+		return (DirectionalControls) findViewById(R.id.direction_control);
+	}
+
+	@Override
     public void onBackPressed() {
     	super.onBackPressed();
 //    	startActivity(new Intent(this, PauseActivity.class));
@@ -46,4 +66,26 @@ public class GameActivity extends MultiTouchActivity {
         
         gameView.tearDown();
     }
+
+	public void display(String txt, Listener<Void> listener) {
+		dialog().display(txt, listener);
+	}
+
+	public void hideControllers() {
+		setControllersVisibility(View.INVISIBLE);
+	}
+	
+	public void showControllers() {
+		setControllersVisibility(View.VISIBLE);
+	}
+	
+	private void setControllersVisibility(final int visibility){
+		uiHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				controls().setVisibility(visibility);
+				actions().setVisibility(visibility);
+			}
+		});
+	}
 }

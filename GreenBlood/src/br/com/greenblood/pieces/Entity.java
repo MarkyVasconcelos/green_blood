@@ -54,6 +54,8 @@ public abstract class Entity {
 
     public abstract void processLogics(long uptime);
     
+    public abstract void processAnimationLogics(long uptime);
+    
     public int tileX() {
         return GameCore.pixelsToTiles(pos().x());
     }
