@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.pieces.MovableEntity;
+import br.com.greenblood.pieces.movable.MovableEntity;
 import br.com.greenblood.world.map.Tile;
 
 public class WorldMap {

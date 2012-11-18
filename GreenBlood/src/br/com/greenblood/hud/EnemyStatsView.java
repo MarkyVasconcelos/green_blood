@@ -1,16 +1,15 @@
 package br.com.greenblood.hud;
 
-import br.com.digitalpages.commons.view.util.LayoutParamsFactory;
-import br.com.greenblood.pieces.Enemy;
-import br.com.greenblood.util.ImageLoader;
-import br.com.greenblood.view.LinearProgressBar;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import br.com.digitalpages.commons.view.util.LayoutParamsFactory;
+import br.com.greenblood.pieces.movable.Enemy;
+import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.LinearProgressBar;
 
 public class EnemyStatsView extends LinearLayout {
 

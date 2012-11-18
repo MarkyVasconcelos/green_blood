@@ -1,4 +1,4 @@
-package br.com.greenblood.pieces;
+package br.com.greenblood.pieces.movable;
 
 import java.util.Random;
 

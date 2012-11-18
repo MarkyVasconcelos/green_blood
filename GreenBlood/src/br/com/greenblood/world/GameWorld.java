@@ -13,9 +13,9 @@ import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.pieces.Enemy;
-import br.com.greenblood.pieces.Player;
 import br.com.greenblood.pieces.World;
+import br.com.greenblood.pieces.movable.Enemy;
+import br.com.greenblood.pieces.movable.Player;
 
 public class GameWorld {
     private static GameWorld world;

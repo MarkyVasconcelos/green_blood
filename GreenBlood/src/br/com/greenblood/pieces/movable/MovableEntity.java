@@ -1,9 +1,10 @@
-package br.com.greenblood.pieces;
+package br.com.greenblood.pieces.movable;
 
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Gravity;
 import br.com.greenblood.math.Vector2D;
+import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.world.GameWorld;
 import br.com.greenblood.world.WorldMap;
 import android.graphics.Canvas;

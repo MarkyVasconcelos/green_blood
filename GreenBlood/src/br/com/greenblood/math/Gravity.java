@@ -1,6 +1,6 @@
 package br.com.greenblood.math;
 
-import br.com.greenblood.pieces.MovableEntity;
+import br.com.greenblood.pieces.movable.MovableEntity;
 
 public class Gravity {
     private static final Vector2D direction = new Vector2D(0, 2.1f);

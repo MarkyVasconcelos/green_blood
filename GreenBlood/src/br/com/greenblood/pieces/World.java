@@ -7,6 +7,8 @@ import java.util.List;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.math.Vector2D;
+import br.com.greenblood.pieces.movable.Character;
+import br.com.greenblood.pieces.movable.Player;
 
 /**
  * World is the whole entity that holds all others

@@ -1,4 +1,4 @@
-package br.com.greenblood.pieces;
+package br.com.greenblood.pieces.movable;
 
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Vector2D;
