@@ -1,16 +1,6 @@
 package br.com.greenblood.history.mock;
 
-import static br.com.greenblood.world.map.Tiles.empty;
-import static br.com.greenblood.world.map.Tiles.floor;
-import static br.com.greenblood.world.map.Tiles.mountain;
-import static br.com.greenblood.world.map.Tiles.mountainCornerLeft;
-import static br.com.greenblood.world.map.Tiles.mountainCornerRight;
-import static br.com.greenblood.world.map.Tiles.mountainJoinCornerLeft;
-import static br.com.greenblood.world.map.Tiles.mountainJoinCornerRight;
-import static br.com.greenblood.world.map.Tiles.mountainLeft;
-import static br.com.greenblood.world.map.Tiles.mountainRight;
-import static br.com.greenblood.world.map.Tiles.water;
-import static br.com.greenblood.world.map.Tiles.waterFill;
+import static br.com.greenblood.world.map.Tiles.*;
 import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.ObjectCreator;
@@ -18,6 +8,7 @@ import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
+import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.Scene;
 import br.com.greenblood.world.map.Tile;
 
@@ -201,9 +192,41 @@ public class SceneMaker {
 		addLog(scene, 73, 15);
 		addLog(scene, 77, 15);
 		
+		//Great house tree
+		
+		for(int row = 9; row <= 14; row++){
+			tiles[82][row] = houseTree();
+			tiles[83][row] = houseTree();
+		}
+		
+		//House (TODO: Add window)
+		for(int col = 79; col <= 87; col++){
+			tiles[col][10] = houseFloor();
+			for (int row = 6; row <= 9; row++)
+				tiles[col][row] = houseWall();
+			tiles[col][6] = houseTop();
+		}
+		
+		for (int row = 6; row <= 9; row++){
+			tiles[78][row] = houseWallRight();
+			tiles[88][row] = houseWallLeft();
+		}
+		
+		tiles[82][10] = houseTreeFloor();
+		tiles[83][10] = houseTreeFloor();
+		
+		
+		//TODO: Addenemy trough trigger
+		addEnemy(scene, 85, 9);
+		
+		
+		addEnemy(scene, 93, 15);
+		//TODO: Fence and boss house
+		
+		
 		// Scenario block wall
 		for (int row = 0; row < MAP_HEIGHT; row++)
-			tiles[100][row] = mountainLeft();
+			tiles[140][row] = mountainLeft();
 
 		return scene;
 	}

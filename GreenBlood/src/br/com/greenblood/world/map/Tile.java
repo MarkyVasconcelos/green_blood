@@ -9,8 +9,12 @@ public class Tile {
     private Bitmap img;
     
     public Tile(Type type){
-        this.solid = type.solid();
-        img = type.img();
+    	this(type.solid(), type.img());
+    }
+    
+    public Tile(boolean solid, Bitmap img){
+        this.solid = solid;
+        this.img = img;
     }
 
     public boolean isSolid() {

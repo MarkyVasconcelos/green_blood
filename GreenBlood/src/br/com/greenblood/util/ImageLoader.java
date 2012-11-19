@@ -22,6 +22,14 @@ public class ImageLoader {
 	private static Bitmap water;
 	private static Bitmap waterFill;
 	
+	private static Bitmap houseFloor;
+	private static Bitmap houseTop;
+	private static Bitmap houseTree;
+	private static Bitmap houseTreeFloor;
+	private static Bitmap houseWall;
+	private static Bitmap houseWallLeft;
+	private static Bitmap houseWallRight;
+	
 	private static final Map<String, Bitmap> assets = new HashMap<String, Bitmap>();
 
     public static void init(Context context) {
@@ -37,6 +45,14 @@ public class ImageLoader {
         mountainJoinCornerRight = image("tile_H.png");
         water = image("tile_water.png");
         waterFill = image("tile_water_fill.png");
+        
+        houseTree = image("house/tree.PNG");
+        houseFloor = image("house/floor.PNG");
+        houseTreeFloor = image("house/tree_floor.PNG");
+        houseTop = image("house/top.PNG");
+        houseWall = image("house/wall.PNG");
+        houseWallLeft = image("house/wall_left.PNG");
+        houseWallRight = image("house/wall_right.PNG");
     }
     
     public static Bitmap image(int resId) {
@@ -97,5 +113,34 @@ public class ImageLoader {
 	public static Bitmap waterFill() {
 		return waterFill;
 	}
+	
+	public static Bitmap houseTree() {
+		return houseTree;
+	}
+	
+	public static Bitmap houseFloor() {
+		return houseFloor;
+	}
+
+	public static Bitmap houseTop() {
+		return houseTop;
+	}
+
+	public static Bitmap houseWall() {
+		return houseWall;
+	}
+	
+	public static Bitmap houseWallLeft() {
+		return houseWallLeft;
+	}
+	
+	public static Bitmap houseWallRight() {
+		return houseWallRight;
+	}
+
+	public static Bitmap houseTreeFloor() {
+		return houseTreeFloor;
+	}
+
 	
 }

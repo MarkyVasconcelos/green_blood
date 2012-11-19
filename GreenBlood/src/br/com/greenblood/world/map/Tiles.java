@@ -1,5 +1,7 @@
 package br.com.greenblood.world.map;
 
+import br.com.greenblood.util.ImageLoader;
+
 public class Tiles {
 	public static Tile empty(){
 		return null;//TODO: Document it
@@ -43,5 +45,33 @@ public class Tiles {
 
 	public static Tile mountainLeft() {
 		return new Tile(Tile.Type.MOUNTAIN_LEFT);
+	}
+	
+	public static Tile houseTree() {
+		return new Tile(false, ImageLoader.houseTree());
+	}
+	
+	public static Tile houseTreeFloor() {
+		return new Tile(true, ImageLoader.houseTreeFloor());
+	}
+	
+	public static Tile houseWallLeft() {
+		return new Tile(true, ImageLoader.houseWallLeft());
+	}
+	
+	public static Tile houseWallRight() {
+		return new Tile(true, ImageLoader.houseWallRight());
+	}
+	
+	public static Tile houseFloor() {
+		return new Tile(true, ImageLoader.houseFloor());
+	}
+	
+	public static Tile houseWall() {
+		return new Tile(false, ImageLoader.houseWall());
+	}
+	
+	public static Tile houseTop() {
+		return new Tile(false, ImageLoader.houseTop());
 	}
 }
