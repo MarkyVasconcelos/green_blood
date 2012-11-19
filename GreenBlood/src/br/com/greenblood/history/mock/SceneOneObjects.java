@@ -8,6 +8,9 @@ import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.Log;
+import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
+import br.com.greenblood.pieces.scene.one.TreeCutterTrigger;
+import br.com.greenblood.pieces.scene.one.WhatABeutifullDayTrigger;
 import br.com.greenblood.util.ImageLoader;
 
 public class SceneOneObjects {
@@ -22,6 +25,12 @@ public class SceneOneObjects {
 		fire.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("fire/fire.PNG"),
 				ImageLoader.image("fire/fire2.PNG")}, 300, true));
 		return fire;
+	}
+	
+	public static Entity fence(){
+		StaticObject fence = new StaticObject(new Rect(0, 0, 32, 140));
+		fence.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/fence.PNG")}, 0, false));
+		return fence;
 	}
 	
 	public static Entity log(){

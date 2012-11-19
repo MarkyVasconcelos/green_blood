@@ -98,6 +98,12 @@ public abstract class MovableEntity extends Entity {
         if(target != null && target.isCollidable()){
             direction.setX(0);
             step.setX(0);
+        }else{
+			Entity obj = GameWorld.pieces().collidableObjectAt((int) targetX, (int) y());
+			if (obj != null) {
+				direction.setX(0);
+				step.setX(0);
+			}
         }
         
         float targetY = y() + height() / 2f + step.y();

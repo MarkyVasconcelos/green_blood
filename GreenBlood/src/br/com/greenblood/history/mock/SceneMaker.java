@@ -220,13 +220,29 @@ public class SceneMaker {
 		addEnemy(scene, 85, 9);
 		
 		
+		//TODO: Sitted enemy, grab chair to climb tree
 		addEnemy(scene, 93, 15);
+		
 		//TODO: Fence and boss house
 		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Entity fence = SceneOneObjects.fence();
+				fence.setCollidable(true);
+				int bottom = GameCore.tilesToPixels(15);
+				fence.pos().set(GameCore.tilesToPixels(94),
+						bottom - fence.height() / 2);
+				return fence;
+			}
+		});
+		
+		//TODO: Make this the boos
+		addEnemy(scene, 97, 15);
 		
 		// Scenario block wall
 		for (int row = 0; row < MAP_HEIGHT; row++)
-			tiles[140][row] = mountainLeft();
+			tiles[105][row] = mountainLeft();
 
 		return scene;
 	}
