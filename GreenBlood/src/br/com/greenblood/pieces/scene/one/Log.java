@@ -3,7 +3,6 @@ package br.com.greenblood.pieces.scene.one;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import br.com.greenblood.img.Sprite;
-import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;

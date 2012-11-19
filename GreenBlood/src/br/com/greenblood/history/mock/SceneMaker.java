@@ -175,7 +175,7 @@ public class SceneMaker {
 		tiles[60][15] = mountainJoinCornerRight();
 		floorGround(tiles, 61, MAP_WIDTH, 15, MAP_HEIGHT);
 		
-		//TODO: Water and jump obstacles
+		//Water and jump obstacles
 
 		//down a level
 		remove(tiles, 67, 78, 15, MAP_HEIGHT);
