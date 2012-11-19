@@ -41,8 +41,10 @@ public class Player extends Character {
         if (controls.isHoldingRight())
             accelerate();
 
-        if (actions.hasJumped())
+        if (actions.hasJumped()){
+        	walkingOnAir();
             dir().setY(-1.2f);
+        }
         
         if(actions.hasAction())
          	punch();

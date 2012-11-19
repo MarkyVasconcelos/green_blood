@@ -68,7 +68,7 @@ public abstract class MovableEntity extends Entity {
 
         WorldMap map = GameWorld.map();
 
-        if(!map.isSolid(pos().x(), boundingBottom()))
+        if(!map.isSolid(pos().x(), boundingBottom()) && walking != Walking.Ground)
             Gravity.apply(this, uptime);
         
         if(step.y() > 0)
@@ -98,6 +98,13 @@ public abstract class MovableEntity extends Entity {
         if(target != null && target.isCollidable()){
             direction.setX(0);
             step.setX(0);
+        }
+        
+        float targetY = y() + height() / 2f + step.y();
+        Entity obj = GameWorld.pieces().collidableObjectAt((int) x(), (int) targetY);
+        if(obj != null){
+            direction.setY(0);
+            step.setY(obj.currentBounds().top - currentBoundingBounds().bottom + 1);
         }
         
         pos().plusMe(step);
@@ -175,6 +182,15 @@ public abstract class MovableEntity extends Entity {
     
     private float boundingRight() {
         return (int) (pos().x() + boundingWidth() / 2);
+    }
+    
+    public void walkingOnGround(){
+    	walking = Walking.Ground;
+    }
+    
+    
+    public void walkingOnAir(){
+    	walking = Walking.Jumping;
     }
 
     private enum Walking {

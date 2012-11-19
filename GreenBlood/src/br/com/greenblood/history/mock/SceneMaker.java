@@ -16,7 +16,6 @@ import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.ObjectCreator;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
-import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.world.Scene;
@@ -61,7 +60,7 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				StaticObject hallow = SceneOneObjects.hallow();
+				Entity hallow = SceneOneObjects.hallow();
 				int bottom = GameCore.tilesToPixels(11);
 				hallow.pos().set(GameCore.tilesToPixels(3), bottom - hallow.height() / 2);
 				return hallow;
@@ -71,7 +70,7 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				StaticObject fire = SceneOneObjects.fire();
+				Entity fire = SceneOneObjects.fire();
 				int bottom = GameCore.tilesToPixels(11);
 				fire.pos().set(GameCore.tilesToPixels(6), bottom - fire.height() / 2);
 				return fire;
@@ -134,7 +133,7 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				StaticObject tree = SceneOneObjects.beingCuttedTree();
+				Entity tree = SceneOneObjects.beingCuttedTree();
 				int bottom = GameCore.tilesToPixels(16);
 				tree.pos().set(GameCore.tilesToPixels(34),
 						bottom - tree.height() / 2);
@@ -142,7 +141,7 @@ public class SceneMaker {
 			}
 		});
 		
-		// Up (XXX: see anti-word of fall)
+		// Rise
 		tiles[37][16] = mountainJoinCornerLeft();
 		tiles[37][15] = mountainCornerLeft();
 		tiles[38][15] = mountainJoinCornerLeft();
@@ -179,24 +178,28 @@ public class SceneMaker {
 		//TODO: Water and jump obstacles
 
 		//down a level
-		remove(tiles, 67, 77, 15, MAP_HEIGHT);
+		remove(tiles, 67, 78, 15, MAP_HEIGHT);
 		
-		// Water
-		
+		// River borders
 		for (int row = 15; row < MAP_HEIGHT; row++) {
 			tiles[66][row] = mountainRight();
-			tiles[78][row] = mountainLeft();
+			tiles[79][row] = mountainLeft();
 		}
 		
 		tiles[66][15] = mountainCornerRight();
-		tiles[78][15] = mountainCornerLeft();
-	
-		for (int row = 67; row < 78; row++) {
+		tiles[79][15] = mountainCornerLeft();
+		
+		//Water
+		for (int row = 67; row < 79; row++) {
 			tiles[row][15] = water();
 
 			for (int i = 16; i < MAP_HEIGHT; i++)
 				tiles[row][i] = waterFill();
 		}
+		
+		addLog(scene, 69, 15);
+		addLog(scene, 73, 15);
+		addLog(scene, 77, 15);
 		
 		// Scenario block wall
 		for (int row = 0; row < MAP_HEIGHT; row++)
@@ -219,6 +222,18 @@ public class SceneMaker {
 			for (int i = y1 + 1; i < y2; i++)
 				tiles[col][i] = mountain();
 		}
+	}
+	
+	public static void addLog(Scene scene, final int x, final int y){
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Entity ent = SceneOneObjects.log();
+				int bottom = GameCore.tilesToPixels(y);
+				ent.pos().set(GameCore.tilesToPixels(x), bottom);
+				return ent;
+			}
+		});
 	}
 	
 	public static void addEnemy(Scene scene, final int x, final int y){

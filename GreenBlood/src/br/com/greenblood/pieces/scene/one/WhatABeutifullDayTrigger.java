@@ -12,7 +12,7 @@ public class WhatABeutifullDayTrigger extends Trigger {
 
 	@Override
 	public void onFired() {
-		GameWorld.world().display("Welcome! touch to continue...");
+		GameWorld.world().display("Que belo dia!");
 	}
 
 }

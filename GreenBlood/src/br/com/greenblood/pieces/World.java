@@ -65,6 +65,16 @@ public class World extends Entity {
 		player.draw(canvas, surfaceSize, offset);
 	}
 
+
+	public Entity collidableObjectAt(int x, int y) {
+		for (Entity ent : pieces)
+			if (ent.isCollidable() && !(ent instanceof Character))
+				if (ent.currentBounds().contains(x, y))
+					return ent;
+
+		return null;
+	}
+	
 	public Character punchCollidableEntityAt(int x, int y) {
 		if (player.currentBoundingBounds().contains(x, y))
 			return player;
@@ -84,4 +94,5 @@ public class World extends Entity {
 	public void postAdd(Entity ent) {
 		postAdd.add(ent);
 	}
+
 }
