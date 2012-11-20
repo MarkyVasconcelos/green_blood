@@ -27,6 +27,7 @@ public class Player extends Character {
 	private int currentHelth = maxHelth;
 	private Listener<Integer> onTouchingActionListener;
 	private Listener<Integer> onTouchingJumpListener;
+	private Listener<Void> nextActionListener;
 	
     public Player(Rect bounds, Rect boundingBox) {
         super(bounds, boundingBox, 180, new StandingSprite());
@@ -57,10 +58,16 @@ public class Player extends Character {
 	        }
 	        
 	        if(actions.hasAction())
-	         	punch();
+	         	executeAction();
         }
     }
     
+	private void executeAction() {
+		if(nextActionListener != null)
+			nextActionListener.on(null);
+		else punch();		
+	}
+
 	protected void processMoveLogicsOnAnimation(Vector2D dir){
 		if(blockInput)
 			return;
@@ -157,5 +164,9 @@ public class Player extends Character {
 
 	public void onTouchJump(Listener<Integer> onTouchingJumpListener) {
 		this.onTouchingJumpListener = onTouchingJumpListener;
+	}
+
+	public void setOnNextActionListener(Listener<Void> nextActionListener) {
+		this.nextActionListener = nextActionListener;
 	}
 }

@@ -237,6 +237,18 @@ public class SceneMaker {
 		//TODO: Sitted enemy, grab chair to climb tree
 		addEnemy(scene, 93, 15);
 		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Entity chair = SceneOneObjects.chair();
+				chair.setCollidable(true);
+				int bottom = GameCore.tilesToPixels(15);
+				chair.pos().set(GameCore.tilesToPixels(93),
+						bottom - chair.height() / 2);
+				return chair;
+			}
+		});
+		
 		//TODO: Fence and boss house
 		
 		scene.addObjectCreator(new ObjectCreator() {
@@ -245,14 +257,14 @@ public class SceneMaker {
 				Entity fence = SceneOneObjects.fence();
 				fence.setCollidable(true);
 				int bottom = GameCore.tilesToPixels(15);
-				fence.pos().set(GameCore.tilesToPixels(94),
+				fence.pos().set(GameCore.tilesToPixels(95),
 						bottom - fence.height() / 2);
 				return fence;
 			}
 		});
 		
 		//TODO: Make this the boos
-		addEnemy(scene, 97, 15);
+		addEnemy(scene, 99, 15);
 		
 		// Scenario block wall
 		for (int row = 0; row < MAP_HEIGHT; row++)

@@ -6,6 +6,7 @@ import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
+import br.com.greenblood.pieces.scene.one.Chair;
 import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.Log;
 import br.com.greenblood.pieces.scene.one.Stairs;
@@ -41,6 +42,9 @@ public class SceneOneObjects {
 		return new Stairs(new Rect(0, 0, 64, 128));
 	}
 	
+	public static Entity chair(){
+		return new Chair(new Rect(0, 0, 33, 60));
+	}
 	public static Entity fence(){
 		StaticObject fence = new StaticObject(new Rect(0, 0, 32, 140));
 		fence.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/fence.PNG")}, 0, false));
