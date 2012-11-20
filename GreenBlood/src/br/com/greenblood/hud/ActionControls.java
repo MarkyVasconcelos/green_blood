@@ -8,8 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class ActionControls extends View {
-    private boolean touchedJump;
-    private boolean touchedAction;
+	private boolean touchedAction, stillTouchingAction;
+    private boolean touchedJump, stillTouchingJump;
 
     public ActionControls(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -19,16 +19,65 @@ public class ActionControls extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             if (event.getY() < getHeight() / 2)
-                touchedAction = true;
-            else
-                touchedJump = true;
+                touchAction();
+			else
+				touchJump();
         }
         
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            clearFlags();
+            return true;
+        }
+        
+        if(event.getAction() == MotionEvent.ACTION_MOVE){
+            if (event.getY() < getHeight() / 2)
+                touchingAction();
+            else
+                touchingJump();
+        }
         
         return true;
     }
 
-    public boolean hasAction() {
+	private void clearFlags() {
+		touchedJump = false;
+		stillTouchingJump = false;
+		touchedAction = false;
+		stillTouchingAction = false;
+	}
+
+
+    private void touchAction() {
+    	clearFlags();
+    	touchedAction = true;
+    	touchingAction();
+	}
+
+	private void touchJump() {
+		clearFlags();
+		touchedJump = true;
+		touchingJump();
+	}
+	
+	private void touchingAction() {
+		stillTouchingAction = true;
+		stillTouchingJump = false;
+	}
+
+	private void touchingJump() {
+		stillTouchingJump = true;
+		stillTouchingAction = false;
+	}
+	
+	public boolean isTouchingAction(){
+		return stillTouchingAction;
+	}
+	
+	public boolean isTouchingJump(){
+		return stillTouchingJump;
+	}
+
+	public boolean hasAction() {
         if (!touchedAction)
             return false;
 

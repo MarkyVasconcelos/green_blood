@@ -2,6 +2,7 @@ package br.com.greenblood.pieces.movable;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.PlayerStatsView;
@@ -24,6 +25,8 @@ public class Player extends Character {
 	
 	private int maxHelth = 10;
 	private int currentHelth = maxHelth;
+	private Listener<Integer> onTouchingActionListener;
+	private Listener<Integer> onTouchingJumpListener;
 	
     public Player(Rect bounds, Rect boundingBox) {
         super(bounds, boundingBox, 180, new StandingSprite());
@@ -41,13 +44,21 @@ public class Player extends Character {
         if (controls.isHoldingRight())
             accelerate();
 
-        if (actions.hasJumped()){
-        	walkingOnAir();
-            dir().setY(-1.2f);
+        if(isControlledWalking()){
+        	if(actions.isTouchingAction())
+        		onTouchingActionListener.on((int) uptime);
+        	
+        	if(actions.isTouchingJump())
+        		onTouchingJumpListener.on((int) uptime);
+        }else{
+	        if (actions.hasJumped()){
+	        	walkingOnAir();
+	            dir().setY(-1.2f);
+	        }
+	        
+	        if(actions.hasAction())
+	         	punch();
         }
-        
-        if(actions.hasAction())
-         	punch();
     }
     
 	protected void processMoveLogicsOnAnimation(Vector2D dir){
@@ -138,5 +149,13 @@ public class Player extends Character {
 
 	public void stop() {
 		execute(standingSprite(), false);
+	}
+
+	public void onTouchAction(Listener<Integer> onTouchingActionListener) {
+		this.onTouchingActionListener = onTouchingActionListener;
+	}
+
+	public void onTouchJump(Listener<Integer> onTouchingJumpListener) {
+		this.onTouchingJumpListener = onTouchingJumpListener;
 	}
 }

@@ -19,8 +19,6 @@ public abstract class MovableEntity extends Entity {
     private MoveDirection moving;
 	private Rect boundingBox;
     
-    
-    
     public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
         super(bounds);
         this.speed = speed * GameCore.scale();
@@ -67,50 +65,52 @@ public abstract class MovableEntity extends Entity {
         Vector2D step = direction.multiply(speed / (float) uptime);
 
         WorldMap map = GameWorld.map();
-
-        if(!map.isSolid(pos().x(), boundingBottom()) && walking != Walking.Ground)
-            Gravity.apply(this, uptime);
         
-        if(step.y() > 0)
-            if (map.isSolid(pos().x(), boundingBottom())) {
-                int tileY = GameCore.tilesToPixels(GameCore.pixelsToTiles(boundingBottom()));
-                step.setY(tileY - boundingBottom());
-                direction.setY(0);
-            }
-
-        if (step.x() < 0)
-            moving = MoveDirection.Left;
-        else if (step.x() > 0)
-            moving = MoveDirection.Right;
+        if(walking != Walking.Controlled){
+	        if(!map.isSolid(pos().x(), boundingBottom()) && walking != Walking.Ground)
+	            Gravity.apply(this, uptime);
+	        
+	        if(step.y() > 0)
+	            if (map.isSolid(pos().x(), boundingBottom())) {
+	                int tileY = GameCore.tilesToPixels(GameCore.pixelsToTiles(boundingBottom()));
+	                step.setY(tileY - boundingBottom());
+	                direction.setY(0);
+	            }
+	
+	        if (step.x() < 0)
+	            moving = MoveDirection.Left;
+	        else if (step.x() > 0)
+	            moving = MoveDirection.Right;
+	        
+	        if (step.x() != 0){
+	            if(movingLeft() && map.isSolid(boundingLeft(), boundingBottom() - 1)){
+	                direction.setX(0);
+	                step.setX(0);
+	            }else if (movingRight() && map.isSolid(boundingRight(), boundingBottom() - 1)){
+	                direction.setX(0);
+	                step.setX(0);
+	            }
+	        }
         
-        if (step.x() != 0){
-            if(movingLeft() && map.isSolid(boundingLeft(), boundingBottom() - 1)){
-                direction.setX(0);
-                step.setX(0);
-            }else if (movingRight() && map.isSolid(boundingRight(), boundingBottom() - 1)){
-                direction.setX(0);
-                step.setX(0);
-            }
-        }
-        
-        float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
-        Entity target = GameWorld.pieces().punchCollidableEntityAt((int) targetX, (int) (y()));
-        if(target != null && target.isCollidable()){
-            direction.setX(0);
-            step.setX(0);
-        }else{
-			Entity obj = GameWorld.pieces().collidableObjectAt((int) targetX, (int) y());
-			if (obj != null) {
-				direction.setX(0);
-				step.setX(0);
-			}
-        }
-        
-        float targetY = y() + height() / 2f + step.y();
-        Entity obj = GameWorld.pieces().collidableObjectAt((int) x(), (int) targetY);
-        if(obj != null){
-            direction.setY(0);
-            step.setY(obj.currentBounds().top - currentBoundingBounds().bottom + 1);
+	        float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
+	        Entity target = GameWorld.pieces().punchCollidableEntityAt((int) targetX, (int) (y()));
+	        if(target != null && target.isCollidable()){
+	            direction.setX(0);
+	            step.setX(0);
+	        }else{
+				Entity obj = GameWorld.pieces().collidableObjectAt((int) targetX, (int) y());
+				if (obj != null) {
+					direction.setX(0);
+					step.setX(0);
+				}
+	        }
+	        
+	        float targetY = y() + height() / 2f + step.y();
+	        Entity obj = GameWorld.pieces().collidableObjectAt((int) x(), (int) targetY);
+	        if(obj != null){
+	            direction.setY(0);
+	            step.setY(obj.currentBounds().top - currentBoundingBounds().bottom + 1);
+	        }
         }
         
         pos().plusMe(step);
@@ -190,17 +190,24 @@ public abstract class MovableEntity extends Entity {
         return (int) (pos().x() + boundingWidth() / 2);
     }
     
+	protected boolean isControlledWalking() {
+		return walking == Walking.Controlled;
+	}
+    
     public void walkingOnGround(){
     	walking = Walking.Ground;
     }
     
-    
+    public void controlledWalking(){
+    	walking = Walking.Controlled;
+    }
+
     public void walkingOnAir(){
     	walking = Walking.Jumping;
     }
 
     private enum Walking {
-        Ground, Jumping, Falling;
+        Ground, Jumping, Falling, Controlled;
     }
     
     private enum MoveDirection {

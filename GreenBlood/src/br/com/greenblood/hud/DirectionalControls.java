@@ -17,8 +17,7 @@ public class DirectionalControls extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean isUp = event.getAction() == MotionEvent.ACTION_UP;
-        if (isUp) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             holdingLeft = holdingRight = false;
             return true;
         }

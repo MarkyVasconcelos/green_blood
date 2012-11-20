@@ -192,32 +192,46 @@ public class SceneMaker {
 		addLog(scene, 73, 15);
 		addLog(scene, 77, 15);
 		
-		//Great house tree
 		
-		for(int row = 9; row <= 14; row++){
+		//Great house tree + stairs
+		for(int row = 7; row <= 14; row++){
 			tiles[82][row] = houseTree();
 			tiles[83][row] = houseTree();
 		}
 		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Entity stairs = SceneOneObjects.stairs();
+				int bottom = GameCore.tilesToPixels(10);
+				stairs.pos().set(GameCore.tilesToPixels(83),
+						bottom - stairs.height() / 2);
+				return stairs;
+			}
+		});
+		
+		
 		//House (TODO: Add window)
-		for(int col = 79; col <= 87; col++){
-			tiles[col][10] = houseFloor();
-			for (int row = 6; row <= 9; row++)
+		for(int col = 78; col <= 88; col++){
+			tiles[col][8] = houseFloor();
+			for (int row = 5; row <= 7; row++)
 				tiles[col][row] = houseWall();
-			tiles[col][6] = houseTop();
+			tiles[col][4] = houseTop();
 		}
 		
-		for (int row = 6; row <= 9; row++){
-			tiles[78][row] = houseWallRight();
-			tiles[88][row] = houseWallLeft();
+		for (int row = 4; row <= 7; row++){
+			tiles[77][row] = houseWallRight();
+			tiles[89][row] = houseWallLeft();
 		}
 		
-		tiles[82][10] = houseTreeFloor();
-		tiles[83][10] = houseTreeFloor();
+		tiles[82][8] = houseTree();
+		tiles[83][8] = houseTree();
+//		tiles[82][8] = houseTreeFloor();
+//		tiles[83][8] = houseTreeFloor();
 		
 		
-		//TODO: Addenemy trough trigger
-		addEnemy(scene, 85, 9);
+		//TODO: Add enemy trough trigger
+		addEnemy(scene, 85, 7);
 		
 		
 		//TODO: Sitted enemy, grab chair to climb tree
