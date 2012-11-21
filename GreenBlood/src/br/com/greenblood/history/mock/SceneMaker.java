@@ -150,7 +150,6 @@ public class SceneMaker {
 		floorGround(tiles, 40, MAP_WIDTH, 13, MAP_HEIGHT);
 		
 		//TODO: House and enemy + trigger
-		
 		addEnemy(scene, 53, 13);
 		
 		//down a level
@@ -230,8 +229,6 @@ public class SceneMaker {
 		tiles[82][8] = houseTreeFloor();
 		tiles[83][8] = houseTreeFloor();
 		
-		
-		//TODO: Add enemy trough trigger
 		//Miniboss
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
@@ -260,8 +257,7 @@ public class SceneMaker {
 			}
 		});
 		
-		//TODO: Fence and boss house
-		
+		//Gate
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
@@ -270,6 +266,7 @@ public class SceneMaker {
 				int bottom = GameCore.tilesToPixels(15);
 				fence.pos().set(GameCore.tilesToPixels(95),
 						bottom - fence.height() / 2);
+				SceneOneObjects.setFenceInstance(fence);
 				return fence;
 			}
 		});

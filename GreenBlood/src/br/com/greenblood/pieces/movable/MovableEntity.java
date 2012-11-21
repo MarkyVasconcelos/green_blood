@@ -121,7 +121,7 @@ public abstract class MovableEntity extends Entity {
     	image().update(uptime);
     }
     
-    protected boolean movingLeft(){
+    public boolean movingLeft(){
         return moving == MoveDirection.Left;
     }
     

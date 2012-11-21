@@ -22,6 +22,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="8dp"
         android:padding="1dp" />
+    
+	<br.com.greenblood.hud.ItemView
+        android:id="@+id/item_view"
+        android:visibility="invisible"
+        android:layout_width="27px"
+        android:layout_height="49px"
+        android:layout_gravity="right"
+        android:layout_marginRight="6dp" />
 
     <br.com.greenblood.hud.DirectionalControls
         android:id="@+id/direction_control"

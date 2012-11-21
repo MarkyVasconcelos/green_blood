@@ -11,6 +11,7 @@ import br.com.greenblood.history.mock.SceneMaker;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
+import br.com.greenblood.hud.ItemView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
@@ -25,10 +26,12 @@ public class GameWorld {
 		world = new GameWorld(gameActivity.controls(), gameActivity.actions());
 		world.playerStatsView = gameActivity.playerStats();
 		world.enemyStatsView = gameActivity.enemyStats();
+		world.itemView = gameActivity.itemView();
 		world.gameActivity = gameActivity;
 	}
 
 	private GameActivity gameActivity;
+	private ItemView itemView;
     private PlayerStatsView playerStatsView;
     private EnemyStatsView enemyStatsView;
     private WorldMap worldMap;
@@ -76,6 +79,14 @@ public class GameWorld {
         
         Vector2D initialTile = scene.playerInitialTile();
 		player.pos().set(GameCore.tilesToPixel(initialTile));
+		
+		player.setOnNextActionListener(new Listener<Void>() {
+			@Override
+			public boolean on(Void t) {
+				player.pos().setX(GameCore.tilesToPixels(80));
+				return false;
+			}
+		});
 
         worldScene = new World(player);
         
@@ -114,6 +125,10 @@ public class GameWorld {
 				return false;
 			}
 		});
+	}
+	
+	public void displayItemView(){
+		itemView.show();
 	}
 
 	public void lockScreen() {

@@ -32,12 +32,13 @@ public class Chair extends StaticObject {
 		
 		if(grabbed){
 			pos().set(playerBounds.centerX(), playerBounds.top);
+			player.setOnNextActionListener(ungrabListener);
 			return;
 		}
 			
 		
 		Rect thisBounds = currentBounds();
-		if(Rect.intersects(playerBounds, thisBounds) && !passingTroughThis){
+		if(Rect.intersects(playerBounds, thisBounds)){
 			player.setOnNextActionListener(grabListener);
 			passingTroughThis = true;
 		}else if(passingTroughThis){

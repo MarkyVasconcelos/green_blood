@@ -11,9 +11,7 @@ import br.com.greenblood.world.GameWorld;
 
 public class GateKey extends StaticObject {
 	private final Player player;
-	private boolean grabbed = false;
 	private boolean passingTroughThis;
-	private int originalY;
 	
 	public GateKey(Rect bounds) {
 		super(bounds);
@@ -29,15 +27,8 @@ public class GateKey extends StaticObject {
 	@Override
 	public void processLogics(long uptime) {
 		Rect playerBounds = player.currentBoundingBounds();
-		
-		if(grabbed){
-			pos().set(playerBounds.centerX(), playerBounds.top);
-			return;
-		}
-			
-		
 		Rect thisBounds = currentBounds();
-		if(Rect.intersects(playerBounds, thisBounds) && !passingTroughThis){
+		if(Rect.intersects(playerBounds, thisBounds)){
 			player.setOnNextActionListener(grabListener);
 			passingTroughThis = true;
 		}else if(passingTroughThis){
@@ -46,25 +37,13 @@ public class GateKey extends StaticObject {
 		}
 	}
 	
-	
 	private final Listener<Void> grabListener = new Listener<Void>() {
 		@Override
 		public boolean on(Void t) {
-			grabbed = true;
-			originalY = currentBounds().bottom;
-			player.setOnNextActionListener(ungrabListener);
+			GameWorld.world().displayItemView();
+			kill();
 			return false;
 		}
 	};
-	
-	private final Listener<Void> ungrabListener = new Listener<Void>() {
-		@Override
-		public boolean on(Void t) {
-			grabbed = false;
-			pos().setY(originalY - height() / 2);
-			return false;
-		}
-	};
-	
 
 }

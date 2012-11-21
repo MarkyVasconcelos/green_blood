@@ -18,6 +18,8 @@ import br.com.greenblood.util.ImageLoader;
 
 public class SceneOneObjects {
 	
+	private static Entity fence;
+
 	public static Entity hallow() {
 		StaticObject hallow = new StaticObject(new Rect(0, 0, 144, 288));
 		hallow.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("hollow.PNG") }, 0l, false));
@@ -70,6 +72,14 @@ public class SceneOneObjects {
 	public static Trigger cutTrigger() {
 //		return new EmptyTrigger(new Rect(0, 0, 40, 200));
 		return new TreeCutterTrigger(new Rect(0,0,40,200));
+	}
+
+	public static void setFenceInstance(Entity fence) {
+		SceneOneObjects.fence = fence;
+	}
+	
+	public static Entity fenceInstance(){
+		return SceneOneObjects.fence;
 	}
 
 }

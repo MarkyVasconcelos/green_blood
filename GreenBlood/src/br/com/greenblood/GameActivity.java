@@ -7,6 +7,7 @@ import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
+import br.com.greenblood.hud.ItemView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
@@ -47,6 +48,10 @@ public class GameActivity extends MultiTouchActivity {
     
     public ActionControls actions() {
 		return (ActionControls) findViewById(R.id.action_control);
+	}
+    
+	public ItemView itemView() {
+		return (ItemView) findViewById(R.id.item_view);
 	}
 
     public DirectionalControls controls() {
