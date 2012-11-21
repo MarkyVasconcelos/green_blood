@@ -24,6 +24,9 @@ public class Enemy extends Character {
     public void processSelfLogics(long uptime) {
         Player player = GameWorld.player();
 
+        if(Math.abs(player.y() - y()) > 100)
+        	return;
+        
         int dist = (int) (player.x() - x());
         if (dist > 0 && dist < 100)
             accelerate();

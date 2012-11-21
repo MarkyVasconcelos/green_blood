@@ -8,6 +8,7 @@ import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
+import br.com.greenblood.pieces.movable.MiniBossEnemy;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.Scene;
 import br.com.greenblood.world.map.Tile;
@@ -226,15 +227,25 @@ public class SceneMaker {
 		
 		tiles[82][8] = houseTree();
 		tiles[83][8] = houseTree();
-//		tiles[82][8] = houseTreeFloor();
-//		tiles[83][8] = houseTreeFloor();
+		tiles[82][8] = houseTreeFloor();
+		tiles[83][8] = houseTreeFloor();
 		
 		
 		//TODO: Add enemy trough trigger
-		addEnemy(scene, 85, 7);
+		//Miniboss
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Enemy ent =  new MiniBossEnemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+				int bottom = GameCore.tilesToPixels(7);
+				ent.pos().set(GameCore.tilesToPixels(85), bottom - ent.height() / 2);
+				return ent;
+			}
+		});
 		
 		
-		//TODO: Sitted enemy, grab chair to climb tree
+		//Enemy and chair
+		//TODO: Animate
 		addEnemy(scene, 93, 15);
 		
 		scene.addObjectCreator(new ObjectCreator() {
@@ -243,7 +254,7 @@ public class SceneMaker {
 				Entity chair = SceneOneObjects.chair();
 				chair.setCollidable(true);
 				int bottom = GameCore.tilesToPixels(15);
-				chair.pos().set(GameCore.tilesToPixels(93),
+				chair.pos().set(GameCore.tilesToPixels(94),
 						bottom - chair.height() / 2);
 				return chair;
 			}

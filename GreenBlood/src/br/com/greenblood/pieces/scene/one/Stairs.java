@@ -22,7 +22,7 @@ public class Stairs extends StaticObject {
 				new Bitmap[] { ImageLoader.image("house/stairs.PNG") },
 				0, false));
 		
-		setCollidable(true);
+		setCollidable(false);
 		player = GameWorld.player();
 	}
 

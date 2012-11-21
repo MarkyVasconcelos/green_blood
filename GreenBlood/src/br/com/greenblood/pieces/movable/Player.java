@@ -65,7 +65,9 @@ public class Player extends Character {
 	private void executeAction() {
 		if(nextActionListener != null)
 			nextActionListener.on(null);
-		else punch();		
+		else punch();
+		
+		nextActionListener = null;
 	}
 
 	protected void processMoveLogicsOnAnimation(Vector2D dir){

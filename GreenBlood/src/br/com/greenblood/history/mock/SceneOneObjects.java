@@ -7,12 +7,13 @@ import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.scene.one.Chair;
+import br.com.greenblood.pieces.scene.one.EmptyTrigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
+import br.com.greenblood.pieces.scene.one.GateKey;
 import br.com.greenblood.pieces.scene.one.Log;
 import br.com.greenblood.pieces.scene.one.Stairs;
 import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
 import br.com.greenblood.pieces.scene.one.TreeCutterTrigger;
-import br.com.greenblood.pieces.scene.one.WhatABeutifullDayTrigger;
 import br.com.greenblood.util.ImageLoader;
 
 public class SceneOneObjects {
@@ -45,6 +46,11 @@ public class SceneOneObjects {
 	public static Entity chair(){
 		return new Chair(new Rect(0, 0, 33, 60));
 	}
+	
+	public static Entity gateKey() {
+		return new GateKey(new Rect(0,0,49,112));
+	}
+	
 	public static Entity fence(){
 		StaticObject fence = new StaticObject(new Rect(0, 0, 32, 140));
 		fence.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/fence.PNG")}, 0, false));
@@ -52,12 +58,17 @@ public class SceneOneObjects {
 	}
 	
 	public static Trigger welcomeTrigger() {
-		return new WhatABeutifullDayTrigger(new Rect(0,0,40,80));
+		return new EmptyTrigger(new Rect(0, 0, 30, 200));
+//		return new WhatABeutifullDayTrigger(new Rect(0, 0, 30, 200));
 	}
 	
 	public static Trigger problemTrigger() {
-		return new TheresAProblemAheadTrigger(new Rect(0,0,40,80));
+//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
+		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
+	}
+
 	public static Trigger cutTrigger() {
+//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
 		return new TreeCutterTrigger(new Rect(0,0,40,200));
 	}
 
