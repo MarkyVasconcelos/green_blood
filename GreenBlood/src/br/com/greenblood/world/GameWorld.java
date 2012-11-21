@@ -80,13 +80,13 @@ public class GameWorld {
         Vector2D initialTile = scene.playerInitialTile();
 		player.pos().set(GameCore.tilesToPixel(initialTile));
 		
-		player.setOnNextActionListener(new Listener<Void>() {
-			@Override
-			public boolean on(Void t) {
-				player.pos().setX(GameCore.tilesToPixels(80));
-				return false;
-			}
-		});
+//		player.setOnNextActionListener(new Listener<Void>() {
+//			@Override
+//			public boolean on(Void t) {
+//				player.pos().setX(GameCore.tilesToPixels(80));
+//				return false;
+//			}
+//		});
 
         worldScene = new World(player);
         

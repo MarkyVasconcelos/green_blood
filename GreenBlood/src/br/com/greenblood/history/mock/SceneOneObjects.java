@@ -45,6 +45,12 @@ public class SceneOneObjects {
 		return new Stairs(new Rect(0, 0, 64, 128));
 	}
 	
+	public static Entity cabin(){
+		StaticObject cabin = new StaticObject(new Rect(0, 0, 110, 216));
+		 cabin.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("cabin.PNG")}, 0, false));
+		return cabin;
+	}
+	
 	public static Entity chair(){
 		return new Chair(new Rect(0, 0, 33, 60));
 	}
@@ -75,6 +81,11 @@ public class SceneOneObjects {
 	public static Trigger problemTrigger() {
 //		return new EmptyTrigger(new Rect(0, 0, 40, 200));
 		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
+	}
+	
+	public static Trigger cabinTrigger() {
+		return new EmptyTrigger(new Rect(0, 0, 40, 200));
+//		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
 	}
 
 	public static Trigger cutTrigger() {

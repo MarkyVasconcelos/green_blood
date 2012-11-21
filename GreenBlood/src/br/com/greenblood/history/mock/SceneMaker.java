@@ -150,7 +150,29 @@ public class SceneMaker {
 		floorGround(tiles, 40, MAP_WIDTH, 13, MAP_HEIGHT);
 		
 		//TODO: House and enemy + trigger
-		addEnemy(scene, 53, 13);
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Entity stairs = SceneOneObjects.cabin();
+				int bottom = GameCore.tilesToPixels(13);
+				stairs.pos().set(GameCore.tilesToPixels(45),
+						bottom - stairs.height() / 2);
+				return stairs;
+			}
+		});
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Trigger problem = SceneOneObjects.cabinTrigger();
+				int bottom = GameCore.tilesToPixels(13);
+				problem.pos().set(GameCore.tilesToPixels(48), bottom - problem.height() / 2);
+				return problem;
+			}
+		});
+		
+		
+		addEnemy(scene, 51, 13);
 		
 		//down a level
 		remove(tiles, 54, MAP_WIDTH, 13, 14);
