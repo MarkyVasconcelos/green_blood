@@ -9,6 +9,7 @@ import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.GameWorld;
 
+//TODO: After grabbing touch action
 public class GateKey extends StaticObject {
 	private final Player player;
 	private boolean passingTroughThis;
@@ -41,6 +42,7 @@ public class GateKey extends StaticObject {
 		@Override
 		public boolean on(Void t) {
 			GameWorld.world().displayItemView();
+			player.setOnNextActionListener(null);
 			kill();
 			return false;
 		}

@@ -55,8 +55,16 @@ public class SceneOneObjects {
 	
 	public static Entity fence(){
 		StaticObject fence = new StaticObject(new Rect(0, 0, 32, 140));
+		fence.setCollidable(true);
 		fence.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/fence.PNG")}, 0, false));
+		setFenceInstance(fence);
 		return fence;
+	}
+	
+	public static Entity headquarters() {
+		StaticObject bossHouse = new StaticObject(new Rect(0, 0, 608, 293));
+		bossHouse.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/house.PNG")}, 0, false));
+		return bossHouse;
 	}
 	
 	public static Trigger welcomeTrigger() {
@@ -81,5 +89,6 @@ public class SceneOneObjects {
 	public static Entity fenceInstance(){
 		return SceneOneObjects.fence;
 	}
+
 
 }

@@ -15,7 +15,7 @@ import br.com.greenblood.world.map.Tile;
 
 public class SceneMaker {
 	public static Scene sceneOne() {
-		int MAP_WIDTH = 150; // cols
+		int MAP_WIDTH = 108; // cols
 		int MAP_HEIGHT = 20; // rows
 		Scene scene = new Scene(MAP_HEIGHT, MAP_WIDTH);
 		scene.setName("Prologue");
@@ -257,27 +257,32 @@ public class SceneMaker {
 			}
 		});
 		
-		//Gate
+		//Gate, boss and headquarters
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				Entity fence = SceneOneObjects.fence();
-				fence.setCollidable(true);
 				int bottom = GameCore.tilesToPixels(15);
 				fence.pos().set(GameCore.tilesToPixels(95),
 						bottom - fence.height() / 2);
-				SceneOneObjects.setFenceInstance(fence);
 				return fence;
+			}
+		});
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Entity headquarters = SceneOneObjects.headquarters();
+				int bottom = GameCore.tilesToPixels(15);
+				headquarters.pos().set(GameCore.tilesToPixels(107),
+						bottom - headquarters.height() / 2);
+				return headquarters;
 			}
 		});
 		
 		//TODO: Make this the boos
 		addEnemy(scene, 99, 15);
 		
-		// Scenario block wall
-		for (int row = 0; row < MAP_HEIGHT; row++)
-			tiles[105][row] = mountainLeft();
-
 		return scene;
 	}
 
