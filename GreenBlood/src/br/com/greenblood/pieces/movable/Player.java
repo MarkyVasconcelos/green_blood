@@ -2,6 +2,7 @@ package br.com.greenblood.pieces.movable;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
@@ -18,9 +19,11 @@ public class Player extends Character {
 	private final Sprite punchingSprite = new PunchingSprite();
 	private final Sprite jumpingSprite = new JumpingSprite();
 	private final Sprite fallingSprite = new FallingSprite();
+	private final Sprite backwardDash = new BackwardDashSprite();
 	
 	private static final int JUMPING = 3;
 	private static final int FALLING = 4;
+	private static final int DASHING = 5;
 	private PlayerStatsView statsView;
 	
 	private int maxHelth = 10;
@@ -87,6 +90,13 @@ public class Player extends Character {
     
     public void setControls(DirectionalControls controls) {
         this.controls = controls;
+        this.controls.setOnDoubleTapListener(new Listener<Void>() {
+			@Override
+			public boolean on(Void t) {
+				doBackwardDash();
+				return true;
+			}
+		});
     }
 
     public void setActionControls(ActionControls actions) {
@@ -111,6 +121,15 @@ public class Player extends Character {
         public JumpingSprite(){
             super(new Bitmap[] { ImageLoader.image("player/player_jumping.png"),
             			}, 0, true);
+        }
+    }
+    
+    private final class BackwardDashSprite extends Sprite {
+        public BackwardDashSprite(){
+            super(new Bitmap[] { ImageLoader.image("player/backward_jump/back_jump_1.png"),
+            					 ImageLoader.image("player/backward_jump/back_jump_2.png"),
+            					 ImageLoader.image("player/backward_jump/back_jump_3.png"),
+            			}, 700, false);
         }
     }
     
@@ -139,6 +158,19 @@ public class Player extends Character {
 		currentHelth--;
 		statsView.setValue(currentHelth);
 		//TODO: Die
+	}
+	
+	public void doBackwardDash() {
+		lockDirection();
+		backwardDash.addOnAnimationEndListener(new br.com.greenblood.util.Listener<Void>() {
+			@Override
+			public void fire(Void t) {
+				unlockDirection();
+				stop();
+			}
+		});
+		dir().set(new Vector2D(movingLeft() ? 0.75f : -0.75f, -0.6f));
+		execute(backwardDash.id(DASHING), true);
 	}
 
 	@Override

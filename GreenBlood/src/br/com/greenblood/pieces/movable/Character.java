@@ -16,7 +16,7 @@ public abstract class Character extends MovableEntity {
 	private static final int PUNCHING = 2;
 
 	private final Sprite standingSprite;
-	
+
 	public Character(Rect bounds, Rect boundingBox, float speed, Sprite standingSprite) {
 		super(bounds, boundingBox, speed);
 		this.standingSprite = standingSprite;

@@ -18,7 +18,8 @@ public abstract class MovableEntity extends Entity {
     private Walking walking;
     private MoveDirection moving;
 	private Rect boundingBox;
-    
+	private boolean lockDirection;
+	
     public MovableEntity(Rect bounds, Rect boundingBox, float speed) {
         super(bounds);
         this.speed = speed * GameCore.scale();
@@ -76,17 +77,22 @@ public abstract class MovableEntity extends Entity {
 	                step.setY(tileY - boundingBottom());
 	                direction.setY(0);
 	            }
+	        
+	        MoveDirection currentDirection = null;
 	
 	        if (step.x() < 0)
-	            moving = MoveDirection.Left;
+	        	currentDirection = MoveDirection.Left;
 	        else if (step.x() > 0)
-	            moving = MoveDirection.Right;
+	        	currentDirection = MoveDirection.Right;
+	        
+	        if(!lockDirection && currentDirection != null)
+	        	moving = currentDirection;
 	        
 	        if (step.x() != 0){
-	            if(movingLeft() && map.isSolid(boundingLeft(), boundingBottom() - 1)){
+	            if(MoveDirection.isLeft(currentDirection) && map.isSolid(boundingLeft(), boundingBottom() - 1)){
 	                direction.setX(0);
 	                step.setX(0);
-	            }else if (movingRight() && map.isSolid(boundingRight(), boundingBottom() - 1)){
+	            }else if (MoveDirection.isRight(currentDirection) && map.isSolid(boundingRight(), boundingBottom() - 1)){
 	                direction.setX(0);
 	                step.setX(0);
 	            }
@@ -116,10 +122,20 @@ public abstract class MovableEntity extends Entity {
         pos().plusMe(step);
     }
     
-    @Override
+
+	@Override
     public void processAnimationLogics(long uptime) {
     	image().update(uptime);
     }
+    
+	
+	protected void lockDirection() {
+		lockDirection = true;
+	}
+
+	protected void unlockDirection() {
+		lockDirection = false;
+	}
     
     public boolean movingLeft(){
         return moving == MoveDirection.Left;
@@ -212,5 +228,13 @@ public abstract class MovableEntity extends Entity {
     
     private enum MoveDirection {
         Left, Right;
+        
+        public static boolean isLeft(MoveDirection dir){
+        	return dir == Left;
+        }
+        
+        public static boolean isRight(MoveDirection dir){
+        	return dir == Right;
+        }
     }
 }

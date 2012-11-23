@@ -41,6 +41,7 @@ public class Sprite {
         public void reset(){
             fired = false;
             duration = originalDuration;
+            currentSprite = 0;
         }
         
         public void update(long uptime){
