@@ -98,7 +98,7 @@ public abstract class MovableEntity extends Entity {
 	            }
 	        }
         
-	        float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
+	        float targetX = MoveDirection.isLeft(currentDirection) ? x() - width() / 2f : x() + width() / 2f;
 	        Entity target = GameWorld.pieces().punchCollidableEntityAt((int) targetX, (int) (y()));
 	        if(target != null && target.isCollidable()){
 	            direction.setX(0);

@@ -14,6 +14,9 @@ public class Enemy extends Character {
     private final int maxHealth = 3;
     private int currentHealth;
 
+	private final Sprite walkingSprite = new WalkingSprite();
+	private final Sprite punchingSprite = new PunchingSprite();
+	
     public Enemy(Rect bounds, Rect boundingBounds) {
         super(bounds, boundingBounds, 130 + rdm.nextInt(130), new WalkingSprite());
         setCollidable(true);
@@ -45,7 +48,7 @@ public class Enemy extends Character {
     private final class PunchingSprite extends Sprite{
         public PunchingSprite() {
             super(new Bitmap[] { ImageLoader.image("stick_punch.png"), ImageLoader.image("stick_punch_1.png"), ImageLoader.image("stick_punch_2.png") },
-                    400, false);
+                    993, false);
         }
     }
 	@Override
@@ -58,13 +61,11 @@ public class Enemy extends Character {
 			kill();
 	}
 
-	private final Sprite walkingSprite = new WalkingSprite();
 	@Override
 	protected Sprite walkingSprite() {
 		return walkingSprite;
 	}
 
-	private final Sprite punchingSprite = new PunchingSprite();
 	@Override
 	protected Sprite punchingSprite() {
 		return punchingSprite;
