@@ -1,10 +1,11 @@
 package br.com.greenblood.pieces.movable;
 
+import android.graphics.Rect;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Vector2D;
-import br.com.greenblood.util.Listener;
 import br.com.greenblood.world.GameWorld;
-import android.graphics.Rect;
+
+import commons.awt.Listener;
 
 //statefull animations
 public abstract class Character extends MovableEntity {
@@ -57,9 +58,10 @@ public abstract class Character extends MovableEntity {
 		Sprite punchingSprite = punchingSprite();
 		punchingSprite.addOnAnimationEndListener(new Listener<Void>() {
             @Override
-            public void fire(Void t) {
+            public boolean on(Void t) {
             	executePunch();
                 execute(standingSprite.id(STANDING), false);
+                return true;
             }
         });
 		execute(punchingSprite.id(PUNCHING), true);

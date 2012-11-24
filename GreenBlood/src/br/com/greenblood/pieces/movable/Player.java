@@ -2,14 +2,14 @@ package br.com.greenblood.pieces.movable;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.view.MotionEvent;
-import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.util.ImageLoader;
+
+import commons.awt.Listener;
 
 public class Player extends Character {
     private DirectionalControls controls;
@@ -162,11 +162,12 @@ public class Player extends Character {
 	
 	public void doBackwardDash() {
 		lockDirection();
-		backwardDash.addOnAnimationEndListener(new br.com.greenblood.util.Listener<Void>() {
+		backwardDash.addOnAnimationEndListener(new Listener<Void>() {
 			@Override
-			public void fire(Void t) {
+			public boolean on(Void t) {
 				unlockDirection();
 				stop();
+				return true;
 			}
 		});
 		dir().set(new Vector2D(movingLeft() ? 0.75f : -0.75f, -0.6f));

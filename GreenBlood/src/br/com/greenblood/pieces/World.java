@@ -3,13 +3,13 @@ package br.com.greenblood.pieces;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.movable.Character;
 import br.com.greenblood.pieces.movable.Player;
-import edu.emory.mathcs.backport.java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * World is the whole entity that holds all others

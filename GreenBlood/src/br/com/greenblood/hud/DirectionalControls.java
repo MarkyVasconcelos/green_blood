@@ -1,12 +1,13 @@
 package br.com.greenblood.hud;
 
-import br.com.digitalpages.commons.awt.Listener;
-import br.com.greenblood.dev.Paints;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import br.com.greenblood.dev.Paints;
+
+import commons.awt.Listener;
 
 public class DirectionalControls extends View {
     private volatile boolean holdingLeft;

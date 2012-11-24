@@ -2,13 +2,10 @@ package br.com.greenblood.pieces.scene.one;
 
 import android.graphics.Rect;
 import android.os.Handler;
-import br.com.greenblood.core.GameCore;
-import br.com.greenblood.history.mock.SceneMaker;
-import br.com.greenblood.history.mock.SceneOneObjects;
 import br.com.greenblood.pieces.Trigger;
-import br.com.greenblood.pieces.movable.Enemy;
-import br.com.greenblood.util.Listener;
 import br.com.greenblood.world.GameWorld;
+
+import commons.awt.Listener;
 
 public class TreeCutterTrigger extends Trigger {
 
@@ -31,8 +28,9 @@ public class TreeCutterTrigger extends Trigger {
 			if(msg.what == START_FALL)
 				FallingTree.instance.cut(new Listener<Void>() {
 					@Override
-					public void fire(Void t) {
+					public boolean on(Void t) {
 						sendEmptyMessage(RESUME_GAME);
+						return true;
 					}
 				});
 			

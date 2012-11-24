@@ -1,14 +1,15 @@
 package br.com.greenblood.hud;
 
-import br.com.digitalpages.commons.view.util.LayoutParamsFactory;
-import br.com.greenblood.util.ImageLoader;
-import br.com.greenblood.view.LinearProgressBar;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.LinearProgressBar;
+
+import commons.view.LayoutParamsFactory;
 
 public class PlayerStatsView extends LinearLayout {
 

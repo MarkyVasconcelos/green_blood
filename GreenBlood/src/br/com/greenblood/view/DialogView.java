@@ -1,7 +1,5 @@
 package br.com.greenblood.view;
 
-import br.com.digitalpages.commons.awt.Listener;
-import br.com.digitalpages.commons.view.util.LayoutParamsFactory;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -10,6 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import commons.awt.Listener;
+import commons.view.LayoutParamsFactory;
 
 public class DialogView extends FrameLayout {
 

@@ -6,8 +6,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import br.com.digitalpages.commons.device.ConnectivityInfo;
-import br.com.digitalpages.commons.util.AlertUtil;
+
+import commons.AlertUtil;
+import commons.ConnectivityInfo;
 
 public class RankingActivity extends Activity {
 	@Override

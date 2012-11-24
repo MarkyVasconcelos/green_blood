@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
-import br.com.greenblood.util.Listener;
+
+import commons.awt.Listener;
 
 public class Sprite {
         private final Bitmap[] imgs;
@@ -60,7 +61,7 @@ public class Sprite {
             duration -= uptime;
             if(duration <= 0){
             	for(Listener<Void> onAnimationEndListener : onAnimationEndListeners)
-            		onAnimationEndListener.fire(null);
+            		onAnimationEndListener.on(null);
             	
             	onAnimationEndListeners = new ArrayList<Listener<Void>>();
                 fired = true;

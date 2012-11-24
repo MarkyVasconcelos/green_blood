@@ -6,10 +6,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import br.com.digitalpages.commons.view.util.LayoutParamsFactory;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.view.LinearProgressBar;
+
+import commons.view.LayoutParamsFactory;
 
 public class EnemyStatsView extends LinearLayout {
 

@@ -7,8 +7,9 @@ import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.util.ImageLoader;
-import br.com.greenblood.util.Listener;
 import br.com.greenblood.world.GameWorld;
+
+import commons.awt.Listener;
 
 public class FallingTree extends StaticObject {
 	// TODO: Remove static reference
@@ -36,13 +37,14 @@ public class FallingTree extends StaticObject {
 				false);
 		sprite.addOnAnimationEndListener(new Listener<Void>() {
 			@Override
-			public void fire(Void t) {
+			public boolean on(Void t) {
 				//TODO: Correct position of enemy
 				Enemy enemy = SceneMaker.enemy();
 				int bottom = currentBounds().bottom - enemy.height();
 				int left = currentBounds().left + 100;
 				enemy.pos().set(left, bottom);
 				GameWorld.world().addEntity(enemy);
+				return true;
 			}
 		});
 		sprite.addOnAnimationEndListener(listener);

@@ -7,12 +7,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import br.com.digitalpages.commons.view.util.LayoutParamsFactory;
 import br.com.greenblood.history.mock.SceneOneObjects;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.GameWorld;
+
+import commons.view.LayoutParamsFactory;
 
 public class ItemView extends LinearLayout {
 

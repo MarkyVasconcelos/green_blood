@@ -3,7 +3,6 @@ package br.com.greenblood;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
@@ -13,6 +12,8 @@ import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
 import br.com.greenblood.view.DialogView;
 import br.com.greenblood.view.GameView;
+
+import commons.awt.Listener;
 
 public class GameActivity extends MultiTouchActivity {
     private GameView gameView;

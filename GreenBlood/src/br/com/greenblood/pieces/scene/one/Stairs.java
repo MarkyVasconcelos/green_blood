@@ -2,12 +2,13 @@ package br.com.greenblood.pieces.scene.one;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.GameWorld;
+
+import commons.awt.Listener;
 
 public class Stairs extends StaticObject {
 	private static final int pixelsPerSecond = 70;

@@ -5,8 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.AttributeSet;
-import br.com.digitalpages.commons.view.OnFirstDrawView;
+
+import commons.view.OnFirstDrawView;
 
 public class LinearProgressBar extends OnFirstDrawView {
     private float progress;

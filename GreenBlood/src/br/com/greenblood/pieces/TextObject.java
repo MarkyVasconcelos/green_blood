@@ -2,9 +2,10 @@ package br.com.greenblood.pieces;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Vector2D;
+
+import commons.awt.Listener;
 
 public class TextObject extends Entity {
 	

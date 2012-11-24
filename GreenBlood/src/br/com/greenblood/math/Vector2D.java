@@ -35,8 +35,8 @@ import static java.lang.Math.sqrt;
  * @author Vinicius Godoy de Mendonca
  */
 public final class Vector2D implements Cloneable, Comparable<Vector2D> {
-	private float x;
-	private float y;
+	public float x;
+	public float y;
 
 	/**
 	 * Creates a new vector. It will be the zero vector.

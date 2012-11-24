@@ -2,7 +2,6 @@ package br.com.greenblood.world;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.GameActivity;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
@@ -18,6 +17,8 @@ import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.World;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.movable.Player;
+
+import commons.awt.Listener;
 
 public class GameWorld {
     private static GameWorld world;

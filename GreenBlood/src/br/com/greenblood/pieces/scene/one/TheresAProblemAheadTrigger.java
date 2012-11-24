@@ -1,10 +1,11 @@
 package br.com.greenblood.pieces.scene.one;
 
 import android.graphics.Rect;
-import br.com.digitalpages.commons.awt.Listener;
 import br.com.greenblood.pieces.TextObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.world.GameWorld;
+
+import commons.awt.Listener;
 
 public class TheresAProblemAheadTrigger extends Trigger {
 
