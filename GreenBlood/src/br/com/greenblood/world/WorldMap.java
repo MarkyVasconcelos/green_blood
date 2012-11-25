@@ -62,8 +62,8 @@ public class WorldMap {
                 int yPos = GameCore.tilesToPixels(y) + offsetY;
 
                 canvas.drawBitmap(tile.sprite(), null, new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLANK);
-                canvas.drawRect(new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLACK_STROKE);
-                canvas.drawText("(" + x + "," + y + ")", xPos + 8, yPos + 20, Paints.BLACK);
+//                canvas.drawRect(new Rect(xPos, yPos, xPos + GameCore.tileSize(), yPos + GameCore.tileSize()), Paints.BLACK_STROKE);
+//                canvas.drawText("(" + x + "," + y + ")", xPos + 8, yPos + 20, Paints.BLACK);
             }
         }
 
