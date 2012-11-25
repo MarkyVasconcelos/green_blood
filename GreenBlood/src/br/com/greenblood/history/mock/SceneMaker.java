@@ -146,28 +146,34 @@ public class SceneMaker {
 		// Rise
 		tiles[37][16] = mountainJoinCornerLeft();
 		tiles[37][15] = mountainCornerLeft();
-		tiles[38][15] = mountainJoinCornerLeft();
-		tiles[38][14] = mountainCornerLeft();
-		tiles[39][14] = mountainJoinCornerLeft();
-		tiles[39][13] = mountainCornerLeft();
 		
-		tiles[38][16] = mountain();
-		tiles[39][16] = mountain();
-		tiles[39][15] = mountain();
+//		tiles[38][16] = mountain();
+//		tiles[39][16] = mountain();
+//		tiles[39][15] = mountain();
 
 		// Floor on another level
-		remove(tiles, 40, MAP_WIDTH, 11, 14);
-		floorGround(tiles, 40, MAP_WIDTH, 13, MAP_HEIGHT);
+		remove(tiles, 38, MAP_WIDTH, 11, 15);
+		floorGround(tiles, 38, MAP_WIDTH, 15, MAP_HEIGHT);
+		
+		addEnemy(scene, 43, 15);
+		
+		tiles[44][15] = mountainJoinCornerLeft();
+		tiles[44][14] = mountainCornerLeft();
+		tiles[45][15] = mountain();
+		tiles[45][14] = mountainJoinCornerLeft();
+		tiles[45][13] = mountainCornerLeft();
+		
+		floorGround(tiles, 46, MAP_WIDTH, 13, MAP_HEIGHT);
 		
 		//TODO: House and enemy + trigger
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Entity stairs = SceneOneObjects.cabin();
+				Entity cabin = SceneOneObjects.cabin();
 				int bottom = GameCore.tilesToPixels(13);
-				stairs.pos().set(GameCore.tilesToPixels(45),
-						bottom - stairs.height() / 2);
-				return stairs;
+				cabin.pos().set(GameCore.tilesToPixels(47),
+						bottom - cabin.height() / 2);
+				return cabin;
 			}
 		});
 		
@@ -176,21 +182,19 @@ public class SceneMaker {
 			public Entity create() {
 				Trigger problem = SceneOneObjects.cabinTrigger();
 				int bottom = GameCore.tilesToPixels(13);
-				problem.pos().set(GameCore.tilesToPixels(48), bottom - problem.height() / 2);
+				problem.pos().set(GameCore.tilesToPixels(50), bottom - problem.height() / 2);
 				return problem;
 			}
 		});
 		
 		
-		addEnemy(scene, 51, 13);
+		addEnemy(scene, 53, 13);
 		
 		//down a level
 		remove(tiles, 54, MAP_WIDTH, 13, 14);
 		tiles[54][13] = mountainCornerRight();
 		tiles[54][14] = mountainJoinCornerRight();
 		floorGround(tiles, 55, MAP_WIDTH, 14, MAP_HEIGHT);
-		
-		addEnemy(scene, 58, 14);
 		
 		//down a level
 		remove(tiles, 60, MAP_WIDTH, 14, 15);
