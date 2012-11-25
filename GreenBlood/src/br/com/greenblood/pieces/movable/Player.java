@@ -150,7 +150,7 @@ public class Player extends Character {
             super(new Bitmap[] { ImageLoader.image("stick_punch.png"),
             					 ImageLoader.image("stick_punch_1.png"), 
             					 ImageLoader.image("stick_punch_2.png") 
-            		    }, 982, false);
+            		    }, 565, false);
         }
     }
 	@Override

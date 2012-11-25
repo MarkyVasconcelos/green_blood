@@ -79,8 +79,8 @@ public class SceneOneObjects {
 	}
 	
 	public static Trigger problemTrigger() {
-//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
-		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
+		return new EmptyTrigger(new Rect(0, 0, 40, 200));
+//		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
 	}
 	
 	public static Trigger cabinTrigger() {

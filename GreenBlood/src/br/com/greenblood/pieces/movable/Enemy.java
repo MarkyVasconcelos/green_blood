@@ -48,7 +48,7 @@ public class Enemy extends Character {
     private final class PunchingSprite extends Sprite{
         public PunchingSprite() {
             super(new Bitmap[] { ImageLoader.image("stick_punch.png"), ImageLoader.image("stick_punch_1.png"), ImageLoader.image("stick_punch_2.png") },
-                    993, false);
+                    593, false);
         }
     }
 	@Override

@@ -11,6 +11,7 @@ import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
 import br.com.greenblood.view.DialogView;
+import br.com.greenblood.view.SlideView;
 import br.com.greenblood.view.GameView;
 
 import commons.awt.Listener;
@@ -46,6 +47,10 @@ public class GameActivity extends MultiTouchActivity {
 	public DialogView dialog() {
 		return (DialogView) findViewById(R.id.dialog_view);
 	}
+	
+	public SlideView slide() {
+		return (SlideView) findViewById(R.id.slide_view);
+	}
     
     public ActionControls actions() {
 		return (ActionControls) findViewById(R.id.action_control);
@@ -54,6 +59,7 @@ public class GameActivity extends MultiTouchActivity {
 	public ItemView itemView() {
 		return (ItemView) findViewById(R.id.item_view);
 	}
+	
 
     public DirectionalControls controls() {
 		return (DirectionalControls) findViewById(R.id.direction_control);
@@ -76,6 +82,10 @@ public class GameActivity extends MultiTouchActivity {
 	public void display(String txt, Listener<Void> listener) {
 		dialog().display(txt, listener);
 	}
+	
+	public void showSlide(Listener<Void> onEndListener) {
+		slide().display(onEndListener);
+	}
 
 	public void hideControllers() {
 		setControllersVisibility(View.INVISIBLE);
@@ -94,4 +104,5 @@ public class GameActivity extends MultiTouchActivity {
 			}
 		});
 	}
+
 }
