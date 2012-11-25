@@ -70,7 +70,7 @@ public class SceneMaker {
 		});
 
 		// Remove floor to build up fall
-		for (int col = 18; col < 42; col++) {
+		for (int col = 16; col < 42; col++) {
 			for (int row = 11; row < 17; row++)
 				tiles[col][row] = empty();
 			tiles[col][16] = floor();
@@ -81,33 +81,43 @@ public class SceneMaker {
 			public Entity create() {
 				Trigger problem = SceneOneObjects.problemTrigger();
 				int bottom = GameCore.tilesToPixels(11);
-				problem.pos().set(GameCore.tilesToPixels(17), bottom - problem.height() / 2);
+				problem.pos().set(GameCore.tilesToPixels(15), bottom - problem.height() / 2);
 				return problem;
 			}
 		});
 		
 		// Fall
-		tiles[18][11] = mountainCornerRight();
-		tiles[18][12] = mountainJoinCornerRight();
-		tiles[19][12] = mountainCornerRight();
-		tiles[19][13] = mountainJoinCornerRight();
-		tiles[20][13] = mountainCornerRight();
-		tiles[20][14] = mountainJoinCornerRight();
+		tiles[15][11] = mountainCornerRight();
+		tiles[15][12] = mountainJoinCornerRight();
+		tiles[16][12] = floor();
+		tiles[17][12] = mountainCornerRight();
+		tiles[17][13] = mountainJoinCornerRight();
+		tiles[18][13] = floor();
+		tiles[19][13] = mountainCornerRight();
+		tiles[19][14] = mountainJoinCornerRight();
+		tiles[20][14] = floor();
 		tiles[21][14] = mountainCornerRight();
 		tiles[21][15] = mountainJoinCornerRight();
-		tiles[22][15] = mountainCornerRight();
-		tiles[22][16] = mountainJoinCornerRight();
+		tiles[22][15] = floor();
+		tiles[23][15] = mountainCornerRight();
+		tiles[23][16] = mountainJoinCornerRight();
 
-		tiles[18][13] = mountain();
+		tiles[16][13] = mountain();
+		tiles[16][14] = mountain();
+		tiles[16][15] = mountain();
+		tiles[16][16] = mountain();
+		tiles[17][14] = mountain();
+		tiles[17][15] = mountain();
+		tiles[17][16] = mountain();
 		tiles[18][14] = mountain();
 		tiles[18][15] = mountain();
 		tiles[18][16] = mountain();
-		tiles[19][14] = mountain();
 		tiles[19][15] = mountain();
 		tiles[19][16] = mountain();
 		tiles[20][15] = mountain();
 		tiles[20][16] = mountain();
 		tiles[21][16] = mountain();
+		tiles[22][16] = mountain();
 
 		// first enemy (tree)
 		
