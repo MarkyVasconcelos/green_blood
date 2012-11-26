@@ -17,7 +17,8 @@ public class TreeCutterTrigger extends Trigger {
 	public void onFired() {
 		GameWorld.world().lockScreen();
 		GameWorld.world().offsetDraw(90, 0); // TODO: smoothly do that
-		coreographer.sendEmptyMessageDelayed(START_FALL, 3500);
+		FallingTree.instance.startCutting();
+		coreographer.sendEmptyMessageDelayed(START_FALL, 3000);
 	}
 	
 	private static final int START_FALL = 0;
