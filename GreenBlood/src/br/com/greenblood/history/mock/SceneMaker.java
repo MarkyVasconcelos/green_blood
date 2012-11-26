@@ -38,16 +38,6 @@ public class SceneMaker {
 		tiles[1][11] = mountainJoinCornerRight();
 		
 		scene.setPlayerInitialTile(new Vector2D(4, 9));
-		
-		scene.addObjectCreator(new ObjectCreator() {
-			@Override
-			public Entity create() {
-				Trigger salut = SceneOneObjects.welcomeTrigger();
-				int bottom = GameCore.tilesToPixels(11);
-				salut.pos().set(GameCore.tilesToPixels(5), bottom - salut.height() / 2);
-				return salut;
-			}
-		});
 
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override

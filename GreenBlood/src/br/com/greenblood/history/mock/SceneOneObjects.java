@@ -73,11 +73,6 @@ public class SceneOneObjects {
 		return bossHouse;
 	}
 	
-	public static Trigger welcomeTrigger() {
-		return new EmptyTrigger(new Rect(0, 0, 30, 200));
-//		return new WhatABeutifullDayTrigger(new Rect(0, 0, 30, 200));
-	}
-	
 	public static Trigger problemTrigger() {
 		return new EmptyTrigger(new Rect(0, 0, 40, 200));
 //		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
