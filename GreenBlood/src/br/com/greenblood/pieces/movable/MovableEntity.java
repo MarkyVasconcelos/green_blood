@@ -46,7 +46,7 @@ public abstract class MovableEntity extends Entity {
         
         float scale = (float) currentBounds.width() / (float) image().current().getWidth();
         
-        boolean leftMovement = movingLeft();
+        boolean leftMovement = isMovingLeft();
         
         Matrix matrix = new Matrix();
         matrix.setScale(leftMovement ? -scale : scale, scale);
@@ -137,11 +137,19 @@ public abstract class MovableEntity extends Entity {
 		lockDirection = false;
 	}
     
-    public boolean movingLeft(){
+    public void movingLeft(){
+        moving = MoveDirection.Left;
+    }
+    
+    public void movingRight(){
+        moving = MoveDirection.Right;
+    }
+    
+    public boolean isMovingLeft(){
         return moving == MoveDirection.Left;
     }
     
-    protected boolean movingRight(){
+    protected boolean isMovingRight(){
         return moving == MoveDirection.Right;
     }
 

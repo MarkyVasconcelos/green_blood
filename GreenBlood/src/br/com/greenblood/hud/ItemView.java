@@ -58,7 +58,7 @@ public class ItemView extends LinearLayout {
 		@Override
 		public void onClick(View v) {
 			Player player = GameWorld.player();
-			float targetX = player.movingLeft() ? player.x() - player.width() / 2f : player.x() + player.width() / 2f;
+			float targetX = player.isMovingLeft() ? player.x() - player.width() / 2f : player.x() + player.width() / 2f;
 
 			Entity target = GameWorld.pieces().collidableObjectAt((int) targetX, (int) (player.y()));
 

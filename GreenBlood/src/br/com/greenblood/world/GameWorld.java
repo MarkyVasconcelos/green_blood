@@ -83,16 +83,14 @@ public class GameWorld {
 		
 		player.setOnNextActionListener(new Listener<Void>() {
 			@Override
-			public boolean on(Void t) {
+			public void on(Void t) {
 				lockScreen();
 				gameActivity.showSlide(new Listener<Void>() {
 					@Override
-					public boolean on(Void t) {
+					public void on(Void t) {
 						unlockScreen();
-						return true;
 					}
 				});
-				return false;
 			}
 		});
 
@@ -126,11 +124,10 @@ public class GameWorld {
 		lockScreen();
 		gameActivity.display(txt, new Listener<Void>() {
 			@Override
-			public boolean on(Void t) {
+			public void on(Void t) {
 				unlockMove();
 				gameActivity.dialog().hide();
 				gameActivity.showControllers();
-				return false;
 			}
 		});
 	}

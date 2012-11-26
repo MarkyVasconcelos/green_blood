@@ -21,9 +21,8 @@ public class TheresAProblemAheadTrigger extends Trigger {
 		chainsawDisplay.pos().set(currentBounds().left + 90, currentBounds().top + 180);
 		chainsawDisplay.onEnd(new Listener<Void>() {
 			@Override
-			public boolean on(Void t) {
+			public void on(Void t) {
 				GameWorld.world().display("Que som é esse?!?! Tem alguma coisa errada a frente!");
-				return true;
 			}
 		});
 		GameWorld.world().addEntity(chainsawDisplay);

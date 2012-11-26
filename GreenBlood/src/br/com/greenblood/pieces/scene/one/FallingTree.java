@@ -2,6 +2,7 @@ package br.com.greenblood.pieces.scene.one;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.mock.SceneMaker;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
@@ -28,7 +29,7 @@ public class FallingTree extends StaticObject {
 				true));
 	}
 	
-	public void cut(Listener<Void> listener){
+	public void cut(final Listener<Void> listener){
 		Sprite sprite = new Sprite(new Bitmap[] {
 				ImageLoader.image("falling_tree/tree.PNG"),
 				ImageLoader.image("falling_tree/tree2.PNG"),
@@ -37,17 +38,28 @@ public class FallingTree extends StaticObject {
 				false);
 		sprite.addOnAnimationEndListener(new Listener<Void>() {
 			@Override
-			public boolean on(Void t) {
+			public void on(Void t) {
 				//TODO: Correct position of enemy
-				Enemy enemy = SceneMaker.enemy();
-				int bottom = currentBounds().bottom - enemy.height();
+				final Enemy enemy = SceneMaker.enemy();
+				enemy.movingLeft();
+				int bottom = GameCore.tilesToPixels(16) - enemy.height() / 2;
 				int left = currentBounds().left + 100;
 				enemy.pos().set(left, bottom);
 				GameWorld.world().addEntity(enemy);
-				return true;
+				GameWorld.player().walkRightUntilBlock(new Listener<Void>() {
+					@Override
+					public void on(Void t) {
+						GameWorld.player().punch(new Listener<Void>() {
+							@Override
+							public void on(Void t) {
+								enemy.kill();
+								listener.on(t);
+							}
+						});
+					}
+				});
 			}
 		});
-		sprite.addOnAnimationEndListener(listener);
 		setSprite(sprite);
 	}
 

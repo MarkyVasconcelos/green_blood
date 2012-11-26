@@ -31,7 +31,7 @@ public abstract class Character extends MovableEntity {
 			processSelfLogics(uptime);
 		
 		super.processLogics(uptime);
-		
+
 		processMoveLogicsOnAnimation(dir());
 	}
 	
@@ -54,21 +54,33 @@ public abstract class Character extends MovableEntity {
 		}
 	}
 	
+	
+	public void punch(final Listener<Void> listener) {
+		Sprite punchingSprite = punchingSprite();
+		punchingSprite.addOnAnimationEndListener(new Listener<Void>() {
+            @Override
+            public void on(Void t) {
+                listener.on(t);
+                execute(standingSprite.id(STANDING), false);
+            }
+        });
+		execute(punchingSprite.id(PUNCHING), true);
+	}
+
 	protected void punch(){
 		Sprite punchingSprite = punchingSprite();
 		punchingSprite.addOnAnimationEndListener(new Listener<Void>() {
             @Override
-            public boolean on(Void t) {
+            public void on(Void t) {
             	executePunch();
                 execute(standingSprite.id(STANDING), false);
-                return true;
             }
         });
 		execute(punchingSprite.id(PUNCHING), true);
 	}
 
 	private void executePunch(){
-		float targetX = movingLeft() ? x() - width() / 2f : x() + width() / 2f;
+		float targetX = isMovingLeft() ? x() - width() / 2f : x() + width() / 2f;
 
 		Character target = GameWorld.pieces().punchCollidableEntityAt((int) targetX, (int) (y()));
 
@@ -85,6 +97,4 @@ public abstract class Character extends MovableEntity {
 	public abstract void hit();
 	protected abstract Sprite walkingSprite();
 	protected abstract Sprite punchingSprite();
-	
-	
 }

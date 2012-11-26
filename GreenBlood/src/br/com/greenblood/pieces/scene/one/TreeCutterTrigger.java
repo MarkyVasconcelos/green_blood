@@ -17,7 +17,7 @@ public class TreeCutterTrigger extends Trigger {
 	public void onFired() {
 		GameWorld.world().lockScreen();
 		GameWorld.world().offsetDraw(90); // TODO: smoothly do that
-		coreographer.sendEmptyMessageDelayed(START_FALL, 2000);
+		coreographer.sendEmptyMessageDelayed(START_FALL, 3500);
 	}
 	
 	private static final int START_FALL = 0;
@@ -28,9 +28,8 @@ public class TreeCutterTrigger extends Trigger {
 			if(msg.what == START_FALL)
 				FallingTree.instance.cut(new Listener<Void>() {
 					@Override
-					public boolean on(Void t) {
+					public void on(Void t) {
 						sendEmptyMessage(RESUME_GAME);
-						return true;
 					}
 				});
 			

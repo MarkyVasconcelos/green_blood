@@ -92,11 +92,23 @@ public class Player extends Character {
         this.controls = controls;
         this.controls.setOnDoubleTapListener(new Listener<Void>() {
 			@Override
-			public boolean on(Void t) {
+			public void on(Void t) {
 				doBackwardDash();
-				return true;
 			}
 		});
+    }
+    
+	@Override
+    public void processAnimationLogics(long uptime) {
+		if(walkingRightUntilBlock){
+			accelerate();
+			super.processLogics(uptime);
+			if(dir().x() == 0){
+				walkingRightUntilBlock = false;
+				endListener.on(null);
+			}
+		}
+    	image().update(uptime);
     }
 
     public void setActionControls(ActionControls actions) {
@@ -152,6 +164,11 @@ public class Player extends Character {
             					 ImageLoader.image("stick_punch_2.png") 
             		    }, 565, false);
         }
+        
+        @Override
+        public void update(long uptime) {
+        	super.update(uptime);
+        }
     }
 	@Override
 	public void hit() {
@@ -164,13 +181,12 @@ public class Player extends Character {
 		lockDirection();
 		backwardDash.addOnAnimationEndListener(new Listener<Void>() {
 			@Override
-			public boolean on(Void t) {
+			public void on(Void t) {
 				unlockDirection();
 				stop();
-				return true;
 			}
 		});
-		dir().set(new Vector2D(movingLeft() ? 0.75f : -0.75f, -0.6f));
+		dir().set(new Vector2D(isMovingLeft() ? 0.75f : -0.75f, -0.6f));
 		execute(backwardDash.id(DASHING), true);
 	}
 
@@ -188,7 +204,7 @@ public class Player extends Character {
 		this.statsView = statsView;
 		statsView.setMaximumHealth(maxHelth);
 	}
-
+	
 	public void stop() {
 		execute(standingSprite(), false);
 	}
@@ -204,4 +220,15 @@ public class Player extends Character {
 	public void setOnNextActionListener(Listener<Void> nextActionListener) {
 		this.nextActionListener = nextActionListener;
 	}
+	
+	//Please do it better
+	private boolean walkingRightUntilBlock;
+	private Listener<Void> endListener;
+	public void walkRightUntilBlock(Listener<Void> endListener) {
+		blockInput = true;
+		this.endListener = endListener;
+		walkingRightUntilBlock = true;
+		setSprite(walkingSprite);
+	}
+	
 }

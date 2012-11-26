@@ -51,20 +51,18 @@ public class Chair extends StaticObject {
 	
 	private final Listener<Void> grabListener = new Listener<Void>() {
 		@Override
-		public boolean on(Void t) {
+		public void on(Void t) {
 			grabbed = true;
 			originalY = currentBounds().bottom;
 			player.setOnNextActionListener(ungrabListener);
-			return false;
 		}
 	};
 	
 	private final Listener<Void> ungrabListener = new Listener<Void>() {
 		@Override
-		public boolean on(Void t) {
+		public void on(Void t) {
 			grabbed = false;
 			pos().setY(originalY - height() / 2);
-			return false;
 		}
 	};
 	

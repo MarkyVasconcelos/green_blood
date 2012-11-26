@@ -41,19 +41,17 @@ public class Stairs extends StaticObject {
 	
 	private final Listener<Integer> onTouchingActionListener = new Listener<Integer>() {
 		@Override
-		public boolean on(Integer t) {
+		public void on(Integer t) {
 			long fall = pixelsPerSecond / t;
 			player.pos().setY(player.pos().y() - fall);
-			return false;
 		}
 	};
 	
 	private final Listener<Integer> onTouchingJumpListener = new Listener<Integer>() {
 		@Override
-		public boolean on(Integer t) {
+		public void on(Integer t) {
 			long fall = pixelsPerSecond / t;
 			player.pos().setY(player.pos().y() + fall);
-			return false;
 		}
 	};
 

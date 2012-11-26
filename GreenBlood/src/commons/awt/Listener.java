@@ -10,7 +10,6 @@ package commons.awt;
 public interface Listener<T> {
     /**
      * @param t the Object of the event itself
-     * @return if the event was consumed
      */
-    public boolean on(T t);
+    public void on(T t);
 }

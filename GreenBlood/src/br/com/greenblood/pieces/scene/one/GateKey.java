@@ -41,11 +41,10 @@ public class GateKey extends StaticObject {
 	
 	private final Listener<Void> grabListener = new Listener<Void>() {
 		@Override
-		public boolean on(Void t) {
+		public void on(Void t) {
 			GameWorld.world().displayItemView();
 			player.setOnNextActionListener(null);
 			kill();
-			return false;
 		}
 	};
 
