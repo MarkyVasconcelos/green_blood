@@ -43,6 +43,7 @@ public class GameWorld {
 	private Scene scene;
 	private boolean blockMove;
 	private int offsetX;
+	private int offsetY;
     
     private GameWorld(DirectionalControls controls, ActionControls actions) {
         this.controls = controls;
@@ -64,7 +65,7 @@ public class GameWorld {
 
         canvas.drawRect(surfaceSize, Paints.BLUE);
 
-        Vector2D offset = worldMap.draw(canvas, player.pos(), offsetX);
+        Vector2D offset = worldMap.draw(canvas, player.pos(), offsetX, offsetY);
         worldScene.draw(canvas, surfaceSize, offset);
         
         canvas.restore();
@@ -84,13 +85,14 @@ public class GameWorld {
 		player.setOnNextActionListener(new Listener<Void>() {
 			@Override
 			public void on(Void t) {
-				lockScreen();
-				gameActivity.showSlide(new Listener<Void>() {
-					@Override
-					public void on(Void t) {
-						unlockScreen();
-					}
-				});
+				player.pos().setX(GameCore.tilesToPixels(70));
+//				lockScreen();
+//				gameActivity.showSlide(new Listener<Void>() {
+//					@Override
+//					public void on(Void t) {
+//						unlockScreen();
+//					}
+//				});
 			}
 		});
 
@@ -120,7 +122,7 @@ public class GameWorld {
 		enemyStatsView.display(enemy);
 	}
 	
-	public void display(String txt){
+	public void display(String txt, final Listener<Void> listener){
 		lockScreen();
 		gameActivity.display(txt, new Listener<Void>() {
 			@Override
@@ -128,6 +130,9 @@ public class GameWorld {
 				unlockMove();
 				gameActivity.dialog().hide();
 				gameActivity.showControllers();
+				
+				if(listener != null)
+					listener.on(null);
 			}
 		});
 	}
@@ -159,8 +164,9 @@ public class GameWorld {
 		worldScene.postAdd(ent);
 	}
 	
-	public void offsetDraw(int offsetX){
+	public void offsetDraw(int offsetX, int offsetY){
 		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 	}
 
 }

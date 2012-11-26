@@ -44,7 +44,7 @@ public class SceneMaker {
 			public Entity create() {
 				Entity hallow = SceneOneObjects.hallow();
 				int bottom = GameCore.tilesToPixels(11);
-				hallow.pos().set(GameCore.tilesToPixels(3), bottom - hallow.height() / 2);
+				hallow.pos().set(GameCore.tilesToPixels(4), bottom - hallow.height() / 2);
 				return hallow;
 			}
 		});
@@ -137,10 +137,6 @@ public class SceneMaker {
 		tiles[37][16] = mountainJoinCornerLeft();
 		tiles[37][15] = mountainCornerLeft();
 		
-//		tiles[38][16] = mountain();
-//		tiles[39][16] = mountain();
-//		tiles[39][15] = mountain();
-
 		// Floor on another level
 		remove(tiles, 38, MAP_WIDTH, 11, 15);
 		floorGround(tiles, 38, MAP_WIDTH, 15, MAP_HEIGHT);
@@ -228,10 +224,20 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
+				Trigger wayHigh = SceneOneObjects.wayHighTrigger();
+				int bottom = GameCore.tilesToPixels(15);
+				wayHigh.pos().set(GameCore.tilesToPixels(83), bottom - wayHigh.height() / 2);
+				return wayHigh;
+			}
+		});
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
 				Entity stairs = SceneOneObjects.stairs();
-				int bottom = GameCore.tilesToPixels(10);
+				int top = GameCore.tilesToPixels(8) - 8;
 				stairs.pos().set(GameCore.tilesToPixels(83),
-						bottom - stairs.height() / 2);
+						top + stairs.height() / 2);
 				return stairs;
 			}
 		});

@@ -22,7 +22,7 @@ public class TheresAProblemAheadTrigger extends Trigger {
 		chainsawDisplay.onEnd(new Listener<Void>() {
 			@Override
 			public void on(Void t) {
-				GameWorld.world().display("Que som é esse?!?! Tem alguma coisa errada a frente!");
+				GameWorld.world().display("Que som é esse?!?! Tem alguma coisa errada a frente!", null);
 			}
 		});
 		GameWorld.world().addEntity(chainsawDisplay);

@@ -35,8 +35,8 @@ public class ImageLoader {
     public static void init(Context context) {
         ImageLoader.context = context;
         
-        mountain = image("tile_A.png");
-        floor = image("tile_B.png");
+        mountain = image("scene/mountain.png");//image("tile_A.png");
+        floor = image("scene/floor.png");//image("tile_B.png");
         mountainLeft = image("tile_C.png");
         mountainRight = image("tile_D.png");
         mountainCornerLeft = image("tile_E.png");

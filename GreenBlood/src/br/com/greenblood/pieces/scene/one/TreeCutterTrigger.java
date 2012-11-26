@@ -16,7 +16,7 @@ public class TreeCutterTrigger extends Trigger {
 	@Override
 	public void onFired() {
 		GameWorld.world().lockScreen();
-		GameWorld.world().offsetDraw(90); // TODO: smoothly do that
+		GameWorld.world().offsetDraw(90, 0); // TODO: smoothly do that
 		coreographer.sendEmptyMessageDelayed(START_FALL, 3500);
 	}
 	
@@ -34,7 +34,7 @@ public class TreeCutterTrigger extends Trigger {
 				});
 			
 			if(msg.what == RESUME_GAME){
-				GameWorld.world().offsetDraw(0); // TODO: smoothly do that
+				GameWorld.world().offsetDraw(0, 0); // TODO: smoothly do that
 				GameWorld.world().unlockScreen();
 			}
 		};

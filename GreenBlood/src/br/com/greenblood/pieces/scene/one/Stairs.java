@@ -1,8 +1,11 @@
 package br.com.greenblood.pieces.scene.one;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Rect;
+import br.com.greenblood.dev.Paints;
 import br.com.greenblood.img.Sprite;
+import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
@@ -15,16 +18,45 @@ public class Stairs extends StaticObject {
 	
 	private final Player player;
 	private boolean walkingOverThis = false;
+	private Rect imageBounds;
+	private int stairs;
 	
 	public Stairs(Rect bounds) {
 		super(bounds);
 
-		setSprite(new Sprite(
-				new Bitmap[] { ImageLoader.image("house/stairs.PNG") },
-				0, false));
+		img = ImageLoader.image("house/stairs.png");
+		imageBounds = new Rect(0,0,img.getWidth(), img.getHeight());
+		
+		float scale = (float) imageBounds.width() / (float) bounds().width();
+		
+		imageBounds.right *= scale;
+		imageBounds.bottom *= scale;
+		
+		stairs = bounds().height() / imageBounds.height();
 		
 		setCollidable(false);
 		player = GameWorld.player();
+	}
+	
+	@Override
+	public void processAnimationLogics(long uptime) {
+	}
+	
+	@Override
+	public void draw(Canvas canvas, Rect surfaceSize, Vector2D offset) {
+		canvas.save();
+		
+		Rect bounds = currentBounds();
+		Rect imgRect = new Rect(imageBounds);
+		imgRect.offset(bounds.left, bounds.top);
+		imgRect.offset((int)offset.x,(int) offset.y);
+		
+		for(int i = 0; i <= stairs; i++){
+			canvas.drawBitmap(img, imageBounds, imgRect, Paints.BLANK);
+			imgRect.offset(0, imageBounds.height() - 20);
+		}
+		
+		canvas.restore();
 	}
 
 	@Override
@@ -55,4 +87,7 @@ public class Stairs extends StaticObject {
 		}
 	};
 
+	private Bitmap img;
+
 }
+
