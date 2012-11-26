@@ -85,7 +85,8 @@ public class GameWorld {
 		player.setOnNextActionListener(new Listener<Void>() {
 			@Override
 			public void on(Void t) {
-				player.pos().setX(GameCore.tilesToPixels(70));
+				//TODO: Activate slidess
+//				player.pos().setX(GameCore.tilesToPixels(70));
 //				lockScreen();
 //				gameActivity.showSlide(new Listener<Void>() {
 //					@Override
