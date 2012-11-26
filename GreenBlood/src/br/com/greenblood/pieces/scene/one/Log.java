@@ -13,6 +13,8 @@ public class Log extends StaticObject {
 	
 	private final Player player;
 	private boolean walkingOverThis = false;
+	private boolean playerTouched = false;
+	private int originalY;
 	
 	public Log(Rect bounds) {
 		super(bounds);
@@ -28,14 +30,22 @@ public class Log extends StaticObject {
 	//TODO: Float backs to initial position
 	@Override
 	public void processLogics(long uptime) {
-		if(Rect.intersects(player.currentBoundingBounds(), currentBounds())){
+		Rect currentBounds = currentBounds();
+		if(Rect.intersects(player.currentBoundingBounds(), currentBounds)){
+			if(!playerTouched){
+				originalY = currentBounds.bottom;
+				playerTouched = true;
+			}
 			player.walkingOnGround();
 			walkingOverThis = true;
 			long fall = pixelsPerSecond / uptime;
 			pos().setY(pos().y() + fall);
 			player.pos().setY(player.pos().y() + fall);
-		}else if(walkingOverThis)
+		}else if(walkingOverThis){
 			player.walkingOnAir();
+			walkingOverThis = false;
+		}else if(playerTouched && originalY != currentBounds.bottom)
+			pos().setY(pos().y() - pixelsPerSecond / uptime);
 	}
 
 }
