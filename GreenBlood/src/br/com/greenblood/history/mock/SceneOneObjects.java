@@ -6,13 +6,13 @@ import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
+import br.com.greenblood.pieces.scene.one.CabinTrigger;
 import br.com.greenblood.pieces.scene.one.Chair;
 import br.com.greenblood.pieces.scene.one.EmptyTrigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.GateKey;
 import br.com.greenblood.pieces.scene.one.Log;
 import br.com.greenblood.pieces.scene.one.Stairs;
-import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
 import br.com.greenblood.pieces.scene.one.TreeCutterTrigger;
 import br.com.greenblood.pieces.scene.one.WayHighTrigger;
 import br.com.greenblood.util.ImageLoader;
@@ -20,6 +20,7 @@ import br.com.greenblood.util.ImageLoader;
 public class SceneOneObjects {
 	
 	private static Entity fence;
+	private static StaticObject cabin;
 
 	public static Entity hallow() {
 		StaticObject hallow = new StaticObject(new Rect(0, 0, 144, 288));
@@ -47,8 +48,8 @@ public class SceneOneObjects {
 	}
 	
 	public static Entity cabin(){
-		StaticObject cabin = new StaticObject(new Rect(0, 0, 110, 216));
-		 cabin.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("cabin.PNG")}, 0, false));
+		cabin = new StaticObject(new Rect(0, 0, 110, 216));
+		cabin.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("cabin.PNG")}, 0, false));
 		return cabin;
 	}
 	
@@ -61,10 +62,9 @@ public class SceneOneObjects {
 	}
 	
 	public static Entity fence(){
-		StaticObject fence = new StaticObject(new Rect(0, 0, 32, 140));
+		fence = new StaticObject(new Rect(0, 0, 32, 140));
 		fence.setCollidable(true);
 		fence.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/fence.PNG")}, 0, false));
-		setFenceInstance(fence);
 		return fence;
 	}
 	
@@ -85,8 +85,8 @@ public class SceneOneObjects {
 	}
 	
 	public static Trigger cabinTrigger() {
-		return new EmptyTrigger(new Rect(0, 0, 40, 200));
-//		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
+//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
+		return new CabinTrigger(new Rect(0, 0, 40, 200));
 	}
 
 	public static Trigger cutTrigger() {
@@ -94,12 +94,12 @@ public class SceneOneObjects {
 		return new TreeCutterTrigger(new Rect(0,0,40,200));
 	}
 
-	public static void setFenceInstance(Entity fence) {
-		SceneOneObjects.fence = fence;
-	}
-	
 	public static Entity fenceInstance(){
 		return SceneOneObjects.fence;
+	}
+	
+	public static Entity cabinInstance(){
+		return SceneOneObjects.cabin;
 	}
 
 

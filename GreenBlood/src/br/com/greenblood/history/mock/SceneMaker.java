@@ -141,7 +141,7 @@ public class SceneMaker {
 		remove(tiles, 38, MAP_WIDTH, 11, 15);
 		floorGround(tiles, 38, MAP_WIDTH, 15, MAP_HEIGHT);
 		
-		addEnemy(scene, 43, 15);
+		addEnemy(scene, 43, 15, true);
 		
 		tiles[44][15] = mountainJoinCornerLeft();
 		tiles[44][14] = mountainCornerLeft();
@@ -151,7 +151,7 @@ public class SceneMaker {
 		
 		floorGround(tiles, 46, MAP_WIDTH, 13, MAP_HEIGHT);
 		
-		//TODO: House and enemy + trigger
+		// Cabin and enemy
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
@@ -174,7 +174,7 @@ public class SceneMaker {
 		});
 		
 		
-		addEnemy(scene, 53, 13);
+		addEnemy(scene, 53, 13, true);
 		
 		//down a level
 		remove(tiles, 54, MAP_WIDTH, 13, 14);
@@ -275,7 +275,7 @@ public class SceneMaker {
 		
 		//Enemy and chair
 		//TODO: Animate
-		addEnemy(scene, 93, 15);
+		addEnemy(scene, 93, 15, false);
 		
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
@@ -313,7 +313,7 @@ public class SceneMaker {
 		});
 		
 		//TODO: Make this the boos
-		addEnemy(scene, 99, 15);
+		addEnemy(scene, 99, 15, false);
 		
 		return scene;
 	}
@@ -346,11 +346,16 @@ public class SceneMaker {
 		});
 	}
 	
-	public static void addEnemy(Scene scene, final int x, final int y){
+
+	public static void addEnemy(Scene scene, final int x, final int y, final boolean movingRight){
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				Enemy ent = enemy();
+				if(movingRight)
+					ent.movingRight();
+				else
+					ent.movingLeft();
 				int bottom = GameCore.tilesToPixels(y);
 				ent.pos().set(GameCore.tilesToPixels(x),
 						bottom - ent.height() / 2);
