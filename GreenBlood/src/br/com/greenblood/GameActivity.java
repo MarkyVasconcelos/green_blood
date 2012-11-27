@@ -3,6 +3,7 @@ package br.com.greenblood;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
@@ -25,19 +26,20 @@ public class GameActivity extends MultiTouchActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        GameCore.setDensity(getResources().getDisplayMetrics().density);
+        
         ImageLoader.init(this);
         
         setContentView(R.layout.game_activity);
         
-        gameView = (GameView) findViewById(R.id.game_view);
-
+        gameView = view();
         gameView.set(this);
         controls().setOnTouchListener(this);
         actions().setOnTouchListener(this);
     }
-
-	public PlayerStatsView playerStats() {
-		return (PlayerStatsView) findViewById(R.id.player_stats);
+    
+	public GameView view() {
+		return (GameView) findViewById(R.id.game_view);
 	}
 
 	public EnemyStatsView enemyStats() {

@@ -8,11 +8,11 @@ import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.scene.one.CabinTrigger;
 import br.com.greenblood.pieces.scene.one.Chair;
-import br.com.greenblood.pieces.scene.one.EmptyTrigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.GateKey;
 import br.com.greenblood.pieces.scene.one.Log;
 import br.com.greenblood.pieces.scene.one.Stairs;
+import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
 import br.com.greenblood.pieces.scene.one.TreeCutterTrigger;
 import br.com.greenblood.pieces.scene.one.WayHighTrigger;
 import br.com.greenblood.util.ImageLoader;
@@ -75,8 +75,8 @@ public class SceneOneObjects {
 	}
 	
 	public static Trigger problemTrigger() {
-		return new EmptyTrigger(new Rect(0, 0, 40, 200));
-//		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
+//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
+		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
 	}
 	
 	public static Trigger wayHighTrigger() {
