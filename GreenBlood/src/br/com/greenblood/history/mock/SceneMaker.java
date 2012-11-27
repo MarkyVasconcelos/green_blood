@@ -37,14 +37,14 @@ public class SceneMaker {
 		floorGround(tiles, 1, MAP_WIDTH, 11, MAP_HEIGHT);
 		tiles[1][11] = mountainJoinCornerRight();
 		
-		scene.setPlayerInitialTile(new Vector2D(4, 9));
+		scene.setPlayerInitialTile(new Vector2D(5, 9));
 
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
 				Entity hallow = SceneOneObjects.hallow();
 				int bottom = GameCore.tilesToPixels(11);
-				hallow.pos().set(GameCore.tilesToPixels(4), bottom - hallow.height() / 2);
+				hallow.pos().set(GameCore.tilesToPixels(4) - 20, bottom - hallow.height() / 2);
 				return hallow;
 			}
 		});
@@ -54,7 +54,7 @@ public class SceneMaker {
 			public Entity create() {
 				Entity fire = SceneOneObjects.fire();
 				int bottom = GameCore.tilesToPixels(11);
-				fire.pos().set(GameCore.tilesToPixels(6), bottom - fire.height() / 2);
+				fire.pos().set(GameCore.tilesToPixels(8) - 20, bottom - fire.height() / 2);
 				return fire;
 			}
 		});

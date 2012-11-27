@@ -24,7 +24,7 @@ public class SceneOneObjects {
 
 	public static Entity hallow() {
 		StaticObject hallow = new StaticObject(new Rect(0, 0, 144, 288));
-		hallow.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("hollow.PNG") }, 0l, false));
+		hallow.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("scene/hollow.png") }, 0l, false));
 		return hallow;
 	}
 
