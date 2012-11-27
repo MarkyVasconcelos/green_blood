@@ -161,9 +161,9 @@ public class Player extends Character {
     }
     private final class PunchingSprite extends Sprite{
         public PunchingSprite() {
-            super(new Bitmap[] { ImageLoader.image("stick_punch.png"),
-            					 ImageLoader.image("stick_punch_1.png"), 
-            					 ImageLoader.image("stick_punch_2.png") 
+            super(new Bitmap[] { ImageLoader.image("player/punch/p_1.png"),
+            					 ImageLoader.image("player/punch/p_2.png"), 
+            					 ImageLoader.image("player/punch/p_3.png") 
             		    }, 565, false);
         }
         
