@@ -16,9 +16,14 @@ public class TreeCutterTrigger extends Trigger {
 	@Override
 	public void onFired() {
 		GameWorld.world().lockScreen();
-		GameWorld.world().offsetDraw(90, 0); // TODO: smoothly do that
-		FallingTree.instance.startCutting();
-		coreographer.sendEmptyMessageDelayed(START_FALL, 3000);
+		GameWorld.world().offsetDraw(90, 0, new Listener<Void>() {
+			@Override
+			public void on(Void t) {
+				FallingTree.instance.startCutting();
+				coreographer.sendEmptyMessageDelayed(START_FALL, 2000);				
+			}
+		});
+
 	}
 	
 	private static final int START_FALL = 0;
@@ -35,8 +40,12 @@ public class TreeCutterTrigger extends Trigger {
 				});
 			
 			if(msg.what == RESUME_GAME){
-				GameWorld.world().offsetDraw(0, 0); // TODO: smoothly do that
-				GameWorld.world().unlockScreen();
+				GameWorld.world().offsetDraw(0, 0, new Listener<Void>() {
+					@Override
+					public void on(Void t) {
+						GameWorld.world().unlockScreen();						
+					}
+				});
 			}
 		};
 	};

@@ -48,8 +48,8 @@ public class GameWorld {
     private final ActionControls actions;
 	private Scene scene;
 	private boolean blockMove;
-	private int offsetX;
-	private int offsetY;
+	private float offsetX;
+	private float offsetY;
 	private final Bitmap sky;
 	private final Rect skyBounds;
 	
@@ -66,6 +66,13 @@ public class GameWorld {
 
     public void proccessAI(long uptime) {
     	worldScene.onProcessPhaseStarted();
+    	
+    	if(translater != null){
+    		translater.update(uptime);
+    		if(!translater.running)
+    			translater = null;
+    	}
+    	
     	if(!blockMove)
     		worldScene.processLogics(uptime);
         worldScene.processAnimationLogics(uptime);
@@ -76,7 +83,7 @@ public class GameWorld {
 
     	canvas.drawBitmap(sky, skyBounds, surfaceSize, Paints.BLANK);
     	
-        Vector2D offset = worldMap.draw(canvas, player.pos(), offsetX, offsetY);
+        Vector2D offset = worldMap.draw(canvas, player.pos(), (int)offsetX, (int)offsetY);
         worldScene.draw(canvas, surfaceSize, offset);
         
         canvas.restore();
@@ -179,17 +186,55 @@ public class GameWorld {
 	}
 	
 	private static final List<AnimableEntity> animables = new ArrayList<World.AnimableEntity>();
+	private Translater translater;
 	public static void addEntity(AnimableEntity ent) {
 		animables.add(ent);
 	}
 	
-	public void offsetDraw(int offsetX, int offsetY){
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
+	public void offsetDraw(int offsetX, int offsetY, Listener<Void> onOffsetEnd){
+		translater = new Translater((int) (offsetX - this.offsetX), (int) (offsetY - this.offsetY), onOffsetEnd);
 	}
 
 	public static ActionControls actions() {
 		return world().actions;
+	}
+	
+	private class Translater {
+		int offsetX, offsetY;
+		float speedX, speedY;
+		final long duration = 1400;
+		private boolean running;
+		long elapsed;
+		private final Listener<Void> onOffsetEnd;
+		
+		public Translater(int offsetX, int offsetY, Listener<Void> onOffsetEnd) {
+			this.offsetX = offsetX;
+			this.offsetY = offsetY;
+			this.onOffsetEnd = onOffsetEnd;
+			
+			if(offsetX != 0)
+				speedX = offsetX > 0 ? 2 : -2;
+			if (offsetY != 0)
+				speedY = offsetY > 0 ? 2 : -2;
+			
+			running = true;
+		}
+		
+		public void update(long uptime){
+			if(!running)
+				return;
+			
+			elapsed += uptime;
+			if(elapsed > duration){
+				onOffsetEnd.on(null);
+				running = false;
+				return;
+			}
+			
+			GameWorld.world.offsetX += speedX;
+			GameWorld.world.offsetY += speedY;
+		
+		}
 	}
 
 }
