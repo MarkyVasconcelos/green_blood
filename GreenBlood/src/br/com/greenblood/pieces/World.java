@@ -5,11 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.movable.Character;
 import br.com.greenblood.pieces.movable.Player;
+import br.com.greenblood.util.ImageLoader;
 
 /**
  * World is the whole entity that holds all others
