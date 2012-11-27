@@ -200,7 +200,6 @@ public class GameWorld {
 	}
 	
 	private class Translater {
-		int offsetX, offsetY;
 		float speedX, speedY;
 		final long duration = 1400;
 		private boolean running;
@@ -208,13 +207,11 @@ public class GameWorld {
 		private final Listener<Void> onOffsetEnd;
 		
 		public Translater(int offsetX, int offsetY, Listener<Void> onOffsetEnd) {
-			this.offsetX = offsetX;
-			this.offsetY = offsetY;
 			this.onOffsetEnd = onOffsetEnd;
 			
-			if(offsetX != 0)
+			if(Math.abs(offsetX) > 8)
 				speedX = offsetX > 0 ? 2 : -2;
-			if (offsetY != 0)
+			if (Math.abs(offsetY) > 8)
 				speedY = offsetY > 0 ? 2 : -2;
 			
 			running = true;
