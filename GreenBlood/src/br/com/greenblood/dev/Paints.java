@@ -33,7 +33,7 @@ public class Paints {
         RED.setColor(Color.RED);
         
         RED_WRITE = new Paint(RED);
-        RED_WRITE.setStrokeWidth(2);
+        RED_WRITE.setStrokeWidth(4);
         
         STROKE_BLUE = new Paint();
         STROKE_BLUE.setColor(Color.BLUE);

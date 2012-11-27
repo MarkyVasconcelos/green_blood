@@ -32,7 +32,7 @@ public class ChainsawEnemy extends Enemy {
 	
     private static final class WalkingSprite extends Sprite {
         public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("chainsaw/chainsaw_3.png"), ImageLoader.image("boss/stick_4.png") }, 200, true);
+            super(new Bitmap[] { ImageLoader.image("chainsaw/chainsaw_3.png"), ImageLoader.image("chainsaw/chainsaw_4.png") }, 200, true);
         }
     }
     

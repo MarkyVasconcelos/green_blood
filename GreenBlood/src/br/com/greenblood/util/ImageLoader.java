@@ -19,7 +19,7 @@ public class ImageLoader {
 	private static Bitmap mountainCornerRight;
 	private static Bitmap mountainJoinCornerLeft;
 	private static Bitmap mountainJoinCornerRight;
-	private static Bitmap water1, water2, water3;
+	private static Bitmap water1, water2, water3, water4;
 	private static Bitmap waterFill;
 	
 	private static Bitmap houseFloor;
@@ -46,6 +46,7 @@ public class ImageLoader {
         water1 = image("water/water_1.png");
         water2 = image("water/water_2.png");
         water3 = image("water/water_3.png");
+        water3 = image("water/water_4.png");
         waterFill = image("tile_water_fill.png");
         
         houseTree = image("house/tree.PNG");
@@ -77,7 +78,7 @@ public class ImageLoader {
 	}
 	
 	public static Bitmap water(int idx) {
-		return idx == 1 ? water1 : idx == 2 ? water2 : water3;
+		return idx == 1 ? water1 : idx == 2 ? water2 : idx == 3 ? water3 : water4;
 	}
 
 	public static Bitmap mountain() {

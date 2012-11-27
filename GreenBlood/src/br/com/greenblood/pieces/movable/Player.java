@@ -33,7 +33,7 @@ public class Player extends Character {
 	private Listener<Void> nextActionListener;
 	
     public Player(Rect bounds, Rect boundingBox) {
-        super(bounds, boundingBox, 180, new StandingSprite());
+        super(bounds, boundingBox, 280, new StandingSprite());
         setCollidable(true);
         
         GameWorld.view().playerStats().setMaximumHealth(maxHelth);
@@ -149,13 +149,10 @@ public class Player extends Character {
     
     private final class WalkingSprite extends Sprite {
         public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("player/player_walk_01.png"),
-            					 ImageLoader.image("player/player_walk_02.png"),
-            					 ImageLoader.image("player/player_walk_03.png"),
-            					 ImageLoader.image("player/player_walk_04.png"),
-            					 ImageLoader.image("player/player_walk_05.png"),
-            					 ImageLoader.image("player/player_walk_06.png"),
-            					 ImageLoader.image("player/player_walk_07.png") 
+            super(new Bitmap[] { ImageLoader.image("player/passo_01.png"),
+            					 ImageLoader.image("player/passo_03.png"),
+            					 ImageLoader.image("player/passo_03.png"),
+            					 ImageLoader.image("player/passo_04.png"),
             			}, 700, true);
         }
     }

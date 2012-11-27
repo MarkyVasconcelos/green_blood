@@ -9,10 +9,11 @@ import android.view.View;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.hud.util.ButtonStateImageHolder;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.HighUpDisplay;
 
 import commons.awt.Listener;
 
-public class DirectionalControls extends View {
+public class DirectionalControls extends HighUpDisplay {
 	private ButtonStateImageHolder left, right;
 	
     private volatile boolean holdingLeft;
@@ -21,14 +22,17 @@ public class DirectionalControls extends View {
     
     private Listener<Void> onDoubleTap; 
 
-    public DirectionalControls(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        
-        left = new ButtonStateImageHolder(ImageLoader.image("huds/left_unpressed.png"), ImageLoader.image("huds/left_pressed.png"));
-        right = new ButtonStateImageHolder(ImageLoader.image("huds/right_unpressed.png"), ImageLoader.image("huds/right_pressed.png"));
-    }
+    public DirectionalControls(Rect bounds) {
+    	super(bounds);
+		left = new ButtonStateImageHolder(
+				ImageLoader.image("huds/left_unpressed.png"),
+				ImageLoader.image("huds/left_pressed.png"));
+		right = new ButtonStateImageHolder(
+				ImageLoader.image("huds/right_unpressed.png"),
+				ImageLoader.image("huds/right_pressed.png"));
+	}
 
-    @Override
+	@Override
     public boolean onTouchEvent(MotionEvent event) {
     	doubleTapListener.onTouchEvent(event);
     	
@@ -40,7 +44,7 @@ public class DirectionalControls extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN)
             holdingLeft = holdingRight = false;
 
-        if (event.getX() < getWidth() / 2){
+        if (event.getX() < width() / 2){
             holdingLeft = true;
             holdingRight = false;
         }else{
@@ -52,10 +56,11 @@ public class DirectionalControls extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    public void draw(Canvas canvas, Rect thisBounds) {
         canvas.save();
 
-        Rect half = new Rect(0,0,getWidth() / 2, getHeight());
+        Rect half = new Rect(0, 0, width() / 2, height());
+        half.offset(thisBounds.left, thisBounds.top);
         canvas.drawBitmap(left.unpressed(), left.size(), half, Paints.BLANK);
         half.offset(half.width(), 0);
         canvas.drawBitmap(right.pressed(), right.size(), half, Paints.BLANK);

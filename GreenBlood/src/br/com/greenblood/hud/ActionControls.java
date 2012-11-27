@@ -9,8 +9,9 @@ import android.view.View;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.hud.util.ButtonStateImageHolder;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.HighUpDisplay;
 
-public class ActionControls extends View {
+public class ActionControls extends HighUpDisplay {
 	private final ButtonStateImageHolder punch, jump, grab;
 	private final ButtonStateImageHolder up, down;
 	
@@ -20,10 +21,10 @@ public class ActionControls extends View {
 	private boolean touchedAction, stillTouchingAction;
     private boolean touchedJump, stillTouchingJump;
 
-    public ActionControls(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ActionControls(Rect bounds) {
+        super(bounds);
         
-        punch = new ButtonStateImageHolder(ImageLoader.image("huds/atk_unpressed.png"), ImageLoader.image("huds/atk_pressed.png"));
+		punch = new ButtonStateImageHolder(ImageLoader.image("huds/atk_unpressed.png"), ImageLoader.image("huds/atk_pressed.png"));
         jump = new ButtonStateImageHolder(ImageLoader.image("huds/jump_unpressed.png"), ImageLoader.image("huds/jump_pressed.png"));
         grab = new ButtonStateImageHolder(ImageLoader.image("huds/grab_unpressed.png"), ImageLoader.image("huds/grab_pressed.png"));
         up = new ButtonStateImageHolder(ImageLoader.image("huds/up_unpressed.png"), ImageLoader.image("huds/up_pressed.png"));
@@ -35,7 +36,7 @@ public class ActionControls extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN){
-            if (event.getY() < getHeight() / 2)
+            if (event.getY() < height() / 2)
                 touchAction();
 			else
 				touchJump();
@@ -47,7 +48,7 @@ public class ActionControls extends View {
         }
         
         if(event.getAction() == MotionEvent.ACTION_MOVE){
-            if (event.getY() < getHeight() / 2)
+            if (event.getY() < height() / 2)
                 touchingAction();
             else
                 touchingJump();
@@ -111,10 +112,11 @@ public class ActionControls extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+	public void draw(Canvas canvas, Rect thisBounds) {
         canvas.save();
 
-        Rect half = new Rect(0, 0, getWidth(), getHeight() / 2);
+        Rect half = new Rect(0, 0, width(), height() / 2);
+        half.offset(thisBounds.left, thisBounds.top);
         canvas.drawBitmap(currentMainAction.unpressed(), currentMainAction.size(), half, Paints.BLANK);
         half.offset(0, half.height());
         canvas.drawBitmap(currentSecondaryAction.unpressed(), currentSecondaryAction.size(), half, Paints.BLANK);
@@ -128,7 +130,6 @@ public class ActionControls extends View {
 		
 		currentMainAction = punch;
         currentSecondaryAction = jump;
-        postInvalidate();
 	}
 	        
 	public void displayGrab() {
@@ -136,7 +137,6 @@ public class ActionControls extends View {
 			return;
 		
 		currentMainAction = grab;
-		postInvalidate();
 	}
 
 	public void displayPunch() {
@@ -144,7 +144,6 @@ public class ActionControls extends View {
 			return;
 			
 		currentMainAction = punch;
-		postInvalidate();
 	}
 
 	public void displayDirectionals() {
@@ -153,6 +152,5 @@ public class ActionControls extends View {
 		
 		currentMainAction = up;
         currentSecondaryAction = down;
-        postInvalidate();
 	}
 }

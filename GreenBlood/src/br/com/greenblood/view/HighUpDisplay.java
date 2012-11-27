@@ -2,6 +2,7 @@ package br.com.greenblood.view;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 
 public abstract class HighUpDisplay {
 	private final Rect thisBounds;
@@ -11,6 +12,8 @@ public abstract class HighUpDisplay {
 		thisBounds = bounds;
 		w = bounds.right - bounds.left;
 		h = bounds.bottom - bounds.top;
+		
+		visible = true;
 	}
 	
 	public void draw(Canvas canvas) {
@@ -18,13 +21,16 @@ public abstract class HighUpDisplay {
 			onFirstDraw();
 			firstDraw = false;
 		}
-		draw(canvas, thisBounds);
+		
+		if(visible)
+			draw(canvas, thisBounds);
 	}
 	
 	private boolean firstDraw = true;
+	private boolean visible;
 	public void onFirstDraw(){ }
 	
-	public abstract void draw(Canvas canvas, Rect surfaceView);
+	public abstract void draw(Canvas canvas, Rect thisSize);
 	
 	public int left(){
 		return thisBounds.left;
@@ -48,5 +54,26 @@ public abstract class HighUpDisplay {
 	
 	public int height(){
 		return h;
+	}
+
+	public boolean onTouchEvent(MotionEvent event) {
+		return false;
+	}
+	
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+	
+	public boolean isInvisible() {
+		return !isVisible();
+	}
+
+	public Rect bounds() {
+		return thisBounds;
 	}
 }

@@ -1,27 +1,23 @@
 package br.com.greenblood;
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import br.com.greenblood.core.GameCore;
-import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
 import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.ItemView;
-import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
-import br.com.greenblood.view.DialogView;
-import br.com.greenblood.view.SlideView;
 import br.com.greenblood.view.GameView;
+import br.com.greenblood.view.SlideView;
 
 import commons.awt.Listener;
 
 public class GameActivity extends MultiTouchActivity {
     private GameView gameView;
     
-    private final Handler uiHandler = new Handler();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +30,6 @@ public class GameActivity extends MultiTouchActivity {
         
         gameView = view();
         gameView.set(this);
-        controls().setOnTouchListener(this);
-        actions().setOnTouchListener(this);
     }
     
 	public GameView view() {
@@ -45,28 +39,15 @@ public class GameActivity extends MultiTouchActivity {
 	public EnemyStatsView enemyStats() {
 		return (EnemyStatsView) findViewById(R.id.enemy_stats);
 	}
-
-	public DialogView dialog() {
-		return (DialogView) findViewById(R.id.dialog_view);
-	}
 	
 	public SlideView slide() {
 		return (SlideView) findViewById(R.id.slide_view);
-	}
-    
-    public ActionControls actions() {
-		return (ActionControls) findViewById(R.id.action_control);
 	}
     
 	public ItemView itemView() {
 		return (ItemView) findViewById(R.id.item_view);
 	}
 	
-
-    public DirectionalControls controls() {
-		return (DirectionalControls) findViewById(R.id.direction_control);
-	}
-
 	@Override
     public void onBackPressed() {
     	super.onBackPressed();
@@ -82,7 +63,7 @@ public class GameActivity extends MultiTouchActivity {
     }
 
 	public void display(String txt, Listener<Void> listener) {
-		dialog().display(txt, listener);
+		view().display(txt, listener);
 	}
 	
 	public void showSlide(Listener<Void> onEndListener) {
@@ -98,13 +79,8 @@ public class GameActivity extends MultiTouchActivity {
 	}
 	
 	private void setControllersVisibility(final int visibility){
-		uiHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				controls().setVisibility(visibility);
-				actions().setVisibility(visibility);
-			}
-		});
+				view().controls().setVisible(visibility == View.VISIBLE);
+				view().actions().setVisible(visibility == View.VISIBLE);
 	}
 
 }

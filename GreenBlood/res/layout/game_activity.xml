@@ -25,26 +25,6 @@
         android:layout_marginRight="6dp"
         android:visibility="invisible" />
 
-    <br.com.greenblood.hud.DirectionalControls
-        android:id="@+id/direction_control"
-        android:layout_width="192dp"
-        android:layout_height="96dp"
-        android:layout_gravity="bottom" />
-
-    <br.com.greenblood.hud.ActionControls
-        android:id="@+id/action_control"
-        android:layout_width="96dp"
-        android:layout_height="192dp"
-        android:layout_gravity="bottom|right" />
-
-    <br.com.greenblood.view.DialogView
-        android:id="@+id/dialog_view"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="2dp"
-        android:visibility="invisible" />
-
     <br.com.greenblood.view.SlideView
         android:id="@+id/slide_view"
         android:layout_width="match_parent"

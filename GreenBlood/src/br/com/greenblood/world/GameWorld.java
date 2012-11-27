@@ -31,8 +31,7 @@ public class GameWorld {
     private static GameWorld world;
 
 	public static void init(GameActivity gameActivity) {
-		world = new GameWorld(gameActivity.controls(), gameActivity.actions());
-		world.playerStatsView = gameActivity.view().playerStats();
+		world = new GameWorld();
 		world.enemyStatsView = gameActivity.enemyStats();
 		world.itemView = gameActivity.itemView();
 		world.gameActivity = gameActivity;
@@ -40,13 +39,10 @@ public class GameWorld {
 
 	private GameActivity gameActivity;
 	private ItemView itemView;
-    private PlayerStatsView playerStatsView;
     private EnemyStatsView enemyStatsView;
     private WorldMap worldMap;
     private World worldScene;
     private Player player;
-    private final DirectionalControls controls;
-    private final ActionControls actions;
 	private Scene scene;
 	private boolean blockMove;
 	private float offsetX;
@@ -54,10 +50,7 @@ public class GameWorld {
 	private final Bitmap sky;
 	private final Rect skyBounds;
 	
-    private GameWorld(DirectionalControls controls, ActionControls actions) {
-        this.controls = controls;
-        this.actions = actions;
-        
+    private GameWorld() {
         scene = SceneMaker.sceneOne();
 		worldMap = new WorldMap(scene);
 		
@@ -94,8 +87,8 @@ public class GameWorld {
         worldMap.surfaceCreated(size);
 
         player = new Player(new Rect(0, 0, 64, 128), new Rect(0, 0, 30, 128));
-        player.setControls(controls);
-        player.setActionControls(actions);
+        player.setControls(view().controls());
+        player.setActionControls(view().actions());
         
         Vector2D initialTile = scene.playerInitialTile();
 		player.pos().set(GameCore.tilesToPixel(initialTile));
@@ -149,7 +142,7 @@ public class GameWorld {
 			@Override
 			public void on(Void t) {
 				unlockMove();
-				gameActivity.dialog().hide();
+				view().dialog().hide();
 				gameActivity.showControllers();
 				
 				if(listener != null)
@@ -196,7 +189,7 @@ public class GameWorld {
 	}
 
 	public static ActionControls actions() {
-		return world().actions;
+		return view().actions();
 	}
 	
 	public static GameView view() {

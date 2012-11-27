@@ -26,7 +26,7 @@ public class TextObject extends Entity {
 		Rect currentBounds = currentBounds();
 		currentBounds.offset((int) offset.x(), (int) offset.y());
 
-		canvas.drawText(text, currentBounds.left, currentBounds.top, Paints.RED);
+		canvas.drawText(text, currentBounds.left, currentBounds.top, Paints.RED_WRITE);
 
 		canvas.restore();
 	}
