@@ -1,18 +1,27 @@
 package br.com.greenblood.hud;
 
-import br.com.greenblood.dev.Paints;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import br.com.greenblood.dev.Paints;
+import br.com.greenblood.hud.util.ButtonStateImageHolder;
+import br.com.greenblood.util.ImageLoader;
 
 public class ActionControls extends View {
+	//TODO Create directionals
+	private ButtonStateImageHolder atk, jump, grab;
+	
 	private boolean touchedAction, stillTouchingAction;
     private boolean touchedJump, stillTouchingJump;
 
     public ActionControls(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        atk = new ButtonStateImageHolder(ImageLoader.image("huds/atk_unpressed.png"), ImageLoader.image("huds/atk_pressed.png"));
+        jump = new ButtonStateImageHolder(ImageLoader.image("huds/jump_unpressed.png"), ImageLoader.image("huds/jump_pressed.png"));
     }
 
     @Override
@@ -97,13 +106,11 @@ public class ActionControls extends View {
     protected void onDraw(Canvas canvas) {
         canvas.save();
 
-        int middle = getHeight() / 2;
-        canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.TRANS_BLACK);
-        canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.STROKE_BLUE);
-        canvas.drawLine(0, middle, getWidth(), middle - 1, Paints.BLUE);
-
+        Rect half = new Rect(0,0,getWidth(), getHeight() / 2);
+        canvas.drawBitmap(atk.unpressed(), atk.size(), half, Paints.BLANK);
+        half.offset(0, half.height());
+        canvas.drawBitmap(jump.unpressed(), jump.size(), half, Paints.BLANK);
 
         canvas.restore();
     }
-
 }

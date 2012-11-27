@@ -33,14 +33,14 @@
 
     <br.com.greenblood.hud.DirectionalControls
         android:id="@+id/direction_control"
-        android:layout_width="140dp"
-        android:layout_height="70dp"
+        android:layout_width="192dp"
+        android:layout_height="96dp"
         android:layout_gravity="bottom" />
 
     <br.com.greenblood.hud.ActionControls
         android:id="@+id/action_control"
-        android:layout_width="70dp"
-        android:layout_height="140dp"
+        android:layout_width="96dp"
+        android:layout_height="192dp"
         android:layout_gravity="bottom|right" />
 
     <br.com.greenblood.view.DialogView

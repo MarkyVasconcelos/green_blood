@@ -2,14 +2,19 @@ package br.com.greenblood.hud;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import br.com.greenblood.dev.Paints;
+import br.com.greenblood.hud.util.ButtonStateImageHolder;
+import br.com.greenblood.util.ImageLoader;
 
 import commons.awt.Listener;
 
 public class DirectionalControls extends View {
+	private ButtonStateImageHolder left, right;
+	
     private volatile boolean holdingLeft;
     private volatile boolean holdingRight;
     private DoubleTapListener doubleTapListener = new DoubleTapListener();
@@ -18,6 +23,9 @@ public class DirectionalControls extends View {
 
     public DirectionalControls(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        left = new ButtonStateImageHolder(ImageLoader.image("huds/left_unpressed.png"), ImageLoader.image("huds/left_pressed.png"));
+        right = new ButtonStateImageHolder(ImageLoader.image("huds/right_unpressed.png"), ImageLoader.image("huds/right_pressed.png"));
     }
 
     @Override
@@ -47,12 +55,11 @@ public class DirectionalControls extends View {
     protected void onDraw(Canvas canvas) {
         canvas.save();
 
-        int middle = getWidth() / 2;
-
-        canvas.drawRect(0, 0, getWidth()-1, getHeight(), Paints.TRANS_BLACK);
-        canvas.drawRect(0, 0, getWidth() - 1, getHeight(), Paints.STROKE_BLUE);
-        canvas.drawLine(middle, 0, middle - 1, getHeight(), Paints.BLUE);
-
+        Rect half = new Rect(0,0,getWidth() / 2, getHeight());
+        canvas.drawBitmap(left.unpressed(), left.size(), half, Paints.BLANK);
+        half.offset(half.width(), 0);
+        canvas.drawBitmap(right.pressed(), right.size(), half, Paints.BLANK);
+        
         canvas.restore();
     }
 
