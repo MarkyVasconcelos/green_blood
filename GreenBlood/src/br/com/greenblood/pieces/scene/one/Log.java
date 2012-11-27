@@ -44,7 +44,7 @@ public class Log extends StaticObject {
 		}else if(walkingOverThis){
 			player.walkingOnAir();
 			walkingOverThis = false;
-		}else if(playerTouched && originalY != currentBounds.bottom)
+		}else if(playerTouched && originalY < currentBounds.bottom)
 			//TODO: Don't let it floats away on air
 			pos().setY(pos().y() - pixelsPerSecond / uptime);
 	}
