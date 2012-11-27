@@ -27,7 +27,7 @@ public class FallingTree extends StaticObject {
 	
 	public void cut(final Listener<Void> listener){
 		Sprite sprite = new Sprite(new Bitmap[] {
-				ImageLoader.image("falling_tree/tree.PNG"),
+				ImageLoader.image("falling_tree/tree.png"),
 				ImageLoader.image("falling_tree/tree2.PNG"),
 				ImageLoader.image("falling_tree/tree3.PNG"),
 				ImageLoader.image("falling_tree/tree4.PNG") }, 800,
