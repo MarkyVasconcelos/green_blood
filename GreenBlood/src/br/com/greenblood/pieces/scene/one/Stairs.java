@@ -62,12 +62,15 @@ public class Stairs extends StaticObject {
 	public void processLogics(long uptime) {
 		if(Rect.intersects(player.currentBoundingBounds(), currentBounds())){
 			player.controlledWalking();
+			GameWorld.actions().displayDirectionals();
 			walkingOverThis = true;
 			player.dir().setY(0);
 			player.onTouchAction(onTouchingActionListener);
 			player.onTouchJump(onTouchingJumpListener);
-		}else if(walkingOverThis)
+		}else if(walkingOverThis){
+			GameWorld.actions().displayBasicControls();
 			player.walkingOnAir();
+		}
 	}
 	
 	private final Listener<Integer> onTouchingActionListener = new Listener<Integer>() {

@@ -11,8 +11,8 @@ import br.com.greenblood.hud.util.ButtonStateImageHolder;
 import br.com.greenblood.util.ImageLoader;
 
 public class ActionControls extends View {
-	//TODO Create directionals
 	private final ButtonStateImageHolder punch, jump, grab;
+	private final ButtonStateImageHolder up, down;
 	
 	private ButtonStateImageHolder currentMainAction;
 	private ButtonStateImageHolder currentSecondaryAction;
@@ -26,8 +26,10 @@ public class ActionControls extends View {
         punch = new ButtonStateImageHolder(ImageLoader.image("huds/atk_unpressed.png"), ImageLoader.image("huds/atk_pressed.png"));
         jump = new ButtonStateImageHolder(ImageLoader.image("huds/jump_unpressed.png"), ImageLoader.image("huds/jump_pressed.png"));
         grab = new ButtonStateImageHolder(ImageLoader.image("huds/grab_unpressed.png"), ImageLoader.image("huds/grab_pressed.png"));
+        up = new ButtonStateImageHolder(ImageLoader.image("huds/up_unpressed.png"), ImageLoader.image("huds/up_pressed.png"));
+        down = new ButtonStateImageHolder(ImageLoader.image("huds/down_unpressed.png"), ImageLoader.image("huds/down_pressed.png"));
         
-        displayNormalControls();
+        displayBasicControls();
     }
 
     @Override
@@ -120,31 +122,37 @@ public class ActionControls extends View {
         canvas.restore();
     }
 
-	private void displayNormalControls() {
+	public void displayBasicControls() {
+		if(currentMainAction == punch)
+			return;
+		
 		currentMainAction = punch;
         currentSecondaryAction = jump;
+        postInvalidate();
 	}
 	        
 	public void displayGrab() {
 		if(currentMainAction == grab)
 			return;
+		
 		currentMainAction = grab;
-		getHandler().post(new Runnable() {
-			@Override
-			public void run() {
-				invalidate();
-			}
-		});
+		postInvalidate();
 	}
 
 	public void displayPunch() {
-		if(currentMainAction == grab)
+		if(currentMainAction == punch)
+			return;
+			
 		currentMainAction = punch;
-		getHandler().post(new Runnable() {
-			@Override
-			public void run() {
-				invalidate();
-			}
-		});
+		postInvalidate();
+	}
+
+	public void displayDirectionals() {
+		if(currentMainAction == up)
+			return;
+		
+		currentMainAction = up;
+        currentSecondaryAction = down;
+        postInvalidate();
 	}
 }
