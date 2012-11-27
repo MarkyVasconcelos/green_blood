@@ -3,8 +3,8 @@ package br.com.greenblood.pieces.scene.one;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.dev.Paints;
-import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.movable.Player;
@@ -18,7 +18,7 @@ public class Stairs extends StaticObject {
 	
 	private final Player player;
 	private boolean walkingOverThis = false;
-	private Rect imageBounds;
+	private Rect imageBounds, imageTargetBounds;
 	private int stairs;
 	
 	public Stairs(Rect bounds) {
@@ -27,10 +27,9 @@ public class Stairs extends StaticObject {
 		img = ImageLoader.image("house/stairs.png");
 		imageBounds = new Rect(0,0,img.getWidth(), img.getHeight());
 		
-		float scale = (float) imageBounds.width() / (float) bounds().width();
-		
-		imageBounds.right *= scale;
-		imageBounds.bottom *= scale;
+		imageTargetBounds = new Rect(imageBounds);
+		imageTargetBounds.right *= GameCore.scale();
+		imageTargetBounds.bottom *= GameCore.scale();
 		
 		stairs = bounds().height() / imageBounds.height();
 		
@@ -47,7 +46,7 @@ public class Stairs extends StaticObject {
 		canvas.save();
 		
 		Rect bounds = currentBounds();
-		Rect imgRect = new Rect(imageBounds);
+		Rect imgRect = new Rect(imageTargetBounds);
 		imgRect.offset(bounds.left, bounds.top);
 		imgRect.offset((int)offset.x,(int) offset.y);
 		
