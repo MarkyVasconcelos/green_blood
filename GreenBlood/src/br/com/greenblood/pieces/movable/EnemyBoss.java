@@ -2,29 +2,23 @@ package br.com.greenblood.pieces.movable;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import br.com.greenblood.history.mock.SceneOneObjects;
 import br.com.greenblood.img.Sprite;
-import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.util.ImageLoader;
-import br.com.greenblood.world.GameWorld;
 
-public class MiniBossEnemy extends Enemy {
+public class EnemyBoss extends Enemy {
 	private final Sprite walkingSprite = new WalkingSprite();
 	private final Sprite punchingSprite = new PunchingSprite();
 	
-    public MiniBossEnemy(Rect bounds, Rect boundingBounds) {
-        super(bounds, boundingBounds, 5, new WalkingSprite());
+    public EnemyBoss(Rect bounds, Rect boundingBounds) {
+        super(bounds, boundingBounds, 8, new WalkingSprite());
     }
     
     @Override
     public void kill() {
     	super.kill();
     	
-    	Entity key = SceneOneObjects.gateKey();
-		key.pos().set(pos().x(), pos().y() - key.height() / 2);
-		GameWorld.world().addEntity(key);
+    	//Start final cut-scene
     }
-    
     
 	@Override
 	protected Sprite walkingSprite() {
@@ -38,13 +32,13 @@ public class MiniBossEnemy extends Enemy {
 	
     private static final class WalkingSprite extends Sprite {
         public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("house/stick.png"), ImageLoader.image("house/stick_1.png") }, 200, true);
+            super(new Bitmap[] { ImageLoader.image("boss/stick.png"), ImageLoader.image("boss/stick_1.png") }, 200, true);
         }
     }
     
     private final class PunchingSprite extends Sprite{
         public PunchingSprite() {
-            super(new Bitmap[] { ImageLoader.image("house/stick_punch.png"), ImageLoader.image("house/stick_punch_1.png"), ImageLoader.image("house/stick_punch_2.png") },
+            super(new Bitmap[] { ImageLoader.image("boss/stick_punch.png"), ImageLoader.image("boss/stick_punch_1.png"), ImageLoader.image("boss/stick_punch_2.png") },
                     593, false);
         }
     }

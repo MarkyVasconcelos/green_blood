@@ -8,8 +8,8 @@ import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
+import br.com.greenblood.pieces.movable.EnemyBoss;
 import br.com.greenblood.pieces.movable.MiniBossEnemy;
-import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.world.Scene;
 import br.com.greenblood.world.map.Tile;
 
@@ -312,8 +312,16 @@ public class SceneMaker {
 			}
 		});
 		
-		//TODO: Make this the boos
-		addEnemy(scene, 99, 15, false);
+		//Boss
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Enemy ent = new EnemyBoss(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+				int bottom = GameCore.tilesToPixels(15);
+				ent.pos().set(GameCore.tilesToPixels(99), bottom - ent.height() / 2);
+				return ent;
+			}
+		});
 		
 		return scene;
 	}

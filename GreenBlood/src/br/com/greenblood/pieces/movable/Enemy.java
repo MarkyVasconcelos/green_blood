@@ -18,9 +18,13 @@ public class Enemy extends Character {
 	private final Sprite punchingSprite = new PunchingSprite();
 	
     public Enemy(Rect bounds, Rect boundingBounds) {
-        super(bounds, boundingBounds, 130 + rdm.nextInt(130), new WalkingSprite());
+    	this(bounds, boundingBounds, 3, new WalkingSprite());
+    }
+    
+	protected Enemy(Rect bounds, Rect boundingBounds, int maxHealth, Sprite standingSprite) {
+        super(bounds, boundingBounds, 130 + rdm.nextInt(130), standingSprite);
         setCollidable(true);
-        currentHealth = 3;
+        currentHealth = maxHealth;
     }
 
     @Override
@@ -51,6 +55,7 @@ public class Enemy extends Character {
                     593, false);
         }
     }
+    
 	@Override
 	public void hit() {
 		currentHealth--;
