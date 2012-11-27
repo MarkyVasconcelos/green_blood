@@ -13,10 +13,10 @@ public class TextObject extends Entity {
 	private long duration;
 	private Listener<Void> onEndListener;
 
-	public TextObject(Rect bounds, String text) {
+	public TextObject(Rect bounds, String text, long duration) {
 		super(bounds);
 		this.text = text;
-		duration = 2000;
+		this.duration = duration;
 	}
 
 	@Override

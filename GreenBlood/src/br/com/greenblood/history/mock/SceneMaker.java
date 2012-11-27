@@ -226,7 +226,7 @@ public class SceneMaker {
 			public Entity create() {
 				Trigger wayHigh = SceneOneObjects.wayHighTrigger();
 				int bottom = GameCore.tilesToPixels(15);
-				wayHigh.pos().set(GameCore.tilesToPixels(83), bottom - wayHigh.height() / 2);
+				wayHigh.pos().set(GameCore.tilesToPixels(83) + 20, bottom - wayHigh.height() / 2);
 				return wayHigh;
 			}
 		});

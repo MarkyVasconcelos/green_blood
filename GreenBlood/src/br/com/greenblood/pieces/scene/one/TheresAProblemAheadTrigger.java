@@ -17,7 +17,7 @@ public class TheresAProblemAheadTrigger extends Trigger {
 	public void onFired() {
 		GameWorld.world().lockScreen();
 		
-		TextObject chainsawDisplay = new TextObject(new Rect(0,0,80,100), "Vrum!! Vrum!!");
+		TextObject chainsawDisplay = new TextObject(new Rect(0,0,80,100), "Vrum!! Vrum!!", 2000);
 		chainsawDisplay.pos().set(currentBounds().left + 90, currentBounds().top + 180);
 		chainsawDisplay.onEnd(new Listener<Void>() {
 			@Override

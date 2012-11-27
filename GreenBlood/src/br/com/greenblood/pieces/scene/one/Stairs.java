@@ -32,6 +32,7 @@ public class Stairs extends StaticObject {
 		imageTargetBounds.bottom *= GameCore.scale();
 		
 		stairs = bounds().height() / imageBounds.height();
+		stairs++;
 		
 		setCollidable(false);
 		player = GameWorld.player();

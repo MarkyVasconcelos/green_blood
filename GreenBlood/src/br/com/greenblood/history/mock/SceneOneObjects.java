@@ -81,7 +81,7 @@ public class SceneOneObjects {
 	
 	public static Trigger wayHighTrigger() {
 //		return new EmptyTrigger(new Rect(0, 0, 40, 200));
-		return new WayHighTrigger(new Rect(0,0,40,200));
+		return new WayHighTrigger(new Rect(0,0,1,200));
 	}
 	
 	public static Trigger cabinTrigger() {
