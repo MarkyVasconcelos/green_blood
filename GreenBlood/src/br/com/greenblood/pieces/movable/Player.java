@@ -8,6 +8,7 @@ import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.world.GameWorld;
 
 import commons.awt.Listener;
 
@@ -24,7 +25,6 @@ public class Player extends Character {
 	private static final int JUMPING = 3;
 	private static final int FALLING = 4;
 	private static final int DASHING = 5;
-	private PlayerStatsView statsView;
 	
 	private int maxHelth = 10;
 	private int currentHelth = maxHelth;
@@ -33,8 +33,10 @@ public class Player extends Character {
 	private Listener<Void> nextActionListener;
 	
     public Player(Rect bounds, Rect boundingBox) {
-        super(bounds, boundingBox, 360, new StandingSprite());
+        super(bounds, boundingBox, 180, new StandingSprite());
         setCollidable(true);
+        
+        GameWorld.view().playerStats().setMaximumHealth(maxHelth);
     }
 
     @Override
@@ -173,7 +175,7 @@ public class Player extends Character {
 	@Override
 	public void hit() {
 		currentHelth--;
-		statsView.setValue(currentHelth);
+		GameWorld.view().playerStats().setValue(currentHelth);
 		//TODO: Die
 	}
 	
@@ -200,11 +202,6 @@ public class Player extends Character {
 		return punchingSprite;
 	}
 
-	public void setStatsView(PlayerStatsView statsView) {
-		this.statsView = statsView;
-		statsView.setMaximumHealth(maxHelth);
-	}
-	
 	public void stop() {
 		execute(standingSprite(), false);
 	}

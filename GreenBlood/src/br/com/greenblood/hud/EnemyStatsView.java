@@ -24,11 +24,11 @@ public class EnemyStatsView extends LinearLayout {
 		
 		addView(faceView, LayoutParamsFactory.newLinear(40, 40));
 		
-		bar = new LinearProgressBar(context);
+//		bar = new LinearProgressBar(context);
 		
 		LayoutParams params = LayoutParamsFactory.newWrapMatchLinear();
 		params.gravity = Gravity.CENTER_VERTICAL;
-		addView(bar, params);
+//		addView(bar, params);
 	}
 	
 	public void display(final Enemy enemy) {

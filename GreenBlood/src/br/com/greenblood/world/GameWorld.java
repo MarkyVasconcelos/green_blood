@@ -23,6 +23,7 @@ import br.com.greenblood.pieces.World.AnimableEntity;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.GameView;
 
 import commons.awt.Listener;
 
@@ -31,7 +32,7 @@ public class GameWorld {
 
 	public static void init(GameActivity gameActivity) {
 		world = new GameWorld(gameActivity.controls(), gameActivity.actions());
-		world.playerStatsView = gameActivity.playerStats();
+		world.playerStatsView = gameActivity.view().playerStats();
 		world.enemyStatsView = gameActivity.enemyStats();
 		world.itemView = gameActivity.itemView();
 		world.gameActivity = gameActivity;
@@ -95,7 +96,6 @@ public class GameWorld {
         player = new Player(new Rect(0, 0, 64, 128), new Rect(0, 0, 30, 128));
         player.setControls(controls);
         player.setActionControls(actions);
-        player.setStatsView(playerStatsView);
         
         Vector2D initialTile = scene.playerInitialTile();
 		player.pos().set(GameCore.tilesToPixel(initialTile));
@@ -199,6 +199,10 @@ public class GameWorld {
 		return world().actions;
 	}
 	
+	public static GameView view() {
+		return world().gameActivity.view();
+	}
+	
 	private class Translater {
 		float speedX, speedY;
 		final long duration = 1400;
@@ -233,5 +237,4 @@ public class GameWorld {
 		
 		}
 	}
-
 }

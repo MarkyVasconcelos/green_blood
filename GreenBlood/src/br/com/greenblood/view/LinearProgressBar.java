@@ -4,11 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import commons.view.OnFirstDrawView;
 
-public class LinearProgressBar extends OnFirstDrawView {
+public class LinearProgressBar extends HighUpDisplay {
     private float progress;
 
     private ProgressCalculator calc;
@@ -21,8 +22,9 @@ public class LinearProgressBar extends OnFirstDrawView {
     private RectF fore;
     private RectF up; 
 
-    public LinearProgressBar(Context context) {
-        super(context);
+    public LinearProgressBar(Rect bounds) {
+    	super(bounds);
+    	
         progress = 0;
 
         foreground = new Paint();
@@ -38,34 +40,18 @@ public class LinearProgressBar extends OnFirstDrawView {
 
     @Override
     public void onFirstDraw() {
-        back = new RectF(0, 0, getWidth(), 10);
-
-        float prog = ((float)getWidth()) / 100 * progress;
-        fore = new RectF(0, 0, prog, 10);
-        up = new RectF(0, 3, prog, 10);
-    }
-
-    public void onDraw(Canvas canvas) {
-        if (calc == null)
-            return;
-
-        super.onDraw(canvas);
-
-        canvas.save();
-        canvas.drawRoundRect(back, 5, 5, background);
-        canvas.drawRoundRect(fore, 5, 5, foreground);
-        canvas.drawRoundRect(up, 5, 5, upground);
-        canvas.restore();
+        back = new RectF(left(), top(), right(), bottom());
+        
+        fore = new RectF(left(), top(), right(), bottom());
+        up = new RectF(left(), top() + 3, right(), height());
     }
 
     public void setValue(int value) {
         progress = calc.getPercent(value);
 
-        float prog = ((float)getWidth()) / 100 * progress;
-        fore = new RectF(0, 0, prog, 10);
-        up = new RectF(0, 3, prog, 10);
-        
-        invalidate();
+        float prog = ((float)width()) / 100 * progress;
+        fore =  new RectF(left(), top(), left() + prog, bottom());
+        up = new RectF(left(), top() + 3, left() + prog, height());
     }
 
     public void setTotal(int totalPages) {
@@ -83,4 +69,16 @@ public class LinearProgressBar extends OnFirstDrawView {
             return (currentProccess * 100f) / total;
         }
     }
+
+	@Override
+	public void draw(Canvas canvas, Rect surfaceView) {
+		   if (calc == null)
+	            return;
+
+	        canvas.save();
+	        canvas.drawRoundRect(back, 5, 5, background);
+	        canvas.drawRoundRect(fore, 5, 5, foreground);
+	        canvas.drawRoundRect(up, 5, 5, upground);
+	        canvas.restore();		
+	}
 }

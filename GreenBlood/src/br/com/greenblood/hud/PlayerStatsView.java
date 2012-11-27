@@ -1,38 +1,44 @@
 package br.com.greenblood.hud;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import br.com.greenblood.core.GameCore;
+import br.com.greenblood.dev.Paints;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.HighUpDisplay;
 import br.com.greenblood.view.LinearProgressBar;
 
-import commons.view.LayoutParamsFactory;
-
-public class PlayerStatsView extends LinearLayout {
-
+public class PlayerStatsView extends HighUpDisplay {
+	
+	private Bitmap playerFace;
 	private LinearProgressBar bar;
+	private Rect playerFaceBounds;
 
-	public PlayerStatsView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public PlayerStatsView(Rect bounds) {
+		super(bounds);
+		playerFace = ImageLoader.image("player/player_face.png");
+		playerFaceBounds = new Rect(0, 0, 39, 39);
+		playerFaceBounds.offset(bounds.left, bounds.top);
+		playerFaceBounds.bottom = GameCore.pixels(39);
+		playerFaceBounds.right = GameCore.pixels(39);
 		
-		ImageView faceView = new ImageView(context);
-		faceView.setImageBitmap(ImageLoader.image("player/player_face.png"));
+		Rect healthBarBounds = new Rect(playerFaceBounds.right + GameCore.oneDp(),
+										bounds.bottom - GameCore.pixels(20),
+										bounds.right - GameCore.oneDp(),
+										bounds.bottom - GameCore.oneDp());
+		bar = new LinearProgressBar(healthBarBounds);
 		
-		addView(faceView, LayoutParamsFactory.newLinear(39, 39));
-		
-		LinearLayout weast = new LinearLayout(context);
-		weast.setGravity(Gravity.CENTER);
-		weast.setOrientation(LinearLayout.VERTICAL);
-		TextView score = new TextView(context);
-		score.setText("12154800");
-		weast.addView(score, LayoutParamsFactory.newMatchWrapLinear());
-		bar = new LinearProgressBar(context);
-		weast.addView(bar, LayoutParamsFactory.newMatchWrapLinear());
-		
-		addView(weast, LayoutParamsFactory.newWrapMatchLinear());
+		//TODO: Add score
+//		TextView score = new TextView(context);
+//		score.setText("12154800");
+//		weast.addView(score, LayoutParamsFactory.newMatchWrapLinear());
+//		bar = new LinearProgressBar(context);
+//		weast.addView(bar, LayoutParamsFactory.newMatchWrapLinear());
+//		addView(weast, LayoutParamsFactory.newWrapMatchLinear());
 	}
 
 	public void setMaximumHealth(int maxHelth) {
@@ -40,13 +46,19 @@ public class PlayerStatsView extends LinearLayout {
 		bar.setValue(maxHelth);
 	}
 	
-	public void setValue(final int helth) {
-		post(new Runnable() {
-			@Override
-			public void run() {
-				bar.setValue(helth);
-			}
-		});
+	public void setValue(final int health) {
+		bar.setValue(health);
+	}
+
+	@Override
+	public void draw(Canvas canvas, Rect surfaceView) {
+		canvas.save();
+		
+		canvas.drawRect(surfaceView, Paints.BLACK);
+		canvas.drawBitmap(playerFace, null, playerFaceBounds, Paints.BLANK);
+		bar.draw(canvas);
+		
+		canvas.restore();
 	}
 
 }

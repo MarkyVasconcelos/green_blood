@@ -1,5 +1,7 @@
 package br.com.greenblood.view;
 
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -7,8 +9,10 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import br.com.greenblood.GameActivity;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.core.LoopSteps;
 import br.com.greenblood.core.MainLoop;
+import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.world.GameWorld;
 
 public class GameView extends SurfaceView implements LoopSteps {
@@ -33,7 +37,7 @@ public class GameView extends SurfaceView implements LoopSteps {
 		GameWorld.init(gameActivity);
 		gameWorld = GameWorld.world();
 	}
-
+	
     private class SurfaceCallback implements SurfaceHolder.Callback {
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -41,6 +45,7 @@ public class GameView extends SurfaceView implements LoopSteps {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
+        	createHighUpDisplays();
             thisSize = new Rect(0, 0, getWidth(), getHeight());
             gameWorld.surfaceCreated(thisSize);
             looper.setDaemon(true);
@@ -68,6 +73,9 @@ public class GameView extends SurfaceView implements LoopSteps {
     public void paintScreen() {
         Canvas canvas = holder.lockCanvas();
         gameWorld.draw(canvas, thisSize);
+        
+        playerStats.draw(canvas);
+        
         holder.unlockCanvasAndPost(canvas);        
     }
 
@@ -75,4 +83,19 @@ public class GameView extends SurfaceView implements LoopSteps {
     public void tearDown() {
         glooper.stop();
     }
+    
+	private void createHighUpDisplays(){
+		Rect bounds = new Rect(GameCore.oneDp(), GameCore.oneDp(), GameCore.pixels(112), GameCore.pixels(48));
+		playerStats = new PlayerStatsView(bounds);
+//	    <br.com.greenblood.hud.PlayerStatsView
+//	        android:id="@+id/player_stats"
+//	        android:layout_width="113dp"
+//	        android:layout_height="48dp"
+//	        android:padding="1dp" />
+	}
+	
+    private PlayerStatsView playerStats;
+	public PlayerStatsView playerStats() {
+		return playerStats;
+	}
 }
