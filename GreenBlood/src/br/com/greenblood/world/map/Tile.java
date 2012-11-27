@@ -66,11 +66,6 @@ public class Tile {
 			Bitmap img() {
 				return ImageLoader.mountainJoinCornerRight();
 			}
-		}, WATER(false) {
-			@Override
-			Bitmap img() {
-				return ImageLoader.water();
-			}
 		}, WATER_FILL(false) {
 			@Override
 			Bitmap img() {

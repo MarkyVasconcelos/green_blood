@@ -20,7 +20,7 @@ public class Log extends StaticObject {
 		super(bounds);
 
 		setSprite(new Sprite(
-				new Bitmap[] { ImageLoader.image("cutted_tree_obstacle.PNG") },
+				new Bitmap[] { ImageLoader.image("water/cutted_tree_obstacle.PNG") },
 				0, false));
 		
 		setCollidable(true);

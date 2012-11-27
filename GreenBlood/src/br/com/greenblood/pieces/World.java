@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.dev.Paints;
 import br.com.greenblood.math.Vector2D;
+import br.com.greenblood.pieces.World.AnimableEntity;
 import br.com.greenblood.pieces.movable.Character;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
@@ -23,8 +24,9 @@ import br.com.greenblood.util.ImageLoader;
  */
 public class World extends Entity {
 	private final List<Entity> pieces = new ArrayList<Entity>();
+	private List<AnimableEntity> animables;
 	private final Player player;
-	private final ArrayBlockingQueue postAdd = new ArrayBlockingQueue(20);
+	private final ArrayBlockingQueue<Entity> postAdd = new ArrayBlockingQueue<Entity>(20);
 
 	public World(Player player) {
 		super(new Rect()); //This is the world, has no dimensions
@@ -55,6 +57,9 @@ public class World extends Entity {
 
 	@Override
 	public void processAnimationLogics(long uptime) {
+		for(AnimableEntity ent : animables)
+			ent.update(uptime);
+		
 		player.processAnimationLogics(uptime);
 
 		for (Entity ent : pieces)
@@ -96,6 +101,14 @@ public class World extends Entity {
 
 	public void postAdd(Entity ent) {
 		postAdd.add(ent);
+	}
+	
+	public void set(List<AnimableEntity> animables) {
+		this.animables = animables;
+	}
+	
+	public interface AnimableEntity {
+		public void update(long uptime);
 	}
 
 }

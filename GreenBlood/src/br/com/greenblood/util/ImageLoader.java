@@ -19,7 +19,7 @@ public class ImageLoader {
 	private static Bitmap mountainCornerRight;
 	private static Bitmap mountainJoinCornerLeft;
 	private static Bitmap mountainJoinCornerRight;
-	private static Bitmap water;
+	private static Bitmap water1, water2, water3;
 	private static Bitmap waterFill;
 	
 	private static Bitmap houseFloor;
@@ -43,7 +43,9 @@ public class ImageLoader {
         mountainCornerRight = image("tile_F.png");
         mountainJoinCornerLeft = image("tile_G.png");
         mountainJoinCornerRight = image("tile_H.png");
-        water = image("tile_water.png");
+        water1 = image("water/water_1.png");
+        water2 = image("water/water_2.png");
+        water3 = image("water/water_3.png");
         waterFill = image("tile_water_fill.png");
         
         houseTree = image("house/tree.PNG");
@@ -62,11 +64,7 @@ public class ImageLoader {
     
     //TODO: Cache things to speedup decode time
     public static Bitmap image(String asset) {
-//    	if(assets.containsKey(asset) && !assets.get(asset).isRecycled())
-//    		return assets.get(asset);
-    	
         try {
-//			return assets.put(asset, BitmapFactory.decodeStream(context.getAssets().open(asset)));
         	return BitmapFactory.decodeStream(context.getAssets().open(asset));
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,8 +76,8 @@ public class ImageLoader {
 		return floor;
 	}
 	
-	public static Bitmap water() {
-		return water;
+	public static Bitmap water(int idx) {
+		return idx == 1 ? water1 : idx == 2 ? water2 : water3;
 	}
 
 	public static Bitmap mountain() {

@@ -1,5 +1,8 @@
 package br.com.greenblood.world;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -16,6 +19,7 @@ import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.World;
+import br.com.greenblood.pieces.World.AnimableEntity;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.movable.Player;
 import br.com.greenblood.util.ImageLoader;
@@ -106,6 +110,8 @@ public class GameWorld {
 
         worldScene = new World(player);
         
+        worldScene.set(animables);
+        
         for(ObjectCreator ent : scene.objects())
         	worldScene.add(ent.create());
     }
@@ -170,6 +176,11 @@ public class GameWorld {
 
 	public void addEntity(Entity ent) {
 		worldScene.postAdd(ent);
+	}
+	
+	private static final List<AnimableEntity> animables = new ArrayList<World.AnimableEntity>();
+	public static void addEntity(AnimableEntity ent) {
+		animables.add(ent);
 	}
 	
 	public void offsetDraw(int offsetX, int offsetY){

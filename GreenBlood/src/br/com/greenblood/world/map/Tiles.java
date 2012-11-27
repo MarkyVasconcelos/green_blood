@@ -16,7 +16,7 @@ public class Tiles {
 	}
 
 	public static Tile water() {
-		return new Tile(Tile.Type.WATER);
+		return new WaterTile();
 	}
 
 	public static Tile mountain() {
