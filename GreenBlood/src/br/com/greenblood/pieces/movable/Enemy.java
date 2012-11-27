@@ -16,6 +16,8 @@ public class Enemy extends Character {
 
 	private final Sprite walkingSprite = new WalkingSprite();
 	private final Sprite punchingSprite = new PunchingSprite();
+
+	private boolean active = true;
 	
     public Enemy(Rect bounds, Rect boundingBounds) {
     	this(bounds, boundingBounds, 3, new WalkingSprite());
@@ -29,6 +31,9 @@ public class Enemy extends Character {
 
     @Override
     public void processSelfLogics(long uptime) {
+    	if(!active)
+    		return;
+    	
         Player player = GameWorld.player();
 
         if(Math.abs(player.y() - y()) > 100)
@@ -82,5 +87,9 @@ public class Enemy extends Character {
 	
 	public int currentHealth() {
 		return currentHealth;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

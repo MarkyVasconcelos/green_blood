@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.mock.SceneMaker;
+import br.com.greenblood.history.mock.SceneOneObjects;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.movable.Enemy;
@@ -36,19 +37,13 @@ public class FallingTree extends StaticObject {
 			@Override
 			public void on(Void t) {
 				//TODO: Correct position of enemy
-				final Enemy enemy = SceneMaker.enemy();
-				enemy.movingLeft();
-				int bottom = GameCore.tilesToPixels(16) - enemy.height() / 2;
-				int left = currentBounds().left + 100;
-				enemy.pos().set(left, bottom);
-				GameWorld.world().addEntity(enemy);
 				GameWorld.player().walkRightUntilBlock(new Listener<Void>() {
 					@Override
 					public void on(Void t) {
 						GameWorld.player().punch(new Listener<Void>() {
 							@Override
 							public void on(Void t) {
-								enemy.kill();
+								SceneOneObjects.chainsawEnemy().kill();
 								listener.on(t);
 							}
 						});

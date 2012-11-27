@@ -7,6 +7,7 @@ import br.com.greenblood.history.ObjectCreator;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.Trigger;
+import br.com.greenblood.pieces.movable.ChainsawEnemy;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.movable.EnemyBoss;
 import br.com.greenblood.pieces.movable.MiniBossEnemy;
@@ -121,7 +122,6 @@ public class SceneMaker {
 			}
 		});
 		
-
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
@@ -130,6 +130,19 @@ public class SceneMaker {
 				tree.pos().set(GameCore.tilesToPixels(34),
 						bottom - tree.height() / 2);
 				return tree;
+			}
+		});
+		
+		scene.addObjectCreator(new ObjectCreator() {
+			@Override
+			public Entity create() {
+				Enemy enemy = new ChainsawEnemy(new Rect(0, 0, 118, 128), new Rect(0, 0, 118, 128));
+				enemy.setActive(false);
+				int bottom = GameCore.tilesToPixels(16);
+				enemy.movingLeft();
+				enemy.pos().set(GameCore.tilesToPixels(33), bottom - enemy.height() / 2);
+				SceneOneObjects.setChainsawyEnemy(enemy);
+				return enemy;
 			}
 		});
 		
