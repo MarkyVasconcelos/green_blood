@@ -1,5 +1,6 @@
 package br.com.greenblood.world;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import br.com.greenblood.GameActivity;
@@ -17,6 +18,7 @@ import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.World;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.movable.Player;
+import br.com.greenblood.util.ImageLoader;
 
 import commons.awt.Listener;
 
@@ -44,13 +46,18 @@ public class GameWorld {
 	private boolean blockMove;
 	private int offsetX;
 	private int offsetY;
-    
+	private final Bitmap sky;
+	private final Rect skyBounds;
+	
     private GameWorld(DirectionalControls controls, ActionControls actions) {
         this.controls = controls;
         this.actions = actions;
         
         scene = SceneMaker.sceneOne();
 		worldMap = new WorldMap(scene);
+		
+		sky = ImageLoader.image("scene/sky.png");
+		skyBounds = new Rect(0, 0, sky.getWidth(), sky.getHeight());
     }
 
     public void proccessAI(long uptime) {
@@ -63,8 +70,8 @@ public class GameWorld {
     public void draw(Canvas canvas, Rect surfaceSize) {
         canvas.save();
 
-        canvas.drawRect(surfaceSize, Paints.BLUE);
-
+    	canvas.drawBitmap(sky, skyBounds, surfaceSize, Paints.BLANK);
+    	
         Vector2D offset = worldMap.draw(canvas, player.pos(), offsetX, offsetY);
         worldScene.draw(canvas, surfaceSize, offset);
         
