@@ -266,7 +266,7 @@ public class SceneMaker {
 			@Override
 			public Entity create() {
 				Enemy ent =  new MiniBossEnemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
-				int bottom = GameCore.tilesToPixels(7);
+				int bottom = GameCore.tilesToPixels(8);
 				ent.pos().set(GameCore.tilesToPixels(85), bottom - ent.height() / 2);
 				return ent;
 			}

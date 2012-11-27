@@ -2,6 +2,7 @@ package br.com.greenblood.pieces.movable;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.mock.SceneOneObjects;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.pieces.Entity;
@@ -13,7 +14,7 @@ public class MiniBossEnemy extends Enemy {
 	private final Sprite punchingSprite = new PunchingSprite();
 	
     public MiniBossEnemy(Rect bounds, Rect boundingBounds) {
-        super(bounds, boundingBounds, 5, new WalkingSprite());
+        super(bounds, boundingBounds, 1, new WalkingSprite());
     }
     
     @Override
@@ -21,7 +22,7 @@ public class MiniBossEnemy extends Enemy {
     	super.kill();
     	
     	Entity key = SceneOneObjects.gateKey();
-		key.pos().set(pos().x(), pos().y() - key.height() / 2);
+		key.pos().set(pos().x(), GameCore.tilesToPixels(8) - key.height() / 2);
 		GameWorld.world().addEntity(key);
     }
     

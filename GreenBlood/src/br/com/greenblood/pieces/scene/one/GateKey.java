@@ -31,9 +31,11 @@ public class GateKey extends StaticObject {
 		Rect playerBounds = player.currentBoundingBounds();
 		Rect thisBounds = currentBounds();
 		if(Rect.intersects(playerBounds, thisBounds)){
+			GameWorld.actions().displayGrab();
 			player.setOnNextActionListener(grabListener);
 			passingTroughThis = true;
 		}else if(passingTroughThis){
+			GameWorld.actions().displayPunch();
 			passingTroughThis = false;
 			player.setOnNextActionListener(null);
 		}
