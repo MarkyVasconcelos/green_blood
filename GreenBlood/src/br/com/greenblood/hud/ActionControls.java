@@ -12,7 +12,10 @@ import br.com.greenblood.util.ImageLoader;
 
 public class ActionControls extends View {
 	//TODO Create directionals
-	private ButtonStateImageHolder atk, jump, grab;
+	private final ButtonStateImageHolder punch, jump, grab;
+	
+	private ButtonStateImageHolder currentMainAction;
+	private ButtonStateImageHolder currentSecondaryAction;
 	
 	private boolean touchedAction, stillTouchingAction;
     private boolean touchedJump, stillTouchingJump;
@@ -20,8 +23,11 @@ public class ActionControls extends View {
     public ActionControls(Context context, AttributeSet attrs) {
         super(context, attrs);
         
-        atk = new ButtonStateImageHolder(ImageLoader.image("huds/atk_unpressed.png"), ImageLoader.image("huds/atk_pressed.png"));
+        punch = new ButtonStateImageHolder(ImageLoader.image("huds/atk_unpressed.png"), ImageLoader.image("huds/atk_pressed.png"));
         jump = new ButtonStateImageHolder(ImageLoader.image("huds/jump_unpressed.png"), ImageLoader.image("huds/jump_pressed.png"));
+        grab = new ButtonStateImageHolder(ImageLoader.image("huds/grab_unpressed.png"), ImageLoader.image("huds/grab_pressed.png"));
+        
+        displayNormalControls();
     }
 
     @Override
@@ -106,11 +112,39 @@ public class ActionControls extends View {
     protected void onDraw(Canvas canvas) {
         canvas.save();
 
-        Rect half = new Rect(0,0,getWidth(), getHeight() / 2);
-        canvas.drawBitmap(atk.unpressed(), atk.size(), half, Paints.BLANK);
+        Rect half = new Rect(0, 0, getWidth(), getHeight() / 2);
+        canvas.drawBitmap(currentMainAction.unpressed(), currentMainAction.size(), half, Paints.BLANK);
         half.offset(0, half.height());
-        canvas.drawBitmap(jump.unpressed(), jump.size(), half, Paints.BLANK);
+        canvas.drawBitmap(currentSecondaryAction.unpressed(), currentSecondaryAction.size(), half, Paints.BLANK);
 
         canvas.restore();
     }
+
+	private void displayNormalControls() {
+		currentMainAction = punch;
+        currentSecondaryAction = jump;
+	}
+	        
+	public void displayGrab() {
+		if(currentMainAction == grab)
+			return;
+		currentMainAction = grab;
+		getHandler().post(new Runnable() {
+			@Override
+			public void run() {
+				invalidate();
+			}
+		});
+	}
+
+	public void displayPunch() {
+		if(currentMainAction == grab)
+		currentMainAction = punch;
+		getHandler().post(new Runnable() {
+			@Override
+			public void run() {
+				invalidate();
+			}
+		});
+	}
 }

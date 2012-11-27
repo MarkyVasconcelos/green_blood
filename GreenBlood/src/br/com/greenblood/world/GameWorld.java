@@ -188,4 +188,8 @@ public class GameWorld {
 		this.offsetY = offsetY;
 	}
 
+	public static ActionControls actions() {
+		return world().actions;
+	}
+
 }

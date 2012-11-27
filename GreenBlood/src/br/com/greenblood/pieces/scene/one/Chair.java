@@ -42,9 +42,11 @@ public class Chair extends StaticObject {
 		if(Rect.intersects(playerBounds, thisBounds)){
 			player.setOnNextActionListener(grabListener);
 			passingTroughThis = true;
+			GameWorld.actions().displayGrab();
 		}else if(passingTroughThis){
-			passingTroughThis = false;
+			GameWorld.actions().displayPunch();
 			player.setOnNextActionListener(null);
+			passingTroughThis = false;
 		}
 	}
 	
