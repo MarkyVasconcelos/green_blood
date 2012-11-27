@@ -33,7 +33,7 @@ public class Player extends Character {
 	private Listener<Void> nextActionListener;
 	
     public Player(Rect bounds, Rect boundingBox) {
-        super(bounds, boundingBox, 180, new StandingSprite());
+        super(bounds, boundingBox, 360, new StandingSprite());
         setCollidable(true);
     }
 
