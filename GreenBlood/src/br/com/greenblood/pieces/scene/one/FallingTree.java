@@ -22,7 +22,7 @@ public class FallingTree extends StaticObject {
 		instance = this;
 
 		setSprite(new Sprite(new Bitmap[] {
-				ImageLoader.image("falling_tree/cutting_tree1b.png")}, 0, false));
+				ImageLoader.image("falling_tree/tree.png")}, 0, false));
 	}
 	
 	public void cut(final Listener<Void> listener){
@@ -61,11 +61,9 @@ public class FallingTree extends StaticObject {
 
 	public void startCutting() {
 		setSprite(new Sprite(new Bitmap[] {
-				ImageLoader.image("falling_tree/cutting_tree1b.png"),
-				ImageLoader.image("falling_tree/cutting_tree2.PNG"),
-				ImageLoader.image("falling_tree/cutting_tree3.PNG"),
-				ImageLoader.image("falling_tree/cutting_tree4.PNG") }, 600,
-				true));		
+				ImageLoader.image("falling_tree/tree.png"),
+				}, 0, false));		
+		//Add enemy cutting it
 	}
 
 }
