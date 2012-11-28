@@ -198,7 +198,7 @@ public class GameWorld {
 	
 	private class Translater {
 		float speedX, speedY;
-		final long duration = 1400;
+		final long duration = 1200;
 		private boolean running;
 		long elapsed;
 		private final Listener<Void> onOffsetEnd;
@@ -207,9 +207,9 @@ public class GameWorld {
 			this.onOffsetEnd = onOffsetEnd;
 			
 			if(Math.abs(offsetX) > 8)
-				speedX = offsetX > 0 ? 2 : -2;
+				speedX = offsetX > 0 ? 4 : -4;
 			if (Math.abs(offsetY) > 8)
-				speedY = offsetY > 0 ? 2 : -2;
+				speedY = offsetY > 0 ? 4 : -4;
 			
 			running = true;
 		}
