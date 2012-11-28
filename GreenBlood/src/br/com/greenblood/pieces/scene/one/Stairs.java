@@ -14,7 +14,7 @@ import br.com.greenblood.world.GameWorld;
 import commons.awt.Listener;
 
 public class Stairs extends StaticObject {
-	private static final int pixelsPerSecond = 70;
+	private static final int pixelsPerSecond = 140;
 	
 	private final Player player;
 	private boolean walkingOverThis = false;
@@ -79,6 +79,7 @@ public class Stairs extends StaticObject {
 		public void on(Integer t) {
 			long fall = pixelsPerSecond / t;
 			player.pos().setY(player.pos().y() - fall);
+			player.useStairsSprite();
 		}
 	};
 	
@@ -87,6 +88,7 @@ public class Stairs extends StaticObject {
 		public void on(Integer t) {
 			long fall = pixelsPerSecond / t;
 			player.pos().setY(player.pos().y() + fall);
+			player.useStairsSprite();
 		}
 	};
 

@@ -32,7 +32,7 @@ public class Player extends Character {
 	private Listener<Void> nextActionListener;
 	
     public Player(Rect bounds, Rect boundingBox) {
-        super(bounds, boundingBox, 280, new StandingSprite());
+        super(bounds, boundingBox, 160, new StandingSprite());
         setCollidable(true);
         
         GameWorld.view().playerStats().setMaximumHealth(maxHelth);
@@ -57,12 +57,15 @@ public class Player extends Character {
         		onTouchingJumpListener.on((int) uptime);
         }else{
 	        if (actions.hasJumped()){
+	        	controlledAnimation = false;
 	        	walkingOnAir();
 	            dir().setY(-1.2f);
 	        }
 	        
-	        if(actions.hasAction())
+	        if(actions.hasAction()){
+	        	controlledAnimation = false;
 	         	executeAction();
+	        }
         }
     }
     
@@ -75,7 +78,7 @@ public class Player extends Character {
 	}
 
 	protected void processMoveLogicsOnAnimation(Vector2D dir){
-		if(blockInput)
+		if(blockInput || controlledAnimation)
 			return;
 		
 		if(Math.abs(dir.y()) == 0){
@@ -94,7 +97,7 @@ public class Player extends Character {
         this.controls.setOnDoubleTapListener(new Listener<Void>() {
 			@Override
 			public void on(Void t) {
-				doBackwardDash();
+//				doBackwardDash();
 			}
 		});
     }
@@ -109,6 +112,7 @@ public class Player extends Character {
 				endListener.on(null);
 			}
 		}
+		
     	image().update(uptime);
     }
 
@@ -162,11 +166,6 @@ public class Player extends Character {
             					 ImageLoader.image("player/punch/p_3.png") 
             		    }, 565, false);
         }
-        
-        @Override
-        public void update(long uptime) {
-        	super.update(uptime);
-        }
     }
 	@Override
 	public void hit() {
@@ -217,11 +216,25 @@ public class Player extends Character {
 	//Please do it better
 	private boolean walkingRightUntilBlock;
 	private Listener<Void> endListener;
+	private boolean controlledAnimation;
+	
 	public void walkRightUntilBlock(Listener<Void> endListener) {
 		blockInput = true;
 		this.endListener = endListener;
 		walkingRightUntilBlock = true;
 		setSprite(walkingSprite);
 	}
+
+	public void useStairsSprite() {
+		controlledAnimation = true;
+		execute(onStairsSprite.id(4545), false);
+	}
 	
+	private final Sprite onStairsSprite = new OnStairsSprite();
+    private static final class OnStairsSprite extends Sprite {
+        public OnStairsSprite(){
+            super(new Bitmap[] { ImageLoader.image("player/stairs_1.png"),ImageLoader.image("player/stairs_2.png") }
+            			,160, true);
+        }
+    }
 }
