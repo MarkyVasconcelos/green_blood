@@ -9,12 +9,12 @@ import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.scene.one.EnemyOnTreeTrigger;
 import br.com.greenblood.pieces.scene.one.Logpillow;
-import br.com.greenblood.pieces.scene.one.EmptyTrigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.Fence;
 import br.com.greenblood.pieces.scene.one.GateKey;
 import br.com.greenblood.pieces.scene.one.Log;
 import br.com.greenblood.pieces.scene.one.Stairs;
+import br.com.greenblood.pieces.scene.one.TheresAProblemAheadTrigger;
 import br.com.greenblood.pieces.scene.one.TreeCutterTrigger;
 import br.com.greenblood.pieces.scene.one.WayHighTrigger;
 import br.com.greenblood.util.ImageLoader;
@@ -78,12 +78,10 @@ public class SceneOneObjects {
 	}
 	
 	public static Trigger problemTrigger() {
-		return new EmptyTrigger(new Rect(0, 0, 40, 200));
-//		return new TheresAProblemAheadTrigger(new Rect(0,0,40,200));
+		return new TheresAProblemAheadTrigger(new Rect(0,0,8,200));
 	}
 	
 	public static Trigger wayHighTrigger() {
-//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
 		return new WayHighTrigger(new Rect(0,0,1,200));
 	}
 	
@@ -92,8 +90,7 @@ public class SceneOneObjects {
 	}
 
 	public static Trigger cutTrigger() {
-//		return new EmptyTrigger(new Rect(0, 0, 40, 200));
-		return new TreeCutterTrigger(new Rect(0,0,40,200));
+		return new TreeCutterTrigger(new Rect(0,0, 8,200));
 	}
 
 	public static Entity fenceInstance(){
