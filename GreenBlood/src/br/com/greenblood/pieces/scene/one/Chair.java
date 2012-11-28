@@ -20,7 +20,7 @@ public class Chair extends StaticObject {
 		super(bounds);
 
 		setSprite(new Sprite(
-				new Bitmap[] { ImageLoader.image("boss/chair.PNG") },
+				new Bitmap[] { ImageLoader.image("scene/chair.PNG") },
 				0, false));
 		
 		setCollidable(true);

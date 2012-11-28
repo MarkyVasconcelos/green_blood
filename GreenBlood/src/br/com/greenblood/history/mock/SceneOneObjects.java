@@ -7,10 +7,11 @@ import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
-import br.com.greenblood.pieces.scene.one.CabinTrigger;
+import br.com.greenblood.pieces.scene.one.EnemyOnTreeTrigger;
 import br.com.greenblood.pieces.scene.one.Chair;
 import br.com.greenblood.pieces.scene.one.EmptyTrigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
+import br.com.greenblood.pieces.scene.one.Fence;
 import br.com.greenblood.pieces.scene.one.GateKey;
 import br.com.greenblood.pieces.scene.one.Log;
 import br.com.greenblood.pieces.scene.one.Stairs;
@@ -23,6 +24,7 @@ public class SceneOneObjects {
 	private static Entity fence;
 	private static StaticObject cabin;
 	private static Enemy chainsawEnemy;
+	public static Entity tree;
 
 	public static Entity hallow() {
 		StaticObject hallow = new StaticObject(new Rect(0, 0, 144, 288));
@@ -58,9 +60,7 @@ public class SceneOneObjects {
 	}
 	
 	public static Entity fence(){
-		fence = new StaticObject(new Rect(0, 0, 32, 140));
-		fence.setCollidable(true);
-		fence.setSprite(new Sprite(new Bitmap[] { ImageLoader.image("boss/fence.PNG")}, 0, false));
+		fence = new Fence(new Rect(0, 0, 144, 119));
 		return fence;
 	}
 	
