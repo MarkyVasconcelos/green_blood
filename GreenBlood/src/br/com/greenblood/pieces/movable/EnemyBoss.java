@@ -21,6 +21,23 @@ public class EnemyBoss extends Enemy {
     public void kill() {
     	super.kill();
     	
+    	GameWorld.world().lockScreen();
+    	TextObject spoke = new TextObject(new Rect(0,0,80,100), "nunca será!", 2000);
+    	spoke.pos().set(x(), y() - bounds().left);
+		spoke.onEnd(new Listener<Void>() {
+			@Override
+			public void on(Void t) {
+				GameWorld.world().offsetDraw(0, 0, new Listener<Void>() {
+					@Override
+					public void on(Void t) {
+						GameWorld.showFinalView();							
+					}
+				});
+				
+			}
+		});
+		
+		GameWorld.world().addEntity(spoke);
     	//Start final cut-scene
     }
     

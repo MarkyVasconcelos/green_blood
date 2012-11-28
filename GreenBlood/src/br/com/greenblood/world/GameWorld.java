@@ -225,4 +225,8 @@ public class GameWorld {
 		
 		}
 	}
+
+	public static void showFinalView() {
+		world().gameActivity.slide().displayFinalCut();
+	}
 }

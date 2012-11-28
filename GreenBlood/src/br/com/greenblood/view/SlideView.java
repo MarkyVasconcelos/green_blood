@@ -57,6 +57,17 @@ public class SlideView extends FrameLayout {
 		return super.onTouchEvent(ev);
 	}
 	
+	public void displayFinalCut(){
+		post(new Runnable() {
+			@Override
+			public void run() {
+				view.setImageBitmap(ImageLoader.image("slides/theend.PNG"));
+				view.setScaleType(ScaleType.FIT_XY);
+				setVisibility(VISIBLE);
+			}
+		});
+	}
+	
 	//This will display only once
 	public void display(final Listener<Void> onTouchListener){
 		post(new Runnable() {
