@@ -14,7 +14,7 @@ public class MiniBossEnemy extends Enemy {
 	private final Sprite punchingSprite = new PunchingSprite();
 	
     public MiniBossEnemy(Rect bounds, Rect boundingBounds) {
-        super(bounds, boundingBounds, 1, new WalkingSprite());
+        super(bounds, boundingBounds, 3, new StandingSprite());
     }
     
     @Override
@@ -37,16 +37,28 @@ public class MiniBossEnemy extends Enemy {
 		return punchingSprite;
 	}
 	
-    private static final class WalkingSprite extends Sprite {
-        public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("house/stick.png"), ImageLoader.image("house/stick_1.png") }, 200, true);
-        }
-    }
-    
-    private final class PunchingSprite extends Sprite{
-        public PunchingSprite() {
-            super(new Bitmap[] { ImageLoader.image("house/stick_punch.png"), ImageLoader.image("house/stick_punch_1.png"), ImageLoader.image("house/stick_punch_2.png") },
-                    593, false);
-        }
-    }
+	private static final class StandingSprite extends Sprite {
+		public StandingSprite() {
+			super(new Bitmap[] { ImageLoader.image("minibossenemy/walk_04.png") }, 200,
+					true);
+		}
+	}
+	
+	private static final class WalkingSprite extends Sprite {
+		public WalkingSprite() {
+			super(new Bitmap[] { ImageLoader.image("minibossenemy/walk_01.png"),
+					ImageLoader.image("minibossenemy/walk_02.png"),
+					ImageLoader.image("minibossenemy/walk_03.png"),
+					ImageLoader.image("minibossenemy/walk_04.png") }, 200, true);
+		}
+	}
+
+	private final class PunchingSprite extends Sprite {
+		public PunchingSprite() {
+			super(new Bitmap[] { ImageLoader.image("minibossenemy/punch_1.png"),
+					ImageLoader.image("minibossenemy/punch_2.png"),
+					ImageLoader.image("minibossenemy/punch_3.png"),
+					ImageLoader.image("minibossenemy/punch_3.png") }, 493, false);
+		}
+	}
 }
