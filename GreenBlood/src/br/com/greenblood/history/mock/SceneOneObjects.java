@@ -8,7 +8,7 @@ import br.com.greenblood.pieces.StaticObject;
 import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.pieces.scene.one.EnemyOnTreeTrigger;
-import br.com.greenblood.pieces.scene.one.Chair;
+import br.com.greenblood.pieces.scene.one.Logpillow;
 import br.com.greenblood.pieces.scene.one.EmptyTrigger;
 import br.com.greenblood.pieces.scene.one.FallingTree;
 import br.com.greenblood.pieces.scene.one.Fence;
@@ -39,6 +39,13 @@ public class SceneOneObjects {
 		return fire;
 	}
 	
+	public static Entity tree() {
+		StaticObject tree = new StaticObject(new Rect(0, 0, 383, 288));
+		tree.setSprite(new Sprite(new Bitmap[] {
+				ImageLoader.image("falling_tree/tree.png")}, 0, false));
+		return tree;
+	}
+	
 	public static Entity beingCuttedTree() {
 		return new FallingTree(new Rect(0, 0, 383, 288));
 	}
@@ -52,7 +59,7 @@ public class SceneOneObjects {
 	}
 	
 	public static Entity chair(){
-		return new Chair(new Rect(0, 0, 33, 60));
+		return new Logpillow(new Rect(0, 0, 33, 60));
 	}
 	
 	public static Entity gateKey() {
