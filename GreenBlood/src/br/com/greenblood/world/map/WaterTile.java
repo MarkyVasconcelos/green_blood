@@ -15,7 +15,6 @@ public class WaterTile extends Tile implements AnimableEntity {
 				ImageLoader.water(1),
 				ImageLoader.water(2),
 				ImageLoader.water(3)
-//				ImageLoader.water(4)
 		}, 560, true);
 		
 		GameWorld.addEntity(this);

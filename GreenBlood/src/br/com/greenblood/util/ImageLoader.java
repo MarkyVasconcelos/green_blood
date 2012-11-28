@@ -37,16 +37,15 @@ public class ImageLoader {
         
         mountain = image("scene/mountain.png");//image("tile_A.png");
         floor = image("scene/floor.png");//image("tile_B.png");
-        mountainLeft = image("tile_C.png");
-        mountainRight = image("tile_D.png");
-        mountainCornerLeft = image("tile_E.png");
-        mountainCornerRight = image("tile_F.png");
-        mountainJoinCornerLeft = image("tile_G.png");
-        mountainJoinCornerRight = image("tile_H.png");
+        mountainLeft = mountain; //image("tile_C.png");
+        mountainRight = mountain; //image("tile_D.png");
+        mountainCornerLeft = image("scene/corner_left.png");//image("tile_E.png");
+        mountainCornerRight = image("scene/corner_right.png");//image("tile_F.png");
+        mountainJoinCornerLeft = image("scene/join_left.png");
+        mountainJoinCornerRight = image("scene/join_right.png");
         water1 = image("water/water_1.png");
         water2 = image("water/water_2.png");
         water3 = image("water/water_3.png");
-        water3 = image("water/water_4.png");
         waterFill = image("tile_water_fill.png");
         
         houseTree = image("house/tree.PNG");
