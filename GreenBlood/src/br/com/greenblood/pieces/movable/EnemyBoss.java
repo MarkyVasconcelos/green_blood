@@ -1,16 +1,20 @@
 package br.com.greenblood.pieces.movable;
 
+import commons.awt.Listener;
+
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import br.com.greenblood.img.Sprite;
+import br.com.greenblood.pieces.TextObject;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.world.GameWorld;
 
 public class EnemyBoss extends Enemy {
 	private final Sprite walkingSprite = new WalkingSprite();
 	private final Sprite punchingSprite = new PunchingSprite();
 	
     public EnemyBoss(Rect bounds, Rect boundingBounds) {
-        super(bounds, boundingBounds, 8, new WalkingSprite());
+        super(bounds, boundingBounds, 4, new WalkingSprite());
     }
     
     @Override
@@ -30,15 +34,16 @@ public class EnemyBoss extends Enemy {
 		return punchingSprite;
 	}
 	
-    private static final class WalkingSprite extends Sprite {
-        public WalkingSprite(){
-            super(new Bitmap[] { ImageLoader.image("boss/stick.png"), ImageLoader.image("boss/stick_1.png") }, 200, true);
+    private final static class WalkingSprite extends Sprite{
+        public WalkingSprite() {
+            super(new Bitmap[] { ImageLoader.image("boss/boss_1.png"), ImageLoader.image("boss/boss_3.png"), ImageLoader.image("boss/boss_4.png") },
+                    593, true);
         }
     }
     
-    private final class PunchingSprite extends Sprite{
+    private final static class PunchingSprite extends Sprite{
         public PunchingSprite() {
-            super(new Bitmap[] { ImageLoader.image("boss/stick_punch.png"), ImageLoader.image("boss/stick_punch_1.png"), ImageLoader.image("boss/stick_punch_2.png") },
+            super(new Bitmap[] { ImageLoader.image("boss/boss_1.png"), ImageLoader.image("boss/boss_3.png"), ImageLoader.image("boss/boss_4.png") },
                     593, false);
         }
     }
