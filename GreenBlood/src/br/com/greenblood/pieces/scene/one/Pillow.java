@@ -10,13 +10,13 @@ import br.com.greenblood.world.GameWorld;
 
 import commons.awt.Listener;
 
-public class Chair extends StaticObject {
+public class Pillow extends StaticObject {
 	private final Player player;
 	private boolean grabbed = false;
 	private boolean passingTroughThis;
 	private int originalY;
 	
-	public Chair(Rect bounds) {
+	public Pillow(Rect bounds) {
 		super(bounds);
 
 		setSprite(new Sprite(
