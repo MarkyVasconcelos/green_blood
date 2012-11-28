@@ -15,9 +15,9 @@ public abstract class Trigger extends Entity {
 
 	@Override
 	public void draw(Canvas canvas, Rect surfaceView, Vector2D offset) {
-		Rect currentBounds = currentBounds();
-		currentBounds.offset((int) offset.x(), (int) offset.y());
-		canvas.drawRect(currentBounds, Paints.BLACK_STROKE);
+//		Rect currentBounds = currentBounds();
+//		currentBounds.offset((int) offset.x(), (int) offset.y());
+//		canvas.drawRect(currentBounds, Paints.BLACK_STROKE);
 	}
 	
 	@Override
