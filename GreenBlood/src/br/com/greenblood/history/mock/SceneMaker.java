@@ -139,8 +139,8 @@ public class SceneMaker {
 				Enemy enemy = new ChainsawEnemy(new Rect(0, 0, 118, 128), new Rect(0, 0, 118, 128));
 				enemy.setActive(false);
 				int bottom = GameCore.tilesToPixels(16);
-				enemy.movingLeft();
-				enemy.pos().set(GameCore.tilesToPixels(33), bottom - enemy.height() / 2);
+				enemy.movingRight();
+				enemy.pos().set(GameCore.tilesToPixels(34), bottom - enemy.height() / 2);
 				SceneOneObjects.setChainsawyEnemy(enemy);
 				return enemy;
 			}
@@ -279,9 +279,9 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Enemy ent =  new MiniBossEnemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+				Enemy ent =  new MiniBossEnemy(new Rect(0, 0, 58, 112), new Rect(0, 0, 30, 112));
 				int bottom = GameCore.tilesToPixels(8);
-				ent.pos().set(GameCore.tilesToPixels(85), bottom - ent.height() / 2);
+				ent.pos().set(GameCore.tilesToPixels(86), bottom - ent.height() / 2);
 				return ent;
 			}
 		});
@@ -297,7 +297,7 @@ public class SceneMaker {
 				Entity chair = SceneOneObjects.chair();
 				chair.setCollidable(true);
 				int bottom = GameCore.tilesToPixels(15);
-				chair.pos().set(GameCore.tilesToPixels(94),
+				chair.pos().set(GameCore.tilesToPixels(93),
 						bottom - chair.height() / 2);
 				return chair;
 			}
@@ -309,7 +309,7 @@ public class SceneMaker {
 			public Entity create() {
 				Entity fence = SceneOneObjects.fence();
 				int bottom = GameCore.tilesToPixels(15);
-				fence.pos().set(GameCore.tilesToPixels(95),
+				fence.pos().set(GameCore.tilesToPixels(96),
 						bottom - fence.height() / 2);
 				return fence;
 			}
@@ -330,7 +330,7 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Enemy ent = new EnemyBoss(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+				Enemy ent = new EnemyBoss(new Rect(0, 0, 64, 128), new Rect(0, 0, 64, 128));
 				int bottom = GameCore.tilesToPixels(15);
 				ent.pos().set(GameCore.tilesToPixels(99), bottom - ent.height() / 2);
 				return ent;
@@ -387,7 +387,7 @@ public class SceneMaker {
 	}
 
 	public static Enemy enemy() {
-		return new Enemy(new Rect(0, 0, 42, 128), new Rect(0, 0, 30, 128));
+		return new Enemy(new Rect(0, 0, 58, 112), new Rect(0, 0, 30, 112));
 	}
 
 }
