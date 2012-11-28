@@ -95,16 +95,22 @@ public class GameView extends SurfaceView implements LoopSteps {
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-    	
-    	for(HighUpDisplay hud : huds)
+    	for(int i = 0; i < event.getPointerCount(); i++){
+    		MotionEvent evt = MotionEvent.obtainNoHistory(event);
+    		evt.setLocation(event.getX(i), event.getY(i));
+    		dispatchEvent(evt);
+    	}
+    	return true;
+    }
+    
+	private void dispatchEvent(MotionEvent event) {
+		for(HighUpDisplay hud : huds)
     		if(hud.bounds().contains((int)event.getX(), (int)event.getY())){
     			MotionEvent evt = MotionEvent.obtain(event);
     			evt.setLocation(event.getX() - hud.left(), event.getY() - hud.top());
-    			return hud.onTouchEvent(evt);
+    			hud.onTouchEvent(evt);
     		}
-    	
-    	return false;
-    }
+	}
     
 	private void createHighUpDisplays(){
 		Rect bounds = new Rect(GameCore.oneDp(), GameCore.oneDp(), GameCore.pixels(112), GameCore.pixels(48));

@@ -1,17 +1,17 @@
 package br.com.greenblood;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import br.com.greenblood.core.GameCore;
 import br.com.greenblood.hud.ItemView;
 import br.com.greenblood.util.ImageLoader;
-import br.com.greenblood.util.MultiTouchActivity;
 import br.com.greenblood.view.GameView;
 import br.com.greenblood.view.SlideView;
 
 import commons.awt.Listener;
 
-public class GameActivity extends MultiTouchActivity {
+public class GameActivity extends Activity {
     private GameView gameView;
     
     @Override
