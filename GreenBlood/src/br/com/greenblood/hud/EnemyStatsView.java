@@ -1,59 +1,64 @@
 package br.com.greenblood.hud;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.os.Handler;
+import br.com.greenblood.core.GameCore;
+import br.com.greenblood.dev.Paints;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.util.ImageLoader;
+import br.com.greenblood.view.HighUpDisplay;
 import br.com.greenblood.view.LinearProgressBar;
 
-import commons.view.LayoutParamsFactory;
-
-public class EnemyStatsView extends LinearLayout {
-
+public class EnemyStatsView extends HighUpDisplay {
 	private LinearProgressBar bar;
-
-	public EnemyStatsView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	private Bitmap face;
+	private Rect faceBounds;
+	
+	public EnemyStatsView(Rect bounds) {
+		super(bounds);
 		
-		ImageView faceView = new ImageView(context);
-		faceView.setImageBitmap(ImageLoader.image("enemy/enemy_face.png"));
+		face = ImageLoader.image("enemy/enemy_face.png");
+		faceBounds = new Rect(0, 0, 39, 39);
+		faceBounds.offset(bounds.left, bounds.top);
+		faceBounds.bottom = bounds.top + GameCore.pixels(39);
+		faceBounds.right = bounds.left + GameCore.pixels(39);
 		
-		addView(faceView, LayoutParamsFactory.newLinear(40, 40));
+		Rect healthBarBounds = new Rect(faceBounds.right + GameCore.oneDp(),
+										bounds.bottom - GameCore.pixels(20),
+										bounds.right - GameCore.oneDp(),
+										bounds.bottom - GameCore.oneDp());
+		bar = new LinearProgressBar(healthBarBounds);
 		
-//		bar = new LinearProgressBar(context);
-		
-		LayoutParams params = LayoutParamsFactory.newWrapMatchLinear();
-		params.gravity = Gravity.CENTER_VERTICAL;
-//		addView(bar, params);
+		setVisible(false);
+		bar.setTotal(10);
 	}
+
 	
 	public void display(final Enemy enemy) {
-		post(new Runnable() {
+		setVisible(true);
+		bar.setTotal(enemy.maxHealth());
+		bar.setValue(enemy.currentHealth());
+
+		hider.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				show();
-				bar.setTotal(enemy.maxHealth());
-				bar.setValue(enemy.currentHealth());
-				
-				postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						dismiss();
-					}
-				}, 2000);
+				setVisible(false);
 			}
-		});
+		}, 2000);
 	}
 	
-	private void show() {
-		setVisibility(View.VISIBLE);
+	@Override
+	public void draw(Canvas canvas, Rect surfaceView) {
+		canvas.save();
+		
+		canvas.drawRect(surfaceView, Paints.BLACK);
+		canvas.drawBitmap(face, null, faceBounds, Paints.BLANK);
+		bar.draw(canvas);
+		
+		canvas.restore();
 	}
 	
-	public void dismiss() {
-		setVisibility(View.INVISIBLE);
-	}
+	private Handler hider = new Handler();
 }

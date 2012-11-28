@@ -12,10 +12,7 @@ import br.com.greenblood.dev.Paints;
 import br.com.greenblood.history.ObjectCreator;
 import br.com.greenblood.history.mock.SceneMaker;
 import br.com.greenblood.hud.ActionControls;
-import br.com.greenblood.hud.DirectionalControls;
-import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.ItemView;
-import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.World;
@@ -32,14 +29,12 @@ public class GameWorld {
 
 	public static void init(GameActivity gameActivity) {
 		world = new GameWorld();
-		world.enemyStatsView = gameActivity.enemyStats();
 		world.itemView = gameActivity.itemView();
 		world.gameActivity = gameActivity;
 	}
 
 	private GameActivity gameActivity;
 	private ItemView itemView;
-    private EnemyStatsView enemyStatsView;
     private WorldMap worldMap;
     private World worldScene;
     private Player player;
@@ -133,7 +128,7 @@ public class GameWorld {
     }
 
 	public void showEnemyStats(Enemy enemy) {
-		enemyStatsView.display(enemy);
+		view().enemyStats().display(enemy);
 	}
 	
 	public void display(String txt, final Listener<Void> listener){

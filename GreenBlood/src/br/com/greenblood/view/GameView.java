@@ -19,6 +19,7 @@ import br.com.greenblood.core.LoopSteps;
 import br.com.greenblood.core.MainLoop;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
+import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.world.GameWorld;
 
@@ -110,6 +111,12 @@ public class GameView extends SurfaceView implements LoopSteps {
 		playerStats = new PlayerStatsView(bounds);
 		huds.add(playerStats);
 
+		int w = GameCore.pixels(113);
+		int middle = getWidth() / 2;
+		bounds = new Rect(middle - w / 2, GameCore.oneDp(), middle + w / 2, GameCore.pixels(40));
+		enemyStats = new EnemyStatsView(bounds);
+		huds.add(enemyStats);
+
 		bounds = new Rect(GameCore.oneDp(), getHeight() - GameCore.pixels(97), GameCore.pixels(193), getHeight() - GameCore.oneDp());
 		controls = new DirectionalControls(bounds);
 		huds.add(controls);
@@ -121,6 +128,11 @@ public class GameView extends SurfaceView implements LoopSteps {
 		bounds = new Rect(getWidth() + GameCore.pixels(8), getHeight() - GameCore.pixels(260), getWidth() - GameCore.pixels(8), getHeight() - GameCore.oneDp());
 		dialog = new DialogView(bounds);
 		huds.add(dialog);
+	}
+	
+    private EnemyStatsView enemyStats;
+	public EnemyStatsView enemyStats() {
+		return enemyStats;
 	}
 	
     private PlayerStatsView playerStats;

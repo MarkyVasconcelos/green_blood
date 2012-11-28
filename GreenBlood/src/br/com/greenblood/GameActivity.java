@@ -1,12 +1,8 @@
 package br.com.greenblood;
 
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import br.com.greenblood.core.GameCore;
-import br.com.greenblood.hud.DirectionalControls;
-import br.com.greenblood.hud.EnemyStatsView;
 import br.com.greenblood.hud.ItemView;
 import br.com.greenblood.util.ImageLoader;
 import br.com.greenblood.util.MultiTouchActivity;
@@ -34,10 +30,6 @@ public class GameActivity extends MultiTouchActivity {
     
 	public GameView view() {
 		return (GameView) findViewById(R.id.game_view);
-	}
-
-	public EnemyStatsView enemyStats() {
-		return (EnemyStatsView) findViewById(R.id.enemy_stats);
 	}
 	
 	public SlideView slide() {
