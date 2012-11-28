@@ -9,19 +9,19 @@ import br.com.greenblood.pieces.Trigger;
 import br.com.greenblood.pieces.movable.Enemy;
 import br.com.greenblood.world.GameWorld;
 
-public class CabinTrigger extends Trigger {
+public class EnemyOnTreeTrigger extends Trigger {
 
-	public CabinTrigger(Rect bounds) {
+	public EnemyOnTreeTrigger(Rect bounds) {
 		super(bounds);
 	}
 
 	@Override
 	public void onFired() {
-		Entity cabin = SceneOneObjects.cabinInstance();
-		Rect cabinBounds = cabin.currentBounds();
+		Entity tree = SceneOneObjects.tree;
+		Rect treeBounds = tree.currentBounds();
 		
 		Enemy enemy = SceneMaker.enemy();
-		enemy.pos().set(cabinBounds.right, cabinBounds.bottom - enemy.height() / 2);
+		enemy.pos().set(treeBounds.right - GameCore.pixels(120), treeBounds.top);
 		GameWorld.world().addEntity(enemy);
 	}
 

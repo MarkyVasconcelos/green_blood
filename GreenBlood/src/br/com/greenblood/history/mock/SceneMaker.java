@@ -168,18 +168,19 @@ public class SceneMaker {
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Entity cabin = SceneOneObjects.cabin();
+				Entity tree = SceneOneObjects.tree();
 				int bottom = GameCore.tilesToPixels(13);
-				cabin.pos().set(GameCore.tilesToPixels(47),
-						bottom - cabin.height() / 2);
-				return cabin;
+				tree.pos().set(GameCore.tilesToPixels(47),
+						bottom - tree.height() / 2);
+				SceneOneObjects.tree =  tree;
+				return tree;
 			}
 		});
 		
 		scene.addObjectCreator(new ObjectCreator() {
 			@Override
 			public Entity create() {
-				Trigger problem = SceneOneObjects.cabinTrigger();
+				Trigger problem = SceneOneObjects.enemyOnTreeTrigger();
 				int bottom = GameCore.tilesToPixels(13);
 				problem.pos().set(GameCore.tilesToPixels(50), bottom - problem.height() / 2);
 				return problem;
