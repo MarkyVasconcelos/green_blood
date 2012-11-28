@@ -17,6 +17,7 @@ public class PlayerStatsView extends HighUpDisplay {
 	private Bitmap playerFace;
 	private LinearProgressBar bar;
 	private Rect playerFaceBounds;
+	private Rect scoreBounds;
 
 	public PlayerStatsView(Rect bounds) {
 		super(bounds);
@@ -31,6 +32,11 @@ public class PlayerStatsView extends HighUpDisplay {
 										bounds.right - GameCore.oneDp(),
 										bounds.bottom - GameCore.oneDp());
 		bar = new LinearProgressBar(healthBarBounds);
+		
+		scoreBounds = new Rect(playerFaceBounds.right + GameCore.oneDp(),
+				bounds.top + GameCore.pixels(9),
+				bounds.right - GameCore.oneDp(),
+				bounds.top + GameCore.pixels(18));
 		
 		//TODO: Add score
 //		TextView score = new TextView(context);
@@ -56,6 +62,7 @@ public class PlayerStatsView extends HighUpDisplay {
 		
 		canvas.drawRect(surfaceView, Paints.BLACK);
 		canvas.drawBitmap(playerFace, null, playerFaceBounds, Paints.BLANK);
+		canvas.drawText("12154800", scoreBounds.left, scoreBounds.top, Paints.WHITE);
 		bar.draw(canvas);
 		
 		canvas.restore();

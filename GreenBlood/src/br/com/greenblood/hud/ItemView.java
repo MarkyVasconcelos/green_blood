@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import br.com.greenblood.core.GameCore;
 import br.com.greenblood.history.mock.SceneOneObjects;
 import br.com.greenblood.pieces.Entity;
 import br.com.greenblood.pieces.movable.Player;
@@ -25,7 +26,7 @@ public class ItemView extends LinearLayout {
 
 		setBackgroundColor(Color.GRAY);
 
-		LayoutParams params = LayoutParamsFactory.newLinear(17, 39);
+		LayoutParams params = LayoutParamsFactory.newLinear(GameCore.pixels(17), GameCore.pixels(39));
 		params.leftMargin = 5;
 		params.topMargin = 5;
 		params.rightMargin = 5;
