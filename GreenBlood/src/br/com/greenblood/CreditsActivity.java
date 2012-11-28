@@ -11,7 +11,7 @@ public class CreditsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		TextView view = new TextView(this);
-		view.setText("Desenvolvido pela equipe FIVEMONKEYS!");
+		view.setText("Desenvolvido pela equipe FIVEMONKEYS. Integrantes: Alexandre Magno, Douglas Lacerda, Joao Ricardo, Marcos Vasconcelos, Rafael Albuquerque. Recursos graficos: Felipe Franco");
 		view.setGravity(Gravity.CENTER);
 		setContentView(view);
 	}
