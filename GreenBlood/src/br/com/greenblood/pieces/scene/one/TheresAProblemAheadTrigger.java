@@ -17,12 +17,12 @@ public class TheresAProblemAheadTrigger extends Trigger {
 	public void onFired() {
 		GameWorld.world().lockScreen();
 		
-		TextObject chainsawDisplay = new TextObject(new Rect(0,0,80,100), "Vrum!! Vrum!!", 2000);
-		chainsawDisplay.pos().set(currentBounds().left + 90, currentBounds().top + 180);
+		TextObject chainsawDisplay = new TextObject(new Rect(0,0,80,100), "Que barulho é esse?", 2000);
+		chainsawDisplay.pos().set(x(), y());
 		chainsawDisplay.onEnd(new Listener<Void>() {
 			@Override
 			public void on(Void t) {
-				GameWorld.world().display("Que som é esse?!?! Tem alguma coisa errada a frente!", null);
+				GameWorld.world().unlockScreen();
 			}
 		});
 		GameWorld.world().addEntity(chainsawDisplay);
