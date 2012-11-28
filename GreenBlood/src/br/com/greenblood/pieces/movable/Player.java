@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import br.com.greenblood.hud.ActionControls;
 import br.com.greenblood.hud.DirectionalControls;
-import br.com.greenblood.hud.PlayerStatsView;
 import br.com.greenblood.img.Sprite;
 import br.com.greenblood.math.Vector2D;
 import br.com.greenblood.util.ImageLoader;
@@ -18,7 +17,7 @@ public class Player extends Character {
     
 	private final Sprite walkingSprite = new WalkingSprite();
 	private final Sprite punchingSprite = new PunchingSprite();
-	private final Sprite jumpingSprite = new JumpingSprite();
+	private final Sprite jumpingSprite = new FallingSprite();
 	private final Sprite fallingSprite = new FallingSprite();
 	private final Sprite backwardDash = new BackwardDashSprite();
 	
